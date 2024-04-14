@@ -22,32 +22,32 @@ const plantSchema = new mongoose.Schema(
     stage: {
       type: String,
       required: true,
-      enum: ["seedling", "veg", "flower"],
+      enum: ["seedling", "veg", "flower", "cure"],
       default: "seedling",
     },
-    dateStarted: {
+    startedOn: {
       type: Date,
       default: moment().format("YYYY-MM-DD"),
     },
-    dateVegStarted: {
+    vegStartedOn: {
       type: Date,
     },
-    dateFlowerStarted: {
+    flowerStartedOn: {
       type: Date,
     },
-    datePotentialHarvest: {
+    potentialHarvest: {
       type: Date,
       default: () => {
         return moment().add(9, "weeks").format("YYYY-MM-DD");
       },
     },
-    dateHarvested: {
+    harvestedOn: {
       type: Date,
     },
-    dateCureStarted: {
+    cureStartedOn: {
       type: Date,
     },
-    dateArchived: {
+    archivedOn: {
       type: Date,
     },
   },

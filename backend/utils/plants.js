@@ -45,8 +45,8 @@ exports.getChangeStageData = async (data) => {
  * @returns {object} The update db query.
  */
 function toSeedling(data) {
-  const startDate = data.dateStarted
-    ? moment(setData.dateStarted).format("YYYY-MM-DD")
+  const startDate = data.startedOn
+    ? moment(setData.startedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
@@ -56,17 +56,17 @@ function toSeedling(data) {
 
   const setData = {
     stage: "seedling",
-    dateStarted: startDate,
+    startedOn: startDate,
     potentialHarvest: potentialHarvest,
   };
 
   // Unset veg, flower, harvested, and cure start dates
   const unsetData = {
-    dateVegStarted: "",
-    dateFlowerStarted: "",
-    dateHarvested: "",
-    dateCureStarted: "",
-    dateArchived: "",
+    vegStartedOn: "",
+    flowerStartedOn: "",
+    harvestedOn: "",
+    cureStartedOn: "",
+    archivedOn: "",
   };
 
   return { $unset: unsetData, $set: setData };
@@ -78,8 +78,8 @@ function toSeedling(data) {
  * @returns {object} The update db query.
  */
 function toVeg(data) {
-  const startDate = data.dateVegStarted
-    ? moment(setData.dateVegStarted).format("YYYY-MM-DD")
+  const startDate = data.vegStartedO
+    ? moment(setData.vegStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
@@ -89,24 +89,24 @@ function toVeg(data) {
 
   const setData = {
     stage: "veg",
-    dateVegStarted: startDate,
+    vegStartedOn: startDate,
     potentialHarvest: potentialHarvest,
   };
 
   // Unset flower, harvested, and cure start dates
   const unsetData = {
-    dateFlowerStarted: "",
-    dateHarvested: "",
-    dateCureStarted: "",
-    dateArchived: "",
+    flowerStartedOn: "",
+    harvestedOn: "",
+    cureStartedOn: "",
+    archivedOn: "",
   };
 
   return { $unset: unsetData, $set: setData };
 }
 
 function toFlower(data) {
-  const startDate = data.dateFlowerStarted
-    ? moment(setData.dateFlowerStarted).format("YYYY-MM-DD")
+  const startDate = data.flowerStartedOn
+    ? moment(setData.flowerStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
@@ -116,15 +116,15 @@ function toFlower(data) {
 
   const setData = {
     stage: "flower",
-    dateFlowerStarted: startDate,
+    flowerStartedOn: startDate,
     potentialHarvest: potentialHarvest,
   };
 
   // Unset harvest and cure dates
   const unsetData = {
-    dateHarvested: "",
-    dateCureStarted: "",
-    dateArchived: "",
+    harvestedOn: "",
+    cureStartedOn: "",
+    archivedOn: "",
   };
 
   return { $unset: unsetData, $set: setData };
@@ -136,20 +136,20 @@ function toFlower(data) {
  * @returns {object} The update db query.
  */
 function toHarvest(data) {
-  const startDate = data.dateHarvested
-    ? moment(setData.dateHarvested).format("YYYY-MM-DD")
+  const startDate = data.harvestedOn
+    ? moment(setData.harvestedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
   const setData = {
     stage: "harvest",
-    dateHarvested: startDate,
+    harvestedOn: startDate,
   };
 
   // Unset potential harvest and cure start dates
   const unsetData = {
     potentialHarvest: "",
-    dateCureStarted: "",
-    dateArchived: "",
+    cureStartedOn: "",
+    archivedOn: "",
   };
 
   return { $unset: unsetData, $set: setData };
@@ -161,18 +161,18 @@ function toHarvest(data) {
  * @returns {object} The updat db query.
  */
 function toCure(data) {
-  const startDate = data.dateCureStarted
-    ? moment(setData.dateCureStarted).format("YYYY-MM-DD")
+  const startDate = data.cureStartedOn
+    ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
   const setData = {
     stage: "cure",
-    dateCureStarted: startDate,
+    cureStartedOn: startDate,
   };
 
   // Unset archived date
   const unsetData = {
-    dateArchived: "",
+    archivedOn: "",
   };
 
   return { $set: setData };
@@ -186,7 +186,7 @@ function toCure(data) {
 function toArchive(data) {
   const setData = {
     status: "archived",
-    dateArchived: moment().format("YYYY-MM-DD"),
+    archivedOn: moment().format("YYYY-MM-DD"),
   };
 
   return { $set: setData };
