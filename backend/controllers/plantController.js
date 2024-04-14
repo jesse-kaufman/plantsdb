@@ -1,6 +1,6 @@
 const plantModel = require("../models/plantModel");
 const moment = require("moment");
-const { generatePlantId, changeStage } = require("../utils/plants");
+const { generatePlantId, getChangeStageData } = require("../utils/plants");
 
 /**
  * Gets an existing plant from the database
@@ -112,7 +112,7 @@ exports.addPlant = async (req, res) => {
  */
 exports.updatePlant = async (req, res) => {
   var data = req.body;
-  var unsetData = {};
+  var updateData = {};
 
   //
   // Find the plant
@@ -128,90 +128,19 @@ exports.updatePlant = async (req, res) => {
   }
 
   //
-  // Update dates based on stage
+  // Gets the data to update plant stage and set dates accordingly
   //
   if (data.stage) {
-    var updateData = {};
-    // switch (data.stage) {
-      //
-      // Moving to "seedling" stage
-      //
-      // case "seedling":
-        try {
-          updateData = await changeStage(data);
+    try {
+      updateData = await getChangeStageData(data);
           console.log(updateData);
         } catch (error) {
           res.status(500).json({ error: error.message });
           return;
         }
-        // break;
-
-      //
-      // Moving to "veg" stage
-      //
-      // case "veg":
-      //   data.dateVegStarted = req.body.dateVegStarted
-      //     ? moment(data.dateVegStarted).format("YYYY-MM-DD")
-      //     : moment().format("YYYY-MM-DD");
-
-      //   // Unset harvested and cure started dates
-      //   unsetData = {
-      //     dateFlowerStarted: "",
-      //     dateHarvested: "",
-      //     dateCureStarted: "",
-      //   };
-
-      //   // Set new potential harvest date
-      //   data.potentialHarvest = moment(req.body.dateVegStarted)
-      //     .add(9, "weeks")
-      //     .format("YYYY-MM-DD");
-      //   break;
-
-      //
-      // Moving to "flower" stage
-      //
-      // case "flower":
-      //   data.dateFlowerStarted = req.body.dateFlowerStarted
-      //     ? moment(data.dateFlowerStarted).format("YYYY-MM-DD")
-      //     : moment().format("YYYY-MM-DD");
-
-      //   // Unset harvested and cure started dates
-      //   unsetData = { dateHarvested: "", dateCureStarted: "" };
-
-      //   // Set new potential harvest date
-      //   data.potentialHarvest = moment(req.body.dateVegStarted)
-      //     .add(4, "weeks")
-      //     .format("YYYY-MM-DD");
-      //   break;
-
-      //
-      // Moving to "harvest" stage
-      //
-      // case "harvest":
-      //   data.dateHarvested = req.body.dateHarvested
-      //     ? moment(data.dateHarvested).format("YYYY-MM-DD")
-      //     : moment().format("YYYY-MM-DD");
-
-      //   // Unset potential harvest and cure started dates
-      //   unsetData = { datePotentialHarvest: "", dateCureStarted: "" };
-      //   break;
-
-      //
-      // Moving to "cure" stage
-      //
-      // case "cure":
-      //   data.dateCureStarted = req.body.dateCureStarted
-      //     ? moment(data.dateCureStarted).format("YYYY-MM-DD")
-      //     : moment().format("YYYY-MM-DD");
-      //   break;
-
-      //
-      // Invalid stage
-      //
-      // default:
-      //   res.status(400).json({ error: "Invalid stage" });
-    // }
   }
+
+  // XXX: Update other fields here
 
   //
   // Update the plant

@@ -20,7 +20,7 @@ exports.generatePlantId = async (name) => {
   }
 };
 
-exports.changeStage = async (data) => {
+exports.getChangeStageData = async (data) => {
   switch (data.stage) {
     case "seedling":
       return toSeedling(data);
