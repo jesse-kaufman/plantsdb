@@ -60,7 +60,6 @@ exports.getPlants = async (req, res) => {
  */
 exports.addPlant = async (req, res) => {
   var newPlant = req.body;
-  newPlant.lastUpdated = moment().utc();
 
   //
   // Check if a plant with the same name already exists
