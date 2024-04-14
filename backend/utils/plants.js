@@ -1,4 +1,3 @@
-const { connections } = require("mongoose");
 const plantModel = require("../models/plantModel");
 const moment = require("moment");
 
@@ -131,7 +130,7 @@ function toFlower(data) {
 }
 
 /**
- * Sets the stage of the plant to "harvest" and sets the dateHarvested field to the current date or the provided date.
+ * Sets the stage of the plant to "harvest" and sets the harvestedOn field to the current date or the provided date.
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
@@ -156,7 +155,7 @@ function toHarvest(data) {
 }
 
 /**
- * Sets the stage of the plant to "cure" and sets the dateCureStarted field to the current date or the provided date.
+ * Sets the stage of the plant to "cure" and sets the cureStartedOn field to the current date or the provided date.
  * @param {object} data - The data object containing the plant document.
  * @returns {object} The updat db query.
  */
@@ -179,11 +178,10 @@ function toCure(data) {
 }
 
 /**
- * Sets the status of the plant to "archived" and sets the dateArchived field to the current date.
- * @param {object} data - The data object containing the plant document.
+ * Sets the status of the plant to "archived" and sets the archivedOn field to the current date.
  * @returns {object} The updated plant document.
  */
-function toArchive(data) {
+function toArchive() {
   const setData = {
     status: "archived",
     archivedOn: moment().format("YYYY-MM-DD"),

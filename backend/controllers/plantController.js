@@ -59,6 +59,7 @@ exports.getPlants = async (req, res) => {
  * @param {*} res The response object
  */
 exports.addPlant = async (req, res) => {
+  // XXX: Validate the input here
   var newPlant = req.body;
 
   //
@@ -111,6 +112,7 @@ exports.addPlant = async (req, res) => {
  * @param {*} res The response object
  */
 exports.updatePlant = async (req, res) => {
+  // XXX: Validate the input here
   var data = req.body;
   var updateData = {};
 
@@ -133,11 +135,11 @@ exports.updatePlant = async (req, res) => {
   if (data.stage) {
     try {
       updateData = await getChangeStageData(data);
-          console.log(updateData);
-        } catch (error) {
-          res.status(500).json({ error: error.message });
-          return;
-        }
+      console.log(updateData);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+      return;
+    }
   }
 
   // XXX: Update other fields here
