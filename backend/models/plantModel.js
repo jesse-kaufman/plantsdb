@@ -12,6 +12,12 @@ const plantSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    source: {
+      type: String,
+      required: true,
+      enum: ["seed", "clone"],
+      default: "seed",
+    },
     name: {
       type: String,
       required: true,
