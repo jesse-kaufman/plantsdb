@@ -24,7 +24,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 ## Plant Schema
 
-|           Attribute: | Type:                                 | Notes:    |
+|            Property: | Type:                                 | Notes:    |
 | -------------------: | ------------------------------------- | --------- |
 |          **plantId** | _string_                              |           |
 |             **name** | _string_                              |           |
