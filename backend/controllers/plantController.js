@@ -31,20 +31,20 @@ exports.getPlant = async (req, res) => {
  */
 exports.getPlants = async (req, res) => {
   // Default to only showing active plants
-  var includeStatuses = ["active"];
+  var statuses = ["active"];
 
   //
   // Filter by statuses requested
   //
-  if (req.query.includeStatuses) {
-    includeStatuses = req.query.includeStatuses;
+  if (req.query.statuses) {
+    statuses = req.query.statuses;
   }
 
   //
   // Get all matching plants
   //
   try {
-    const plants = await plantModel.find({ status: { $in: includeStatuses } });
+    const plants = await plantModel.find({ status: { $in: statuses } });
     res.status(200).json(plants);
   } catch (error) {
     res.status(500).json({ error: error.message });
