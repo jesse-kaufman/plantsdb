@@ -72,7 +72,7 @@ exports.addPlant = async (req, res) => {
     });
 
     if (plant) {
-      res.status(400).json({ error: "A plant with that name already exists" });
+      res.status(409).json({ error: "A plant with that name already exists" });
       return;
     }
   } catch (error) {
