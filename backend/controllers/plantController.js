@@ -160,12 +160,13 @@ exports.updatePlant = async (req, res) => {
   //
   if (newPlant.stage && newPlant.stage !== plant.stage) {
     try {
-      let stageData = await getStageData(newPlant.stage, {
+      let dates = {
         vegStartedOn: newPlant.vegStartedOn,
         flowerStartedOn: newPlant.flowerStartedOn,
         cureStartedOn: newPlant.cureStartedOn,
         harvestedOn: newPlant.harvestedOn,
-      });
+      };
+      let stageData = await getStageData(newPlant.stage, dates);
 
       // Add data to newPlant object
       newPlant = { ...stageData };
