@@ -1,7 +1,11 @@
 const plantModel = require("../models/plantModel");
 const logModel = require("../models/logModel");
 const { getStageData } = require("../utils/plantStages");
-const { generatePlantAbbr } = require("../utils/plants");
+const {
+  generatePlantAbbr,
+  getPlantById,
+  getValidPlantStatuses,
+} = require("../utils/plants");
 const { addLogEntry } = require("../utils/log");
 
 /**
@@ -11,6 +15,14 @@ const { addLogEntry } = require("../utils/log");
  * @param {*} res The response object
  */
 exports.getPlant = async (req, res) => {
+  let status = "active";
+
+  const statuses = getValidPlantStatuses();
+
+  if (req.query.status in statuses) {
+    status = req.query.status;
+  }
+
   try {
     //
     // Find the plant

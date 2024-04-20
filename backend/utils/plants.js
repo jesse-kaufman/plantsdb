@@ -1,5 +1,25 @@
 const plantModel = require("../models/plantModel");
 
+/**
+ * Gets list of possible plant statuses
+ *
+ * @returns {Array} List of valid plant statuses
+ */
+exports.getValidPlantStatuses = () => ["active", "inactive", "archived"];
+
+/**
+ * Gets list of possible plant sources
+ *
+ * @returns {Array} List of valid plant sources
+ */
+exports.getValidPlantSources = () => ["seed", "clone"];
+
+/**
+ * Generates a unique plant abbreviation based on the given plant name.
+ *
+ * @param {string} name - The name of the plant.
+ * @returns {string} The unique plant abbreviation.
+ */
 exports.generatePlantAbbr = async (name) => {
   let newPlantAbbr = "";
   name.split(" ").forEach((part) => {

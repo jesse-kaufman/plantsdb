@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
+const {
+  getValidPlantStatuses,
+  getValidPlantSources,
+} = require("../utils/plants");
 
 const plantSchema = new mongoose.Schema(
   {
     status: {
       type: String,
-      enum: ["active", "inactive", "archived"],
+      enum: getValidPlantStatuses(),
       default: "active",
     },
     plantAbbr: {
@@ -15,7 +19,7 @@ const plantSchema = new mongoose.Schema(
     source: {
       type: String,
       required: true,
-      enum: ["seed", "clone"],
+      enum: getValidPlantSources(),
       default: "seed",
     },
     name: {
