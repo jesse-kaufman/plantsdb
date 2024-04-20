@@ -127,6 +127,7 @@ exports.updatePlant = async (req, res) => {
   const data = req.body;
   let plant = null;
   let newPlant = req.body;
+  let updatedPropsMsgs = [];
 
   //
   // Find the plant
@@ -160,12 +161,40 @@ exports.updatePlant = async (req, res) => {
 
       // Add data to newPlant object
       newPlant = { ...stageData };
+      // Update messages for log
+      updatedPropsMsgs.push("Stage changed to " + newPlant.stage);
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
     }
   }
 
+  if (newPlant.vegStartedOn && newPlant.vegStartedOn !== plant.vegStartedOn) {
+    updatedPropsMsgs.push("Veg start date");
+  }
+
+  if (
+    newPlant.flowerStartedOn &&
+    newPlant.flowerStartedOn !== plant.flowerStartedOn
+  ) {
+    updatedPropsMsgs.push("Flower start date");
+  }
+
+  if (
+    newPlant.cureStartedOn &&
+    newPlant.cureStartedOn !== plant.cureStartedOn
+  ) {
+    updatedPropsMsgs.push("Cure start date");
+  }
+  if (newPlant.harvestedOn && newPlant.harvestedOn !== plant.harvestedOn) {
+    updatedPropsMsgs.push("Harvested on date");
+  }
+  if (newPlant.name && newPlant.name !== plant.name) {
+    updatedPropsMsgs.push("Plant name");
+  }
+  if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
+    updatedPropsMsgs.push("Plant abbreviation");
+  }
   console.log(newPlant);
 
   // XXX: Update other fields here
@@ -181,7 +210,10 @@ exports.updatePlant = async (req, res) => {
 
     // Make entry in log
     try {
-      addLogEntry(req.params.plantId, "Updated plant");
+      addLogEntry(
+        req.params.plantId,
+        "Updated plant:\n• " + updatedPropsMsgs.join("\n• ")
+      );
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
