@@ -29,6 +29,10 @@ app.use(cors());
 const plantRoutes = require("./routes/plantRoutes");
 app.use("/api/v1/plants", plantRoutes);
 
+// Log routes
+const logRoutes = require("./routes/logRoutes");
+app.use("/api/v1/logs", logRoutes);
+
 // Start the server
 const server = app.listen(8420, () => {
   console.log(`Express running → PORT ${server.address().port}`);
