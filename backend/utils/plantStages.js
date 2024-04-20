@@ -160,7 +160,7 @@ const toCure = (data) => {
     archivedOn: "",
   };
 
-  return { $set: setData };
+  return { $set: setData, $unset: unsetData };
 };
 
 /**
