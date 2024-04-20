@@ -123,7 +123,6 @@ exports.addPlant = async (req, res) => {
  * @param {*} res The response object
  */
 exports.updatePlant = async (req, res) => {
-  // XXX: Validate the input here
   const data = req.body;
   let plant = null;
   let newPlant = req.body;
@@ -206,9 +205,6 @@ exports.updatePlant = async (req, res) => {
   if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
     updatedPropsMsgs.push("Plant abbreviation");
   }
-  console.log(newPlant);
-
-  // XXX: Update other fields here
 
   //
   // Update the plant
