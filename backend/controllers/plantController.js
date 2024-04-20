@@ -125,7 +125,7 @@ exports.addPlant = async (req, res) => {
 exports.updatePlant = async (req, res) => {
   // XXX: Validate the input here
   const data = req.body;
-  let plant = {};
+  let plant = null;
   let newPlant = req.body;
 
   //
