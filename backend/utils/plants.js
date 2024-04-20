@@ -1,19 +1,19 @@
 const plantModel = require("../models/plantModel");
 
-exports.generatePlantId = async (name) => {
-  let newPlantId = "";
+exports.generatePlantAbbr = async (name) => {
+  let newPlantAbbr = "";
   name.split(" ").forEach((part) => {
-    newPlantId += part.charAt(0).toUpperCase();
+    newPlantAbbr += part.charAt(0).toUpperCase();
   });
-  newPlantId = newPlantId.trim();
+  newPlantAbbr = newPlantAbbr.trim();
 
   try {
     const count = await plantModel.countDocuments({
       status: "active",
-      plantId: { $regex: "^" + newPlantId + "\\-\\d" },
+      plantId: { $regex: "^" + newPlantAbbr + "\\-\\d" },
     });
-    return newPlantId + "-" + (count + 1);
-  } catch (error) {
-    throw new Error(error.message);
+    return newPlantAbbr + "-" + (count + 1);
+  } catch (err) {
+    throw new Error(err.message);
   }
 };

@@ -1,7 +1,8 @@
 const plantModel = require("../models/plantModel");
 const logModel = require("../models/logModel");
 const { getStageData } = require("../utils/plantStages");
-const { generatePlantId } = require("../utils/plants");
+const { generatePlantAbbr } = require("../utils/plants");
+const { addLogEntry } = require("../utils/log");
 
 /**
  * Gets an existing plant from the database
@@ -82,11 +83,11 @@ exports.addPlant = async (req, res) => {
   }
 
   //
-  // If plant ID is not provided, generate one
+  // If plant name abbreviation is not provided, generate one
   //
-  if (!newPlant.plantId) {
+  if (!newPlant.plantAbbr) {
     try {
-      newPlant.plantId = await generatePlantId(newPlant.name, plantModel);
+      newPlant.plantAbbr = await generatePlantAbbr(newPlant.name, plantModel);
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;

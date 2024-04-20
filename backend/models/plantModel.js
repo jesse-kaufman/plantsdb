@@ -8,7 +8,7 @@ const plantSchema = new mongoose.Schema(
       enum: ["active", "inactive", "archived"],
       default: "active",
     },
-    plantId: {
+    plantAbbr: {
       type: String,
       required: true,
     },
