@@ -38,6 +38,18 @@ exports.generatePlantAbbr = async (name) => {
   }
 };
 
+exports.getPlantById = async (plantId, status = "active") => {
+  try {
+    let query = {
+      _id: plantId,
+      status: status,
+    };
+    return await plantModel.findOne(query);
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 exports.getChangeList = (newPlant, oldPlant) => {
   let changeList = [];
 
