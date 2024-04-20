@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
 app.use(cors());
 
-// User routes
+// Plant routes
 const plantRoutes = require("./routes/plantRoutes");
 app.use("/api/v1/plants", plantRoutes);
 
