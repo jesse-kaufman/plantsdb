@@ -1,3 +1,4 @@
+const moment = require("moment");
 const plantModel = require("../models/plantModel");
 const logModel = require("../models/logModel");
 const { getChangeStageData } = require("../utils/plant-stages");
@@ -11,11 +12,22 @@ const { generatePlantId } = require("../utils/plants");
  */
 exports.getPlant = async (req, res) => {
   try {
+    const log = new logModel({
+      plantId: req.params.plantId,
+      message: "Viewed plant",
+    });
+    await log.save();
+  } catch (err) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  try {
     //
     // Find the plant
     //
     const plant = await plantModel.findById({
-      _id: req.params.id,
+      _id: req.params.plantId,
     });
     res.status(200).json(plant);
   } catch (error) {
@@ -104,6 +116,10 @@ exports.addPlant = async (req, res) => {
     res.status(500).json({ error: error.message });
     return;
   }
+
+  console.log(newPlant);
+  //const plantLog = new plantLogModelogModel({plant._id, plantModel});
+  //plantLog.save();
 };
 
 /**
@@ -122,7 +138,7 @@ exports.updatePlant = async (req, res) => {
   //
   try {
     const plant = await plantModel.findOne({
-      _id: req.params.id,
+      _id: req.params.plantId,
       status: "active",
     });
   } catch (error) {
@@ -150,7 +166,7 @@ exports.updatePlant = async (req, res) => {
   //
   try {
     const plant = await plantModel.updateOne(
-      { _id: req.params.id },
+      { _id: req.params.plantId },
       updateData
     );
     res.status(200).json(plant);
@@ -170,7 +186,7 @@ exports.deletePlant = async (req, res) => {
   try {
     // Find and delete the plant
     const plant = await plantModel.updateOne(
-      { _id: req.params.id },
+      { _id: req.params.plantId },
       { status: "inactive" }
     );
     res.status(200).json(plant);
