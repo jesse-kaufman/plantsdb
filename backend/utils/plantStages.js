@@ -1,6 +1,12 @@
 const plantModel = require("../models/plantModel");
 const moment = require("moment");
 
+/**
+ * Returns the update db query for the specified stage and dates.
+ * @param {string} stage - The stage of the plant to update.
+ * @param {object} dates - An object containing dates relevant to the stage.
+ * @returns {object} The update db query for the specified stage and dates.
+ */
 exports.getStageData = async (stage, dates) => {
   switch (stage) {
     case "seedling":
