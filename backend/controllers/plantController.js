@@ -1,6 +1,9 @@
 const plantModel = require("../models/plantModel");
 const moment = require("moment");
-const { generatePlantId, getChangeStageData } = require("../utils/plant-stages");
+const {
+  generatePlantId,
+  getChangeStageData,
+} = require("../utils/plant-stages");
 
 /**
  * Gets an existing plant from the database
