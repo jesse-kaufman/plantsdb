@@ -150,7 +150,7 @@ exports.updatePlant = async (req, res) => {
   //
   // Gets the data to update plant stage and set dates accordingly
   //
-  if (data.stage) {
+  if (req.body.stage && req.body.stage !== plant.stage) {
     try {
       newPlant = await getChangeStageData(data);
       console.log(updateData);
