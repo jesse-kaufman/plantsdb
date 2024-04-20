@@ -155,9 +155,7 @@ exports.updatePlant = async (req, res) => {
     }
   }
 
-  //
-  // Gets the data to update plant stage and set dates accordingly
-  //
+  // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
     try {
       let dates = {
