@@ -147,6 +147,17 @@ exports.updatePlant = async (req, res) => {
     return;
   }
 
+  if (newPlant.name !== plant.name) {
+    try {
+      let plantAbbr = await generatePlantAbbr(newPlant.name);
+      newPlant.plantAbbr = plantAbbr;
+      console.log(plantAbbr);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+  }
+
   //
   // Gets the data to update plant stage and set dates accordingly
   //
