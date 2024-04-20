@@ -136,6 +136,11 @@ exports.updatePlant = async (req, res) => {
       _id: req.params.plantId,
       status: "active",
     });
+
+    if (!plant) {
+      res.status(404).json({ error: "Plant not found" });
+      return;
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
@@ -153,6 +158,8 @@ exports.updatePlant = async (req, res) => {
       return;
     }
   }
+
+  console.log(newPlant);
 
   // XXX: Update other fields here
 
