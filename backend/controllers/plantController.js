@@ -100,6 +100,19 @@ exports.addPlant = async (req, res) => {
   try {
     const plant = new plantModel(newPlant);
     await plant.save();
+
+    // Make entry in log
+    try {
+      const log = new logModel({
+        plantId: plant._id,
+        message: "Created plant",
+      });
+      await log.save();
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+      return;
+    }
+
     res.status(201).json(plant);
   } catch (error) {
     res.status(500).json({ error: error.message });
