@@ -4,17 +4,17 @@ const moment = require("moment");
 exports.getStageData = async (data) => {
   switch (data.stage) {
     case "seedling":
-      return toSeedling(data);
+      return seedling(data);
     case "veg":
-      return toVeg(data);
+      return veg(data);
     case "flower":
-      return toFlower(data);
+      return flower(data);
     case "harvest":
-      return toHarvest(data);
+      return harvest(data);
     case "cure":
-      return toCure(data);
+      return cure(data);
     case "archive":
-      return toArchive(data);
+      return archive(data);
     default:
       throw new Error("Invalid stage");
   }
@@ -25,7 +25,7 @@ exports.getStageData = async (data) => {
  * @param {object} data - The data object containing request data.
  * @returns {object} The update db query.
  */
-const toSeedling = (data) => {
+const seedling = (data) => {
   const startDate = data.startedOn
     ? moment(setData.startedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -58,7 +58,7 @@ const toSeedling = (data) => {
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-const toVeg = (data) => {
+const veg = (data) => {
   const startDate = data.vegStartedO
     ? moment(setData.vegStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -85,7 +85,7 @@ const toVeg = (data) => {
   return { $unset: unsetData, $set: setData };
 };
 
-const toFlower = (data) => {
+const flower = (data) => {
   const startDate = data.flowerStartedOn
     ? moment(setData.flowerStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -118,7 +118,7 @@ const toFlower = (data) => {
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-const toHarvest = (data) => {
+const harvest = (data) => {
   const startDate = data.harvestedOn
     ? moment(setData.harvestedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -145,7 +145,7 @@ const toHarvest = (data) => {
  * @param {object} data - The data object containing the plant document.
  * @returns {object} The updat db query.
  */
-const toCure = (data) => {
+const cure = (data) => {
   const startDate = data.cureStartedOn
     ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -167,7 +167,7 @@ const toCure = (data) => {
  * Sets the status of the plant to "archived" and sets the archivedOn field to the current date.
  * @returns {object} The updated plant document.
  */
-const toArchive = () => {
+const archive = () => {
   const setData = {
     status: "archived",
     archivedOn: moment().format("YYYY-MM-DD"),
