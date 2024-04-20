@@ -15,8 +15,8 @@ exports.getLog = async (req, res) => {
       _id: req.params.logId,
     });
     res.status(200).json(log);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };
@@ -46,8 +46,8 @@ exports.getLogs = async (req, res) => {
       plantId: plantId,
     });
     res.status(200).json(logs);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };
@@ -73,8 +73,8 @@ exports.addLog = async (req, res) => {
     const log = new logModel(newLog);
     await log.save();
     res.status(201).json(log);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };

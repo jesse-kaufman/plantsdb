@@ -19,8 +19,8 @@ exports.getPlant = async (req, res) => {
       _id: req.params.plantId,
     });
     res.status(200).json(plant);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };
@@ -48,8 +48,8 @@ exports.getPlants = async (req, res) => {
   try {
     const plants = await plantModel.find({ status: { $in: statuses } });
     res.status(200).json(plants);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };
@@ -77,8 +77,8 @@ exports.addPlant = async (req, res) => {
       res.status(409).json({ error: "A plant with that name already exists" });
       return;
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 
@@ -88,8 +88,8 @@ exports.addPlant = async (req, res) => {
   if (!newPlant.plantId) {
     try {
       newPlant.plantId = await generatePlantId(newPlant.name, plantModel);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
       return;
     }
   }
@@ -108,14 +108,14 @@ exports.addPlant = async (req, res) => {
         message: "Created plant",
       });
       await log.save();
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
       return;
     }
 
     res.status(201).json(plant);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 
@@ -143,8 +143,8 @@ exports.updatePlant = async (req, res) => {
       _id: req.params.plantId,
       status: "active",
     });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 
@@ -155,8 +155,8 @@ exports.updatePlant = async (req, res) => {
     try {
       updateData = await getChangeStageData(data);
       console.log(updateData);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
       return;
     }
   }
@@ -172,8 +172,8 @@ exports.updatePlant = async (req, res) => {
       updateData
     );
     res.status(200).json(plant);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };
@@ -192,8 +192,8 @@ exports.deletePlant = async (req, res) => {
       { status: "inactive" }
     );
     res.status(200).json(plant);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
     return;
   }
 };
