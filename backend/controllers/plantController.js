@@ -12,17 +12,6 @@ const { generatePlantId } = require("../utils/plants");
  */
 exports.getPlant = async (req, res) => {
   try {
-    const log = new logModel({
-      plantId: req.params.plantId,
-      message: "Viewed plant",
-    });
-    await log.save();
-  } catch (err) {
-    res.status(500).json({ error: error.message });
-    return;
-  }
-
-  try {
     //
     // Find the plant
     //
