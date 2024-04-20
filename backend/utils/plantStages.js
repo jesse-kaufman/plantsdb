@@ -1,7 +1,7 @@
 const plantModel = require("../models/plantModel");
 const moment = require("moment");
 
-exports.getChangeStageData = async (data) => {
+exports.getStageData = async (data) => {
   switch (data.stage) {
     case "seedling":
       return toSeedling(data);

@@ -1,6 +1,6 @@
 const plantModel = require("../models/plantModel");
 const logModel = require("../models/logModel");
-const { getChangeStageData } = require("../utils/plantStages");
+const { getStageData } = require("../utils/plantStages");
 const { generatePlantId } = require("../utils/plants");
 
 /**
