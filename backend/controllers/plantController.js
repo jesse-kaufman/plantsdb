@@ -132,7 +132,7 @@ exports.addPlant = async (req, res) => {
 exports.updatePlant = async (req, res) => {
   // XXX: Validate the input here
   const data = req.body;
-  let updateData = {};
+  let newPlant = {};
 
   //
   // Find the plant
@@ -152,7 +152,7 @@ exports.updatePlant = async (req, res) => {
   //
   if (data.stage) {
     try {
-      updateData = await getChangeStageData(data);
+      newPlant = await getChangeStageData(data);
       console.log(updateData);
     } catch (err) {
       res.status(500).json({ error: err.message });
