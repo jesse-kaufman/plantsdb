@@ -1,20 +1,20 @@
 const plantModel = require("../models/plantModel");
 const moment = require("moment");
 
-exports.getStageData = async (data) => {
-  switch (data.stage) {
+exports.getStageData = async (stage, dates) => {
+  switch (stage) {
     case "seedling":
-      return seedling(data);
+      return seedling(datesdates);
     case "veg":
-      return veg(data);
+      return veg(dates);
     case "flower":
-      return flower(data);
+      return flower(dates);
     case "harvest":
-      return harvest(data);
+      return harvest(dates);
     case "cure":
-      return cure(data);
+      return cure(dates);
     case "archive":
-      return archive(data);
+      return archive(dates);
     default:
       throw new Error("Invalid stage");
   }
