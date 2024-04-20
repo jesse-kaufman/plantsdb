@@ -67,7 +67,7 @@ exports.addLog = async (req, res) => {
   };
 
   //
-  // Save the new plant log entry
+  // Save the new log entry
   //
   try {
     const log = new logModel(newLog);
