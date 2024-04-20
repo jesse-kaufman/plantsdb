@@ -125,8 +125,8 @@ exports.addPlant = async (req, res) => {
 exports.updatePlant = async (req, res) => {
   const data = req.body;
   let plant = null;
+  let changeList = [];
   let newPlant = req.body;
-  let updatedPropsMsgs = [];
 
   //
   // Find the plant
@@ -171,8 +171,6 @@ exports.updatePlant = async (req, res) => {
 
       // Add data to newPlant object
       newPlant = { ...stageData };
-      // Update messages for log
-      updatedPropsMsgs.push("Stage changed to " + newPlant.stage);
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -194,18 +192,8 @@ exports.updatePlant = async (req, res) => {
       newPlant
     );
 
-    // Make entry in log
-    try {
-      addLogEntry(
-        req.params.plantId,
-        "Updated plant:\n• " + updatedPropsMsgs.join("\n• ")
-      );
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-
-    res.status(200).json(plant);
+      "Updated plant:\n• " + changeList.join("\n• ")
+    );
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
