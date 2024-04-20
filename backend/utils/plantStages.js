@@ -4,7 +4,7 @@ const moment = require("moment");
 exports.getStageData = async (stage, dates) => {
   switch (stage) {
     case "seedling":
-      return seedling(datesdates);
+      return seedling(dates);
     case "veg":
       return veg(dates);
     case "flower":
@@ -25,8 +25,8 @@ exports.getStageData = async (stage, dates) => {
  * @param {object} data - The data object containing request data.
  * @returns {object} The update db query.
  */
-const seedling = (data) => {
-  const startDate = data.startedOn
+const seedling = (dates) => {
+  const startDate = dates.startedOn
     ? moment(setData.startedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
@@ -55,11 +55,11 @@ const seedling = (data) => {
 
 /**
  * Changes the stage of the plant to "veg".
- * @param {object} data - The data object containing the request data.
+ * @param {object} dates Object containing dates
  * @returns {object} The update db query.
  */
-const veg = (data) => {
-  const startDate = data.vegStartedO
+const veg = (dates) => {
+  const startDate = dates.vegStartedO
     ? moment(setData.vegStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
@@ -85,8 +85,8 @@ const veg = (data) => {
   return { $unset: unsetData, $set: setData };
 };
 
-const flower = (data) => {
-  const startDate = data.flowerStartedOn
+const flower = (dates) => {
+  const startDate = dates.flowerStartedOn
     ? moment(setData.flowerStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
@@ -118,8 +118,8 @@ const flower = (data) => {
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-const harvest = (data) => {
-  const startDate = data.harvestedOn
+const harvest = (dates) => {
+  const startDate = dates.harvestedOn
     ? moment(setData.harvestedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
@@ -145,8 +145,8 @@ const harvest = (data) => {
  * @param {object} data - The data object containing the plant document.
  * @returns {object} The updat db query.
  */
-const cure = (data) => {
-  const startDate = data.cureStartedOn
+const cure = (dates) => {
+  const startDate = dates.cureStartedOn
     ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
