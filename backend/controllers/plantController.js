@@ -123,7 +123,6 @@ exports.addPlant = async (req, res) => {
  * @param {*} res The response object
  */
 exports.updatePlant = async (req, res) => {
-  const data = req.body;
   let plant = null;
   let changeList = [];
   let newPlant = req.body;
@@ -150,7 +149,6 @@ exports.updatePlant = async (req, res) => {
     try {
       let plantAbbr = await generatePlantAbbr(newPlant.name);
       newPlant.plantAbbr = plantAbbr;
-      console.log(plantAbbr);
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
