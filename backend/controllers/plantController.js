@@ -185,11 +185,17 @@ exports.updatePlant = async (req, res) => {
   // Update the plant
   //
   try {
-    const plant = await plantModel.updateOne(
-      { _id: req.params.plantId },
-      newPlant
-    );
+    await plantModel.updateOne({ _id: req.params.plantId }, newPlant);
+    res.status(200).json(newPlant);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    return;
+  }
 
+  // Make entry in log
+  try {
+    addLogEntry(
+      req.params.plantId,
       "Updated plant:\n• " + changeList.join("\n• ")
     );
   } catch (err) {
