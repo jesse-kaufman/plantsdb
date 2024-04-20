@@ -114,10 +114,6 @@ exports.addPlant = async (req, res) => {
     res.status(500).json({ error: err.message });
     return;
   }
-
-  console.log(newPlant);
-  //const plantLog = new plantLogModelogModel({plant._id, plantModel});
-  //plantLog.save();
 };
 
 /**
