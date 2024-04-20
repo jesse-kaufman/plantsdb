@@ -1,7 +1,7 @@
 const moment = require("moment");
 const plantModel = require("../models/plantModel");
 const logModel = require("../models/logModel");
-const { getChangeStageData } = require("../utils/plant-stages");
+const { getChangeStageData } = require("../utils/plantStages");
 const { generatePlantId } = require("../utils/plants");
 
 /**

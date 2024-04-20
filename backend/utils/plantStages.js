@@ -25,7 +25,7 @@ exports.getChangeStageData = async (data) => {
  * @param {object} data - The data object containing request data.
  * @returns {object} The update db query.
  */
-function toSeedling(data) {
+const toSeedling = (data) => {
   const startDate = data.startedOn
     ? moment(setData.startedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -51,14 +51,14 @@ function toSeedling(data) {
   };
 
   return { $unset: unsetData, $set: setData };
-}
+};
 
 /**
  * Changes the stage of the plant to "veg".
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-function toVeg(data) {
+const toVeg = (data) => {
   const startDate = data.vegStartedO
     ? moment(setData.vegStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -83,9 +83,9 @@ function toVeg(data) {
   };
 
   return { $unset: unsetData, $set: setData };
-}
+};
 
-function toFlower(data) {
+const toFlower = (data) => {
   const startDate = data.flowerStartedOn
     ? moment(setData.flowerStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -109,7 +109,7 @@ function toFlower(data) {
   };
 
   return { $unset: unsetData, $set: setData };
-}
+};
 
 /**
  * Sets the stage of the plant to "harvest" and sets the harvestedOn field
@@ -118,7 +118,7 @@ function toFlower(data) {
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-function toHarvest(data) {
+const toHarvest = (data) => {
   const startDate = data.harvestedOn
     ? moment(setData.harvestedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -136,7 +136,7 @@ function toHarvest(data) {
   };
 
   return { $unset: unsetData, $set: setData };
-}
+};
 
 /**
  * Sets the stage of the plant to "cure" and sets the cureStartedOn field to the
@@ -145,7 +145,7 @@ function toHarvest(data) {
  * @param {object} data - The data object containing the plant document.
  * @returns {object} The updat db query.
  */
-function toCure(data) {
+const toCure = (data) => {
   const startDate = data.cureStartedOn
     ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -161,17 +161,17 @@ function toCure(data) {
   };
 
   return { $set: setData };
-}
+};
 
 /**
  * Sets the status of the plant to "archived" and sets the archivedOn field to the current date.
  * @returns {object} The updated plant document.
  */
-function toArchive() {
+const toArchive = () => {
   const setData = {
     status: "archived",
     archivedOn: moment().format("YYYY-MM-DD"),
   };
 
   return { $set: setData };
-}
+};
