@@ -34,7 +34,7 @@ exports.getPlant = async (req, res) => {
  */
 exports.getPlants = async (req, res) => {
   // Default to only showing active plants
-  var statuses = ["active"];
+  let statuses = ["active"];
 
   //
   // Filter by statuses requested
@@ -63,7 +63,7 @@ exports.getPlants = async (req, res) => {
  */
 exports.addPlant = async (req, res) => {
   // XXX: Validate the input here
-  var newPlant = req.body;
+  let newPlant = req.body;
 
   //
   // Check if a plant with the same name already exists
@@ -116,8 +116,8 @@ exports.addPlant = async (req, res) => {
  */
 exports.updatePlant = async (req, res) => {
   // XXX: Validate the input here
-  var data = req.body;
-  var updateData = {};
+  const data = req.body;
+  let updateData = {};
 
   //
   // Find the plant

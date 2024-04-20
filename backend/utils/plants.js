@@ -2,7 +2,7 @@ const plantModel = require("../models/plantModel");
 const moment = require("moment");
 
 exports.generatePlantId = async (name) => {
-  var newPlantId = "";
+  let newPlantId = "";
   name.split(" ").forEach((part) => {
     newPlantId += part.charAt(0).toUpperCase();
   });
@@ -18,4 +18,3 @@ exports.generatePlantId = async (name) => {
     throw new Error(error.message);
   }
 };
-
