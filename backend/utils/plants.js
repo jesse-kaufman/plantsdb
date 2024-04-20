@@ -1,5 +1,4 @@
 const plantModel = require("../models/plantModel");
-const moment = require("moment");
 
 exports.generatePlantId = async (name) => {
   let newPlantId = "";
