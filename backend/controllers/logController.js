@@ -36,14 +36,12 @@ exports.getLogs = async (req, res) => {
     return;
   }
 
-  const plantId = req.params.plantId;
-  
   //
   // Get all matching plants
   //
   try {
     const logs = await logModel.find({
-      plantId: plantId,
+      plantId: req.params.plantId,
     });
     res.status(200).json(logs);
   } catch (err) {
