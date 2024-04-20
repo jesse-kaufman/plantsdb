@@ -103,11 +103,7 @@ exports.addPlant = async (req, res) => {
 
     // Make entry in log
     try {
-      const log = new logModel({
-        plantId: plant._id,
-        message: "Created plant",
-      });
-      await log.save();
+      addLogEntry(plant._id, "Created new plant");
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -133,13 +129,14 @@ exports.addPlant = async (req, res) => {
 exports.updatePlant = async (req, res) => {
   // XXX: Validate the input here
   const data = req.body;
-  let newPlant = {};
+  let plant = {};
+  let newPlant = req.body;
 
   //
   // Find the plant
   //
   try {
-    const plant = await plantModel.findOne({
+    plant = await plantModel.findOne({
       _id: req.params.plantId,
       status: "active",
     });
@@ -153,8 +150,8 @@ exports.updatePlant = async (req, res) => {
   //
   if (req.body.stage && req.body.stage !== plant.stage) {
     try {
-      newPlant = await getStageData(data);
-      console.log(updateData);
+      let stageData = await getStageData(data);
+      newPlant = { ...stageData };
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -169,8 +166,17 @@ exports.updatePlant = async (req, res) => {
   try {
     const plant = await plantModel.updateOne(
       { _id: req.params.plantId },
-      updateData
+      newPlant
     );
+
+    // Make entry in log
+    try {
+      addLogEntry(req.params.plantId, "Updated plant");
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+
     res.status(200).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
