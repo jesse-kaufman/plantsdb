@@ -27,9 +27,8 @@ exports.getPlant = async (req, res) => {
     //
     // Find the plant
     //
-    const plant = await plantModel.findById({
-      _id: req.params.plantId,
-    });
+    const plant = await getPlantById(req.params.plantId, status);
+
     res.status(200).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
