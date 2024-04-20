@@ -78,21 +78,18 @@ exports.addLog = async (req, res) => {
 };
 
 /**
- * Deletes an existing log from the database
+ * Returns an HTTP 405: "Method not allowed" error message
  *
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.deleteLog = async (req, res) => {
-  try {
-    // Find and delete the plant
-    const log = await logModel.updateOne(
-      { _id: req.params.logId },
-      { status: "inactive" }
-    );
-    res.status(200).json(log);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
+exports.notAllowed = async (req, res) => {
+  switch (req.method) {
+    case "DELETE":
+      res.status(405).json({ error: "Deleting log entries is prohibited." });
+      return;
+    case "PUT":
+      res.status(405).json({ error: "Updating log entries is prohibited." });
+      return;
   }
 };

@@ -6,8 +6,9 @@ const logController = require("../controllers/logController");
 router
   // Log routes
   .get("/", logController.getLogs)
-  .get("/:plantId", logController.getLog)
-  .post("/", logController.addLog);
-//.delete("/:plantId", logController.deleteLog);
+  .get("/:logId", logController.getLog)
+  .post("/", logController.addLog)
+  .put("/:logId", logController.notAllowed)
+  .delete("/:logId", logController.notAllowed);
 
 module.exports = router;
