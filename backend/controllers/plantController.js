@@ -179,31 +179,10 @@ exports.updatePlant = async (req, res) => {
     }
   }
 
-  if (newPlant.vegStartedOn && newPlant.vegStartedOn !== plant.vegStartedOn) {
-    updatedPropsMsgs.push("Veg start date");
-  }
-
-  if (
-    newPlant.flowerStartedOn &&
-    newPlant.flowerStartedOn !== plant.flowerStartedOn
-  ) {
-    updatedPropsMsgs.push("Flower start date");
-  }
-
-  if (
-    newPlant.cureStartedOn &&
-    newPlant.cureStartedOn !== plant.cureStartedOn
-  ) {
-    updatedPropsMsgs.push("Cure start date");
-  }
-  if (newPlant.harvestedOn && newPlant.harvestedOn !== plant.harvestedOn) {
-    updatedPropsMsgs.push("Harvested on date");
-  }
-  if (newPlant.name && newPlant.name !== plant.name) {
-    updatedPropsMsgs.push("Plant name");
-  }
-  if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
-    updatedPropsMsgs.push("Plant abbreviation");
+  // If we have no changes to make, return immediately
+  if (changeList.length === 0) {
+    res.status(200).json(newPlant);
+    return;
   }
 
   //
