@@ -152,7 +152,7 @@ exports.updatePlant = async (req, res) => {
   //
   if (req.body.stage && req.body.stage !== plant.stage) {
     try {
-      newPlant = await getChangeStageData(data);
+      newPlant = await getStageData(data);
       console.log(updateData);
     } catch (err) {
       res.status(500).json({ error: err.message });
