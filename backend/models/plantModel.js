@@ -3,7 +3,8 @@ const moment = require("moment");
 const {
   getValidPlantStatuses,
   getValidPlantSources,
-} = require("../utils/plants");
+  getValidPlantStages,
+} = require("../utils/plantEnums");
 
 const plantSchema = new mongoose.Schema(
   {
@@ -32,7 +33,7 @@ const plantSchema = new mongoose.Schema(
     stage: {
       type: String,
       required: true,
-      enum: ["seedling", "veg", "flower", "cure"],
+      enum: getValidPlantStages(),
       default: "seedling",
     },
     startedOn: {
