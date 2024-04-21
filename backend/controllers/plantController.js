@@ -14,10 +14,9 @@ const { generatePlantAbbr, getPlantById } = require("../utils/plants");
  */
 exports.getPlant = async (req, res) => {
   let status = "active";
-
   const statuses = getValidPlantStatuses();
 
-  if (req.query.status in statuses) {
+  if (req.query.status && req.query.status in statuses) {
     status = req.query.status;
   }
 
