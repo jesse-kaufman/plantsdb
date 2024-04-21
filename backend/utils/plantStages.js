@@ -1,4 +1,3 @@
-const plantModel = require("../models/plantModel");
 const moment = require("moment");
 
 /**
@@ -7,7 +6,7 @@ const moment = require("moment");
  * @param {object} dates - An object containing dates relevant to the stage.
  * @returns {object} The update db query for the specified stage and dates.
  */
-exports.getStageData = async (stage, dates) => {
+exports.getNewStageDates = (stage, dates) => {
   switch (stage) {
     case "seedling":
       return seedling(dates);

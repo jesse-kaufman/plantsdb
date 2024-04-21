@@ -69,7 +69,6 @@ exports.getPlants = async (req, res) => {
  * @param {*} res The response object
  */
 exports.addPlant = async (req, res) => {
-  // XXX: Validate the input here
   let newPlant = req.body;
 
   //
