@@ -9,15 +9,25 @@ const plantModel = require("../models/plantModel");
 exports.generatePlantAbbr = async (name) => {
   let newPlantAbbr = "";
   name.split(" ").forEach((part) => {
-    newPlantAbbr += part.charAt(0).toUpperCase();
+    if (/\d.*$/.test(part)) {
+      // Use entire part if it is numeric
+      newPlantAbbr += part;
+    } else {
+      // Use only first letter of non-numeric parts
+      newPlantAbbr += part.charAt(0).toUpperCase();
+    }
   });
+
   newPlantAbbr = newPlantAbbr.trim();
 
+  // Count existing plants with same plantId base
   try {
     const count = await plantModel.countDocuments({
       status: "active",
       plantId: { $regex: "^" + newPlantAbbr + "\\-\\d" },
     });
+
+    // Add 1 to the count of matching plants to create suffix
     return newPlantAbbr + "-" + (count + 1);
   } catch (err) {
     throw new Error(err.message);

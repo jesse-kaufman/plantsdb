@@ -1,12 +1,10 @@
 const plantModel = require("../models/plantModel");
-const logModel = require("../models/logModel");
-const { getStageData } = require("../utils/plantStages");
 const {
-  generatePlantAbbr,
-  getPlantById,
   getValidPlantStatuses,
-} = require("../utils/plants");
+  getNewStageDates,
+} = require("../utils/plantStages");
 const { addLogEntry } = require("../utils/log");
+const { generatePlantAbbr, getPlantById } = require("../utils/plants");
 
 /**
  * Gets an existing plant from the database
