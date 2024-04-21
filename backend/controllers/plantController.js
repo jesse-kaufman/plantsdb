@@ -154,6 +154,9 @@ exports.updatePlant = async (req, res) => {
 
   // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
+    plant.stage = newPlant.stage;
+    changeList.push("Stage changed to " + newPlant.stage);
+
     try {
       let dates = {
         vegStartedOn: newPlant.vegStartedOn,
@@ -161,28 +164,103 @@ exports.updatePlant = async (req, res) => {
         cureStartedOn: newPlant.cureStartedOn,
         harvestedOn: newPlant.harvestedOn,
       };
-      let stageData = await getStageData(newPlant.stage, dates);
 
+      // Get dates based on new stage and request body
+      let stageDates = getNewStageDates(newPlant.stage, dates);
+      //console.log("Stage dates:");
+      //console.log(stageDates);
       // Add data to newPlant object
-      newPlant = { ...stageData };
+      newPlant = {
+        ...newPlant,
+        ...stageDates,
+      };
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
     }
   }
 
+  // Check if plant name has changed
+  if (newPlant.name !== plant.name) {
+    plant.name = newPlant.name;
+    changeList.push("Plant name");
+    try {
+      // Generate new plantId from new name
+      plant.plantAbbr = await generatePlantAbbr(newPlant.name);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+  }
+
+  // Plant stage changed?
+  if (newPlant.stage && newPlant.stage !== plant.stage) {
+    plant.stage = newPlant.stage;
+    changeList.push("Stage changed to " + newPlant.stage);
+  }
+
+  // Veg start date changed?
+  if (newPlant.vegStartedOn !== plant.vegStartedOn) {
+    if (newPlant.vegStartedOn !== null || plant.vegStartedOn) {
+      plant.vegStartedOn = undefined;
+
+      if (newPlant.vegStartedOn) {
+        plant.vegStartedOn = newPlant.vegStartedOn;
+      }
+      changeList.push("Veg start date");
+    }
+  }
+
+  // Flower start date changed?
+  if (newPlant.flowerStartedOn !== plant.flowerStartedOn) {
+    if (newPlant.flowerStartedOn !== null || plant.flowerStartedOn) {
+      plant.flowerStartedOn = undefined;
+
+      if (newPlant.flowerStartedOn) {
+        plant.flowerStartedOn = newPlant.flowerStartedOn;
+      }
+      changeList.push("Flower start date");
+    }
+  }
+
+  // Cure start date changed?
+  if (newPlant.cureStartedOn !== plant.cureStartedOn) {
+    if (newPlant.cureStartedOn !== null || plant.cureStartedOn) {
+      plant.cureStartedOn = undefined;
+
+      if (newPlant.cureStartedOn) {
+        plant.cureStartedOn = newPlant.cureStartedOn;
+      }
+      changeList.push("Cure start date");
+    }
+  }
+
+  // Harvested on date changed?
+  if (newPlant.harvestedOn !== plant.harvestedOn) {
+    if (newPlant.harvestedOn !== null || plant.harvestedOn) {
+      plant.harvestedOn = undefined;
+
+      if (newPlant.harvestedOn) {
+        plant.harvestedOn = newPlant.harvestedOn;
+      }
+      changeList.push("Harvested on date");
+    }
+  }
+
+  console.log(changeList);
+
   // If we have no changes to make, return immediately
   if (changeList.length === 0) {
-    res.status(200).json(newPlant);
+    res.status(200).json(plant);
     return;
   }
 
   //
-  // Update the plant
+  // Save the plant
   //
   try {
-    await plantModel.updateOne({ _id: req.params.plantId }, newPlant);
-    res.status(200).json(newPlant);
+    plant.save();
+    res.status(200).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;

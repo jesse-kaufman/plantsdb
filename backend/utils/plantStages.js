@@ -40,22 +40,15 @@ const seedling = (dates) => {
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
-  const setData = {
-    stage: "seedling",
+  return {
     startedOn: startDate,
     potentialHarvest: potentialHarvest,
+    vegStartedOn: null,
+    flowerStartedOn: null,
+    harvestedOn: null,
+    cureStartedOn: null,
+    archivedOn: null,
   };
-
-  // Unset veg, flower, harvested, and cure start dates
-  const unsetData = {
-    vegStartedOn: "",
-    flowerStartedOn: "",
-    harvestedOn: "",
-    cureStartedOn: "",
-    archivedOn: "",
-  };
-
-  return { $unset: unsetData, $set: setData };
 };
 
 /**
@@ -73,21 +66,14 @@ const veg = (dates) => {
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
-  const setData = {
-    stage: "veg",
-    vegStartedOn: startDate,
+  return {
     potentialHarvest: potentialHarvest,
+    vegStartedOn: startDate,
+    flowerStartedOn: null,
+    harvestedOn: null,
+    cureStartedOn: null,
+    archivedOn: null,
   };
-
-  // Unset flower, harvested, and cure start dates
-  const unsetData = {
-    flowerStartedOn: "",
-    harvestedOn: "",
-    cureStartedOn: "",
-    archivedOn: "",
-  };
-
-  return { $unset: unsetData, $set: setData };
 };
 
 const flower = (dates) => {
@@ -100,20 +86,13 @@ const flower = (dates) => {
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
-  const setData = {
-    stage: "flower",
-    flowerStartedOn: startDate,
+  return {
     potentialHarvest: potentialHarvest,
+    flowerStartedOn: startDate,
+    harvestedOn: null,
+    cureStartedOn: null,
+    archivedOn: null,
   };
-
-  // Unset harvest and cure dates
-  const unsetData = {
-    harvestedOn: "",
-    cureStartedOn: "",
-    archivedOn: "",
-  };
-
-  return { $unset: unsetData, $set: setData };
 };
 
 /**
@@ -128,19 +107,12 @@ const harvest = (dates) => {
     ? moment(setData.harvestedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
-  const setData = {
-    stage: "harvest",
+  return {
+    potentialHarvest: null,
     harvestedOn: startDate,
+    cureStartedOn: null,
+    archivedOn: null,
   };
-
-  // Unset potential harvest and cure start dates
-  const unsetData = {
-    potentialHarvest: "",
-    cureStartedOn: "",
-    archivedOn: "",
-  };
-
-  return { $unset: unsetData, $set: setData };
 };
 
 /**
@@ -155,28 +127,17 @@ const cure = (dates) => {
     ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
-  const setData = {
-    stage: "cure",
+  return {
     cureStartedOn: startDate,
+    archivedOn: null,
   };
-
-  // Unset archived date
-  const unsetData = {
-    archivedOn: "",
-  };
-
-  return { $set: setData, $unset: unsetData };
 };
 
 /**
  * Sets the status of the plant to "archived" and sets the archivedOn field to the current date.
  * @returns {object} The updated plant document.
  */
-const archive = () => {
-  const setData = {
-    status: "archived",
-    archivedOn: moment().format("YYYY-MM-DD"),
-  };
-
-  return { $set: setData };
-};
+const archive = () => ({
+  status: "archived",
+  archivedOn: moment().format("YYYY-MM-DD"),
+});
