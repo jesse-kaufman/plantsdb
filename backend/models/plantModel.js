@@ -42,9 +42,14 @@ const plantSchema = new mongoose.Schema(
     },
     vegStartedOn: {
       type: Date,
+      required: [
+        () => ["veg", "flower", "harvested", "cure"].includes(this.stage),
+        "required if stage is veg, flower, harvested, or cure",
+      ],
     },
     flowerStartedOn: {
       type: Date,
+      required: () => ["flower", "cure"].includes(this.stage),
     },
     potentialHarvest: {
       type: Date,
@@ -54,12 +59,15 @@ const plantSchema = new mongoose.Schema(
     },
     harvestedOn: {
       type: Date,
+      required: () => ["harvested", "cure"].includes(this.stage),
     },
     cureStartedOn: {
       type: Date,
+      required: () => this.stage === "cure",
     },
     archivedOn: {
       type: Date,
+      required: () => this.status === "archived",
     },
   },
   { timestamps: true }
