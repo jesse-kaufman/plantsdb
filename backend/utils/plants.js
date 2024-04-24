@@ -1,39 +1,5 @@
 const plantModel = require("../models/plantModel");
 
-/**
- * Generates a unique plant abbreviation based on the given plant name.
- *
- * @param {string} name - The name of the plant.
- * @returns {string} The unique plant abbreviation.
- */
-exports.generatePlantAbbr = async (name) => {
-  let newPlantAbbr = "";
-  name.split(" ").forEach((part) => {
-    if (/\d.*$/.test(part)) {
-      // Use entire part if it is numeric
-      newPlantAbbr += part;
-    } else {
-      // Use only first letter of non-numeric parts
-      newPlantAbbr += part.charAt(0).toUpperCase();
-    }
-  });
-
-  newPlantAbbr = newPlantAbbr.trim();
-
-  // Count existing plants with same plantId base
-  try {
-    const count = await plantModel.countDocuments({
-      status: "active",
-      plantId: { $regex: "^" + newPlantAbbr + "\\-\\d" },
-    });
-
-    // Add 1 to the count of matching plants to create suffix
-    return newPlantAbbr + "-" + (count + 1);
-  } catch (err) {
-    throw new Error(err.message);
-  }
-};
-
 exports.getPlantById = async (plantId, status = "active") => {
   try {
     let query = {
