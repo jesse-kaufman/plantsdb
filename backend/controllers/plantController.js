@@ -2,7 +2,7 @@ const plantModel = require("../models/plantModel");
 const { getNewStageDates } = require("../utils/plantStages");
 const { getValidPlantStatuses } = require("../utils/plantEnums");
 const { addLogEntry } = require("../utils/log");
-const { generatePlantAbbr, getPlantById } = require("../utils/plants");
+const { getPlantById } = require("../utils/plants");
 
 /**
  * Gets an existing plant from the database
@@ -184,7 +184,7 @@ exports.updatePlant = async (req, res) => {
     changeList.push("Plant name");
     try {
       // Generate new plantId from new name
-      plant.plantAbbr = await generatePlantAbbr(newPlant.name);
+      await plant.generatePlantAbbr();
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
