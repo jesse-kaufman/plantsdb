@@ -132,6 +132,9 @@ exports.updatePlant = async (req, res) => {
     return;
   }
 
+  // Fill in missing properties in newPlant with ones from the database
+  newPlant = { ...plant.toJSON(), ...newPlant };
+
   // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
     plant.stage = newPlant.stage;
