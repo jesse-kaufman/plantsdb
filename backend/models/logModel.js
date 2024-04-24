@@ -11,9 +11,13 @@ const logSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    level: {
+      type: String,
+      enum: ["info", "warn", "error"],
+      default: "info",
+    },
   },
   { timestamps: true }
 );
 
-const logModel = mongoose.model("Logs", logSchema);
-module.exports = logModel;
+module.exports = mongoose.model("Logs", logSchema);

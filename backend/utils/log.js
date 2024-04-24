@@ -1,13 +1,22 @@
 const logModel = require("../models/logModel");
 
-exports.addLogEntry = async (plantId, message) => {
-  try {
-    const log = new logModel({
-      plantId: plantId,
-      message: message,
-    });
-    await log.save();
-  } catch (err) {
-    throw new Error(err.message);
-  }
+exports.logError = (plantId, message) => {
+  exports.addLogEntry(plantId, message, "error");
+};
+
+exports.logWarn = (plantId, message) => {
+  exports.addLogEntry(plantId, message, "warn");
+};
+
+exports.logInfo = (plantId, message) => {
+  exports.addLogEntry(plantId, message);
+};
+
+exports.addLogEntry = async (plantId, message, level = "info") => {
+  const log = new logModel({
+    plantId: plantId,
+    message: message,
+    level: level,
+  });
+  await log.save();
 };
