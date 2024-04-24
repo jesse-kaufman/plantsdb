@@ -51,7 +51,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
   - [x] Set required dates based on plant stage
   - [ ] Validate stage start dates in relation to each other
 
-**Other Planned Features:**
+### Other Planned Features
 
 - **Plant Journal:**
   - [ ] Add support for journal entry creation
