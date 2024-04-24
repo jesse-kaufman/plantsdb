@@ -13,7 +13,7 @@ exports.validatePlantId = async (plantId) => {
 exports.validatePlantName = async (plantName) => {
   const count = await plantModel.countDocuments({
     status: "active",
-    name: name.trim(),
+    name: plantName.trim(),
   });
   if (count === 0) {
     return true;
