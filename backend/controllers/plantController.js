@@ -60,7 +60,7 @@ exports.getPlants = async (req, res) => {
  * @param {*} res The response object
  */
 exports.addPlant = async (req, res) => {
-  let newPlant = req.body;
+  let newPlant = null;
 
   //
   // Check if a plant with the same name already exists
@@ -68,7 +68,7 @@ exports.addPlant = async (req, res) => {
   try {
     const plant = await plantModel.findOne({
       status: "active",
-      name: newPlant.name,
+      name: req.body.name,
     });
 
     if (plant) {
@@ -81,33 +81,22 @@ exports.addPlant = async (req, res) => {
   }
 
   //
-  // If plant name abbreviation is not provided, generate one
-  //
-  if (!newPlant.plantAbbr) {
-    try {
-      newPlant.plantAbbr = await generatePlantAbbr(newPlant.name, plantModel);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-  }
-
-  //
-  // Save the new plant
+  // Create new plant object from data sent
   //
   try {
-    const plant = new plantModel(newPlant);
+    newPlant = new plantModel(req.body);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    return;
+  }
+
+  // If plant name abbreviation is not provided, generate one
+  if (!req.body.plantAbbr) {
+    await newPlant.generatePlantAbbr();
+  }
+
+  try {
     await plant.save();
-
-    // Make entry in log
-    try {
-      addLogEntry(plant._id, "Created new plant");
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-
-    res.status(201).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
@@ -149,11 +138,19 @@ exports.updatePlant = async (req, res) => {
     changeList.push("Stage changed to " + newPlant.stage);
 
     try {
-      let dates = {
-        vegStartedOn: newPlant.vegStartedOn,
-        flowerStartedOn: newPlant.flowerStartedOn,
-        cureStartedOn: newPlant.cureStartedOn,
-        harvestedOn: newPlant.harvestedOn,
+      const dates = {
+        vegStartedOn: newPlant.vegStartedOn
+          ? newPlant.vegStartedOn
+          : plant.vegStartedOn,
+        flowerStartedOn: newPlant.flowerStartedOn
+          ? newPlant.flowerStartedOn
+          : plant.flowerStartedOn,
+        cureStartedOn: newPlant.cureStartedOn
+          ? newPlant.cureStartedOn
+          : plant.cureStartedOn,
+        harvestedOn: newPlant.harvestedOn
+          ? newPlant.harvestedOn
+          : plant.harvestedOn,
       };
 
       // Get dates based on new stage and request body
@@ -192,50 +189,26 @@ exports.updatePlant = async (req, res) => {
 
   // Veg start date changed?
   if (newPlant.vegStartedOn !== plant.vegStartedOn) {
-    if (newPlant.vegStartedOn !== null || plant.vegStartedOn) {
-      plant.vegStartedOn = undefined;
-
-      if (newPlant.vegStartedOn) {
-        plant.vegStartedOn = newPlant.vegStartedOn;
-      }
-      changeList.push("Veg start date");
-    }
+    plant.vegStartedOn = newPlant.vegStartedOn;
+    changeList.push("Veg start date");
   }
 
   // Flower start date changed?
   if (newPlant.flowerStartedOn !== plant.flowerStartedOn) {
-    if (newPlant.flowerStartedOn !== null || plant.flowerStartedOn) {
-      plant.flowerStartedOn = undefined;
-
-      if (newPlant.flowerStartedOn) {
-        plant.flowerStartedOn = newPlant.flowerStartedOn;
-      }
-      changeList.push("Flower start date");
-    }
+    plant.flowerStartedOn = newPlant.flowerStartedOn;
+    changeList.push("Flower start date");
   }
 
   // Cure start date changed?
   if (newPlant.cureStartedOn !== plant.cureStartedOn) {
-    if (newPlant.cureStartedOn !== null || plant.cureStartedOn) {
-      plant.cureStartedOn = undefined;
-
-      if (newPlant.cureStartedOn) {
-        plant.cureStartedOn = newPlant.cureStartedOn;
-      }
-      changeList.push("Cure start date");
-    }
+    plant.cureStartedOn = newPlant.cureStartedOn;
+    changeList.push("Cure start date");
   }
 
   // Harvested on date changed?
   if (newPlant.harvestedOn !== plant.harvestedOn) {
-    if (newPlant.harvestedOn !== null || plant.harvestedOn) {
-      plant.harvestedOn = undefined;
-
-      if (newPlant.harvestedOn) {
-        plant.harvestedOn = newPlant.harvestedOn;
-      }
-      changeList.push("Harvested on date");
-    }
+    plant.harvestedOn = newPlant.harvestedOn;
+    changeList.push("Harvested on date");
   }
 
   console.log(changeList);
