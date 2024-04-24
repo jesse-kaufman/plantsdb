@@ -39,14 +39,7 @@ exports.getPlant = async (req, res) => {
  */
 exports.getPlants = async (req, res) => {
   // Default to only showing active plants
-  let statuses = ["active"];
-
-  //
-  // Filter by statuses requested
-  //
-  if (req.query.statuses) {
-    statuses = req.query.statuses;
-  }
+  let = req.query.statuses ? req.query.statuses : ["active"];
 
   //
   // Get all matching plants
@@ -164,9 +157,8 @@ exports.updatePlant = async (req, res) => {
       };
 
       // Get dates based on new stage and request body
-      let stageDates = getNewStageDates(newPlant.stage, dates);
-      //console.log("Stage dates:");
-      //console.log(stageDates);
+      const stageDates = getNewStageDates(newPlant.stage, dates);
+
       // Add data to newPlant object
       newPlant = {
         ...newPlant,
@@ -182,6 +174,7 @@ exports.updatePlant = async (req, res) => {
   if (newPlant.name !== plant.name) {
     plant.name = newPlant.name;
     changeList.push("Plant name");
+
     try {
       // Generate new plantId from new name
       await plant.generatePlantAbbr();
@@ -257,7 +250,7 @@ exports.updatePlant = async (req, res) => {
   // Save the plant
   //
   try {
-    plant.save();
+    await plant.save();
     res.status(200).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
