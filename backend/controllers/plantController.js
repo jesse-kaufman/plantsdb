@@ -101,6 +101,11 @@ exports.addPlant = async (req, res) => {
     res.status(500).json({ error: err.message });
     return;
   }
+
+  // Make entry in log
+  addLogEntry(plant._id, "Created new plant");
+
+  res.status(201).json(plant);
 };
 
 /**
