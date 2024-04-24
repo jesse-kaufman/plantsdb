@@ -14,6 +14,13 @@ exports.getValidPlantSources = () => ["seed", "clone"];
 
 /**
  * Returns an array of valid stages for a plant.
- * @returns {Array} An array of valid stages: ["seedling", "veg", "flower", "cure"].
+ *
+ * @returns {Array} An array of valid stages.
  */
-exports.getValidPlantStages = () => ["seedling", "veg", "flower", "cure"];
+exports.getValidPlantStages = () => [
+  "seedling",
+  "veg",
+  "flower",
+  "harvested",
+  "cure",
+];
