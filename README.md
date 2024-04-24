@@ -20,6 +20,44 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - Projected harvest date is auto-calculated and updated with each stage change
 - Automatically generates unique plant IDs if not provided
 
+### Feature Progress
+
+**Create Plants:**
+
+- [x] Basic functionality
+- [ ] Validate plant before creation _(partial—see below)_
+- [x] Add log entry when creating plant
+
+**Modify Plants:**
+
+- [x] Basic functionality
+- [ ] Validate plant before updating _(partial—see below)_
+- [x] Add log entry when updating plant
+- [ ] Add ability to update multiple plants at once
+
+**Delete Plants:**
+
+- [x] Basic functionality
+- [ ] Add log entry when deleting plant
+
+**Archive Plants:**
+
+- [x] Basic functionality
+- [ ] Add log entry when archiving plant
+
+**Plant Validation:**
+
+- [ ] Check plant name for characters outside [a-zA-Z0-9\\-]
+- [x] Set required dates based on plant stage
+- [ ] Validate stage start dates in relation to each other
+
+**Other Features:**
+
+- **Plant Journal:**
+
+  - [ ] Add ability to create journal entries
+  - [ ] Add ability to delete journal entries
+
 ---
 
 ## Plant Schema
