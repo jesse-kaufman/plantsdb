@@ -20,42 +20,41 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - Projected harvest date is auto-calculated and updated with each stage change
 - Automatically generates unique plant IDs if not provided
 
-### Feature Progress
+### Current Functionality
 
-**Create Plants:**
+- **Creating Plants:**
 
-- [x] Basic functionality
-- [ ] Validate plant before creation _(partial—see below)_
-- [x] Add log entry when creating plant
+  - [x] Basic functionality
+  - [ ] Validate plant before creation _(partial—see below)_
+  - [x] Add log entry when creating plant
 
-**Modify Plants:**
+- **Modifying Plants:**
 
-- [x] Basic functionality
-- [ ] Validate plant before updating _(partial—see below)_
-- [x] Add log entry when updating plant
-- [ ] Add ability to update multiple plants at once
+  - [x] Basic functionality
+  - [ ] Validate plant before updating _(partial—see below)_
+  - [x] Add log entry when updating plant
+  - [ ] Add ability to update multiple plants at once
 
-**Delete Plants:**
+- **Deleting Plants:**
 
-- [x] Basic functionality
-- [ ] Add log entry when deleting plant
+  - [x] Basic functionality
+  - [ ] Add log entry when deleting plant
 
-**Archive Plants:**
+- **Archiving Plants:**
 
-- [x] Basic functionality
-- [ ] Add log entry when archiving plant
+  - [x] Basic functionality
+  - [ ] Add log entry when archiving plant
 
-**Plant Validation:**
+- **Validation (applies to plant creation and modification):**
 
-- [ ] Check plant name for characters outside [a-zA-Z0-9\\-]
-- [x] Set required dates based on plant stage
-- [ ] Validate stage start dates in relation to each other
+  - [ ] Check plant name for characters outside a–z, A–Z, 0–9 and '-'
+  - [x] Set required dates based on plant stage
+  - [ ] Validate stage start dates in relation to each other
 
-**Other Features:**
+**Other Planned Features:**
 
 - **Plant Journal:**
-
-  - [ ] Add ability to create journal entries
+  - [ ] Add support for journal entry creation
   - [ ] Add ability to delete journal entries
 
 ---
