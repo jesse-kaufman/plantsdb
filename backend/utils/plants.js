@@ -1,15 +1,11 @@
 const plantModel = require("../models/plantModel");
 
 exports.getPlantById = async (plantId, status = "active") => {
-  try {
-    let query = {
-      _id: plantId,
-      status: status,
-    };
-    return await plantModel.findOne(query);
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  let query = {
+    _id: plantId,
+    status: status,
+  };
+  return await plantModel.findOne(query);
 };
 
 exports.getChangeList = (newPlant, oldPlant) => {
