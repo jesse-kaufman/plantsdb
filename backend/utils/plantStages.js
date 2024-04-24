@@ -31,23 +31,23 @@ exports.getNewStageDates = (stage, dates) => {
  * @returns {object} The update db query.
  */
 const seedling = (dates) => {
-  const startDate = dates.startedOn
-    ? moment(setData.startedOn).format("YYYY-MM-DD")
+  const startedOn = dates.startedOn
+    ? dates.startedOn
     : moment().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
-  const potentialHarvest = moment(startDate)
+  const potentialHarvest = moment(startedOn)
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
   return {
-    startedOn: startDate,
+    startedOn: startedOn,
     potentialHarvest: potentialHarvest,
-    vegStartedOn: null,
-    flowerStartedOn: null,
-    harvestedOn: null,
-    cureStartedOn: null,
-    archivedOn: null,
+    vegStartedOn: undefined,
+    flowerStartedOn: undefined,
+    harvestedOn: undefined,
+    cureStartedOn: undefined,
+    archivedOn: undefined,
   };
 };
 
@@ -57,41 +57,43 @@ const seedling = (dates) => {
  * @returns {object} The update db query.
  */
 const veg = (dates) => {
-  const startDate = dates.vegStartedO
-    ? moment(setData.vegStartedOn).format("YYYY-MM-DD")
+  const vegStartedOn = dates.vegStartedOn
+    ? dates.vegStartedOn
     : moment().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
-  const potentialHarvest = moment(startDate)
+  const potentialHarvest = moment(vegStartedOn)
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
   return {
     potentialHarvest: potentialHarvest,
-    vegStartedOn: startDate,
-    flowerStartedOn: null,
-    harvestedOn: null,
-    cureStartedOn: null,
-    archivedOn: null,
+    vegStartedOn: vegStartedOn,
+    flowerStartedOn: undefined,
+    harvestedOn: undefined,
+    cureStartedOn: undefined,
+    archivedOn: undefined,
   };
 };
 
 const flower = (dates) => {
-  const startDate = dates.flowerStartedOn
-    ? moment(setData.flowerStartedOn).format("YYYY-MM-DD")
+  // Set new flower date
+  const flowerStartedOn = dates.flowerStartedOn
+    ? dates.flowerStartedOn
     : moment().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
-  const potentialHarvest = moment(startDate)
+  const potentialHarvest = moment(flowerStartedOn)
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
   return {
     potentialHarvest: potentialHarvest,
-    flowerStartedOn: startDate,
-    harvestedOn: null,
-    cureStartedOn: null,
-    archivedOn: null,
+    vegStartedOn: dates.vegStartedOn,
+    flowerStartedOn: flowerStartedOn,
+    harvestedOn: undefined,
+    cureStartedOn: undefined,
+    archivedOn: undefined,
   };
 };
 
@@ -103,15 +105,17 @@ const flower = (dates) => {
  * @returns {object} The update db query.
  */
 const harvest = (dates) => {
-  const startDate = dates.harvestedOn
-    ? moment(setData.harvestedOn).format("YYYY-MM-DD")
+  const harvestedOn = dates.harvestedOn
+    ? dates.harvestedOn
     : moment().format("YYYY-MM-DD");
 
   return {
-    potentialHarvest: null,
-    harvestedOn: startDate,
-    cureStartedOn: null,
-    archivedOn: null,
+    potentialHarvest: undefined,
+    vegStartedOn: dates.vegStartedOn,
+    flowerStartedOn: dates.flowerStartedOn,
+    harvestedOn: harvestedOn,
+    cureStartedOn: undefined,
+    archivedOn: undefined,
   };
 };
 
@@ -123,13 +127,17 @@ const harvest = (dates) => {
  * @returns {object} The updat db query.
  */
 const cure = (dates) => {
-  const startDate = dates.cureStartedOn
+  const cureStartedOn = dates.cureStartedOn
     ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
 
   return {
-    cureStartedOn: startDate,
-    archivedOn: null,
+    potentialHarvest: undefined,
+    vegStartedOn: dates.vegStartedOn,
+    flowerStartedOn: dates.flowerStartedOn,
+    harvestedOn: dates.harvestedOn,
+    cureStartedOn: cureStartedOn,
+    archivedOn: undefined,
   };
 };
 
@@ -139,5 +147,6 @@ const cure = (dates) => {
  */
 const archive = () => ({
   status: "archived",
+  potentialHarvest: undefined,
   archivedOn: moment().format("YYYY-MM-DD"),
 });
