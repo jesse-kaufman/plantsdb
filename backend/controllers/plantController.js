@@ -1,8 +1,6 @@
 const plantModel = require("../models/plantModel");
-const {
-  getValidPlantStatuses,
-  getNewStageDates,
-} = require("../utils/plantStages");
+const { getNewStageDates } = require("../utils/plantStages");
+const { getValidPlantStatuses } = require("../utils/plantEnums");
 const { addLogEntry } = require("../utils/log");
 const { generatePlantAbbr, getPlantById } = require("../utils/plants");
 
