@@ -61,20 +61,20 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 ## Plant Schema
 
-|            Property: | Type:                                 | Notes:    |
-| -------------------: | ------------------------------------- | --------- |
-|          **plantId** | _string_                              |           |
-|             **name** | _string_                              |           |
-|           **status** | _'active', 'archived', 'inactive'_    | See below |
-|           **source** | _'seed' or 'clone'_                   |           |
-|            **stage** | _'seedling', 'veg', 'flower', 'cure'_ |           |
-|            **notes** | _string_                              |           |
-|        **startedOn** | _date (YYYY-MM-DD)_                   |           |
-|     **vegStartedOn** | _date (YYYY-MM-DD)_                   |           |
-|  **flowerStartedOn** | _date (YYYY-MM-DD)_                   |           |
-| **potentialHarvest** | _date (YYYY-MM-DD)_                   | Read-only |
-|      **harvestedOn** | _date (YYYY-MM-DD)_                   |           |
-|    **cureStartedOn** | _date (YYYY-MM-DD)_                   |           |
+|            Property: | Type:                                              | Notes:    |
+| -------------------: | -------------------------------------------------- | --------- |
+|          **plantId** | _string_                                           |           |
+|             **name** | _string_                                           |           |
+|           **status** | _'active', 'archived', 'inactive'_                 | See below |
+|           **source** | _'seed' or 'clone'_                                |           |
+|            **stage** | _'seedling', 'veg', 'flower', 'harvested', 'cure'_ |           |
+|            **notes** | _string_                                           |           |
+|        **startedOn** | _date (YYYY-MM-DD)_                                |           |
+|     **vegStartedOn** | _date (YYYY-MM-DD)_                                |           |
+|  **flowerStartedOn** | _date (YYYY-MM-DD)_                                |           |
+| **potentialHarvest** | _date (YYYY-MM-DD)_                                | Read-only |
+|      **harvestedOn** | _date (YYYY-MM-DD)_                                |           |
+|    **cureStartedOn** | _date (YYYY-MM-DD)_                                |           |
 
 **Notes about plant status:**
 Archived plants are hidden by default. Inactive plants are plants that have been "deleted" through the API. They are only marked as inactive so they can be "undeleted" if necessary.
@@ -89,20 +89,19 @@ Archived plants are hidden by default. Inactive plants are plants that have been
 
 `POST /api/v1/plants`
 
-Response:
-: Object of plant created
+**Response:** Object of plant created
 
 **Request data fields:**
 
-|           Field: | Type:                                 | Notes:                                    |
-| ---------------: | ------------------------------------- | ----------------------------------------- |
-|         **name** | _string_                              | **Required**                              |
-|      **plantId** | _string_                              | Auto-generated from name if not provided  |
-|       **source** | _'seed' or 'clone'_                   | Defaults to 'seed'                        |
-|        **notes** | _string_                              |                                           |
-|        **stage** | _'seedling', 'veg', 'flower', 'cure'_ | Defaults to 'seedling'                    |
-|    **startedOn** | _date (YYYY-MM-DD)_                   | Defaults to today                         |
-| **vegStartedOn** | _date (YYYY-MM-DD)_                   | Must be > startedOn and < flowerStartedOn |
+|           Field: | Type:                                              | Notes:                                    |
+| ---------------: | -------------------------------------------------- | ----------------------------------------- |
+|         **name** | _string_                                           | **Required**                              |
+|      **plantId** | _string_                                           | Auto-generated from name if not provided  |
+|       **source** | _'seed' or 'clone'_                                | Defaults to 'seed'                        |
+|        **notes** | _string_                                           |                                           |
+|        **stage** | _'seedling', 'veg', 'flower', 'harvested', 'cure'_ | Defaults to 'seedling'                    |
+|    **startedOn** | _date (YYYY-MM-DD)_                                | Defaults to today                         |
+| **vegStartedOn** | _date (YYYY-MM-DD)_                                | Must be > startedOn and < flowerStartedOn |
 
 **Notes:**
 
@@ -114,50 +113,48 @@ Response:
 
 `GET /api/v1/plants`
 
-Response:
-: Array of plant objects
+**Response:** Array of plant objects
 
 **Request data fields:**
 
-|              Field: | Type:                                 | Notes:               |
-| ------------------: | ------------------------------------- | -------------------- |
-|        **statuses** | _'active','archived','inactive'_      | Defaults to 'active' |
-|            **name** | _string_                              |                      |
-|           **notes** | _string_                              |                      |
-|           **stage** | _'seedling', 'veg', 'flower', 'cure'_ |                      |
-|       **startedOn** | _date (YYYY-MM-DD)_                   |                      |
-|    **vegStartedOn** | _date (YYYY-MM-DD)_                   |                      |
-| **flowerStartedOn** | _date (YYYY-MM-DD)_                   |                      |
-|     **harvestedOn** | _date (YYYY-MM-DD)_                   |                      |
-|   **cureStartedOn** | _date (YYYY-MM-DD)_                   |                      |
-|      **archivedOn** | _date (YYYY-MM-DD)_                   |                      |
+|              Field: | Type:                                              | Notes:               |
+| ------------------: | -------------------------------------------------- | -------------------- |
+|        **statuses** | _'active','archived','inactive'_                   | Defaults to 'active' |
+|            **name** | _string_                                           |                      |
+|           **notes** | _string_                                           |                      |
+|           **stage** | _'seedling', 'veg', 'flower', 'harvested', 'cure'_ |                      |
+|       **startedOn** | _date (YYYY-MM-DD)_                                |                      |
+|    **vegStartedOn** | _date (YYYY-MM-DD)_                                |                      |
+| **flowerStartedOn** | _date (YYYY-MM-DD)_                                |                      |
+|     **harvestedOn** | _date (YYYY-MM-DD)_                                |                      |
+|   **cureStartedOn** | _date (YYYY-MM-DD)_                                |                      |
+|      **archivedOn** | _date (YYYY-MM-DD)_                                |                      |
 
 #### Get a particular plant
 
-`GET /api/v1/plants/{plant_id}`
+`GET /api/v1/plants/{plantId}`
 
 ### UPDATE OPERATIONS
 
 #### Update a plant
 
-`PUT /api/v1/plants/{plant_id}`
+`PUT /api/v1/plants/{plantId}`
 
-Response:
-: Plant object with updates applied
+**Response:** Plant object with updates applied
 
 **Request data fields:**
 
-|              Field: | Type:                                 | Notes:                                     |
-| ------------------: | ------------------------------------- | ------------------------------------------ |
-|            **\_id** | _MongoDB document ID_                 | **Required**                               |
-|            **name** | _string_                              |                                            |
-|           **notes** | _string_                              |                                            |
-|           **stage** | _'seedling', 'veg', 'flower', 'cure'_ |                                            |
-|       **startedOn** | _date (YYYY-MM-DD)_                   | Must be <= vegStartedOn                    |
-|    **vegStartedOn** | _date (YYYY-MM-DD)_                   | Must be >= startedOn and < flowerStartedOn |
-| **flowerStartedOn** | _date (YYYY-MM-DD)_                   | Must be > vegStartedOn and < harvestedOn   |
-|     **harvestedOn** | _date (YYYY-MM-DD)_                   | Must be > harvestedOn and < cureStartedOn  |
-|   **cureStartedOn** | _date (YYYY-MM-DD)_                   | Must be > harvestedOn                      |
+|              Field: | Type:                                              | Notes:                                     |
+| ------------------: | -------------------------------------------------- | ------------------------------------------ |
+|            **\_id** | _MongoDB document ID_                              | **Required**                               |
+|            **name** | _string_                                           |                                            |
+|           **notes** | _string_                                           |                                            |
+|           **stage** | _'seedling', 'veg', 'flower', 'harvested', 'cure'_ |                                            |
+|       **startedOn** | _date (YYYY-MM-DD)_                                | Must be <= vegStartedOn                    |
+|    **vegStartedOn** | _date (YYYY-MM-DD)_                                | Must be >= startedOn and < flowerStartedOn |
+| **flowerStartedOn** | _date (YYYY-MM-DD)_                                | Must be > vegStartedOn and < harvestedOn   |
+|     **harvestedOn** | _date (YYYY-MM-DD)_                                | Must be > harvestedOn and < cureStartedOn  |
+|   **cureStartedOn** | _date (YYYY-MM-DD)_                                | Must be > harvestedOn                      |
 
 **Notes:**
 
@@ -166,4 +163,4 @@ Response:
 
 ### DELETE OPERATIONS
 
-`DELETE /api/v1/plants/{plant_id}`
+`DELETE /api/v1/plants/{plantId}`
