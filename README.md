@@ -110,10 +110,8 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 |      **harvestedOn** | _date (YYYY-MM-DD)_                              |                |
 |    **cureStartedOn** | _date (YYYY-MM-DD)_                              |                |
 
-**Notes:**
-
-- Archived and inactive plants are hidden by default.
-- Inactive plants are plants that have been "deleted" through the API. They are only marked as inactive so they can be "undeleted" if necessary.
+- _Archived and inactive plants are hidden by default._
+- _Inactive plants are plants that have been "deleted" through the API. They are only marked as inactive so they can be "undeleted" if necessary._
 
 ---
 
@@ -121,7 +119,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 `POST /api/v1/plants`
 
-### Valid HTTP request parameters
+### Valid `POST` request parameters
 
 |              Field: | Type:                                            | Notes:                                        |
 | ------------------: | ------------------------------------------------ | --------------------------------------------- |
@@ -133,21 +131,45 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 |    **vegStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `startedOn` and < `flowerStartedOn` |
 | **flowerStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `vegStartedOn`                      |
 
-- If the plant is a clone, stage will default to `veg` and `vegStartedOn` be set to the value of `startedOn`
+_If the plant is a clone, stage will default to `veg` and `vegStartedOn` be set to the value of `startedOn`_
 
-### Possible responses
+### Possible `POST` responses
 
-- `HTTP 201` if successful (with newly-created plant object in body)
-- `HTTP 409` if an active plant with the same name already exists
-- `HTTP 500` if an error occurred (see API Errors below)
+**`HTTP 201`**
+
+Successfully created plant. Response contains the newly-created plant. For example:
+
+```json
+{
+  "_id": "662849f8b87798f29434dc23",
+  "status": "active",
+  "source": "seed",
+  "name": "Roma Tomato 1",
+  "stage": "veg",
+  "startedOn": "2024-04-23T00:00:00.000+00:00",
+  "potentialHarvest": "2024-06-25T00:00:00.000+00:00",
+  "plantAbbr": "RT1-1",
+  "createdAt": "2024-04-23T23:53:28.245+00:00",
+  "updatedAt": "2024-04-24T12:39:59.743+00:00",
+  "vegStartedOn": "2024-04-23T00:00:00.000+00:00"
+}
+```
+
+**`HTTP 409`**
+
+An active plant with the same name already exists. See [API Errors](#api-errors) below.
+
+**`HTTP 500`**
+
+An unrecoverable error occurred. See [API Errors](#api-errors) below.
 
 ## Get all plants
 
 `GET /api/v1/plants`
 
-**Valid HTTP request parameters:**
+List of plants will be filtered by any request parameters provided.
 
-List of plants will be filtered by the request parameters provided.
+### Valid `GET /api/v1/plants` request parameters
 
 |              Field: | Type:                                            | Notes:               |
 | ------------------: | ------------------------------------------------ | -------------------- |
@@ -161,22 +183,95 @@ List of plants will be filtered by the request parameters provided.
 |   **cureStartedOn** | _date (YYYY-MM-DD)_                              |                      |
 |      **archivedOn** | _date (YYYY-MM-DD)_                              |                      |
 
-**Possible responses:**
+### Possible `GET /api/v1/plants` responses
 
-- `HTTP 200` if successful with array of plant objects in body
-- `HTTP 500` if an error occurred
+**`HTTP 200`**
+
+Successfully found plants. Contains array of matching plant objects in response body. For example:
+
+```json
+[
+  {
+    "_id": "662849f8b87798f29434dc23",
+    "status": "active",
+    "source": "seed",
+    "name": "Roma Tomato 1",
+    "stage": "veg",
+    "startedOn": "2024-04-23T00:00:00.000+00:00",
+    "potentialHarvest": "2024-06-25T00:00:00.000+00:00",
+    "plantAbbr": "RT1-1",
+    "createdAt": "2024-04-23T23:53:28.245+00:00",
+    "updatedAt": "2024-04-24T12:39:59.743+00:00",
+    "vegStartedOn": "2024-04-23T00:00:00.000+00:00"
+  },
+  {
+    "_id": "662849f8b87798f29434dc23",
+    "status": "active",
+    "source": "seed",
+    "name": "Cherry Tomato 1",
+    "stage": "veg",
+    "startedOn": "2024-04-23T00:00:00.000+00:00",
+    "potentialHarvest": "2024-06-25T00:00:00.000+00:00",
+    "plantAbbr": "CT1-1",
+    "createdAt": "2024-04-23T23:53:28.245+00:00",
+    "updatedAt": "2024-04-24T12:39:59.743+00:00",
+    "vegStartedOn": "2024-04-23T00:00:00.000+00:00"
+  },
+  ...
+]
+```
+
+**`HTTP 404`**
+
+No plants found matching the request data provided. See [API Errors](#api-errors) below.
+
+**`HTTP 500`**
+
+An unrecoverable error occurred. See [API Errors](#api-errors) below.
 
 ## Get a particular plant
 
 `GET /api/v1/plants/{plantId}`
 
+### Valid `GET /api/v1/plants/{plantId}` request parameters
+
+See [valid request parameters](#valid-get-apiv1plants-request-parameters) for `GET /api/v1/plants` above.
+
+### Possible `GET /api/v1/plants/{plantId}` responses
+
+**`HTTP 200`**
+
+Successfully found plant. Contains found plant object in response body. For example:
+
+```json
+{
+  "_id": "662849f8b87798f29434dc23",
+  "status": "active",
+  "source": "seed",
+  "name": "Roma Tomato 1",
+  "stage": "veg",
+  "startedOn": "2024-04-23T00:00:00.000+00:00",
+  "potentialHarvest": "2024-06-25T00:00:00.000+00:00",
+  "plantAbbr": "RT1-1",
+  "createdAt": "2024-04-23T23:53:28.245+00:00",
+  "updatedAt": "2024-04-24T12:39:59.743+00:00",
+  "vegStartedOn": "2024-04-23T00:00:00.000+00:00"
+}
+```
+
+**`HTTP 404`**
+
+Plant not found. See [API Errors](#api-errors) below.
+
+**`HTTP 500`**
+
+An unrecoverable error occurred. See [API Errors](#api-errors) below.
+
 ## Update a plant
 
 `PUT /api/v1/plants/{plantId}`
 
-**Response:** Plant object with updates applied
-
-**Valid HTTP request parameters:**
+### Valid HTTP request parameters
 
 |              Field: | Type:                                            | Notes:                                         |
 | ------------------: | ------------------------------------------------ | ---------------------------------------------- |
@@ -190,10 +285,44 @@ List of plants will be filtered by the request parameters provided.
 |     **harvestedOn** | _date (YYYY-MM-DD)_                              | Must be > `harvestedOn` and < `cureStartedOn`  |
 |   **cureStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `harvestedOn`                        |
 
-\*If the plant stage changes, the dates will be updated accordingly. For example:
+_\*If the plant stage changes, the dates will be updated accordingly. For example:_
 
-- If the plant stage is changing from `flower` to `veg`, `flowerStartedOn` will be unset and `veg` will be set to today (unless provided in the request parameters).
-- If the plant stage is changing from `veg` to `flower`, `flowerStartedOn` is set to today
+- _If the plant stage is changing from `flower` to `veg`, `flowerStartedOn` will be unset and `veg` will be set to today (unless provided in the request parameters)._
+- _If the plant stage is changing from `veg` to `flower`, `flowerStartedOn` is set to today_
+
+### Possible `PUT` responses
+
+**`HTTP 200`**
+
+Successfully updated plant. Contains the updated plant in body. For example:
+
+```json
+{
+  "_id": "662849f8b87798f29434dc23",
+  "status": "active",
+  "source": "seed",
+  "name": "Roma Tomato 1",
+  "stage": "veg",
+  "startedOn": "2024-04-23T00:00:00.000+00:00",
+  "potentialHarvest": "2024-06-25T00:00:00.000+00:00",
+  "plantAbbr": "RT1-1",
+  "createdAt": "2024-04-23T23:53:28.245+00:00",
+  "updatedAt": "2024-04-24T12:39:59.743+00:00",
+  "vegStartedOn": "2024-04-23T00:00:00.000+00:00"
+}
+```
+
+**`HTTP 404`**
+
+Plant not found. See [API Errors](#api-errors) below.
+
+**`HTTP 409`**
+
+An active plant with the same name already exists. See [API Errors](#api-errors) below.
+
+**`HTTP 500`**
+
+An unrecoverable error occurred. See [API Errors](#api-errors) below.
 
 ### Examples
 
