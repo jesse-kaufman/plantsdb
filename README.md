@@ -34,6 +34,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
   - [ ] Validate plant before updating _(partial—see below)_
   - [x] Add log entry when updating plant
   - [ ] Add ability to update multiple plants at once
+  - [ ] Add ability to mark plants as dead
 
 - **Deleting Plants:**
 
@@ -71,6 +72,8 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
       - [ ] Add ability to view plants
       - [ ] Add ability to edit plants
       - [ ] Add ability to delete plants
+      - [ ] Add ability to move plants between stages
+      - [ ] Add ability to mark plant as dead
     - **Plant Journal:**
       - [ ] Add ability to add plant journal entries
       - [ ] Add ability to edit plant journal entries
