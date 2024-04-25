@@ -55,12 +55,18 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 - **Authentication:**
 
-  - [ ] Implement OAauth and JWT-based authentication
+  - [ ] Implement OAauth and JWT-based authentication for API
+  - [ ] Implement password-based authentication for GUI
 
 - **Plant Journal:**
 
   - [ ] Add support for journal entry creation
   - [ ] Add ability to delete journal entries
+
+- **Frontend GUI:**
+
+  - [ ] Implement frontend GUI
+  - [ ] Implement
 
 ---
 
