@@ -45,7 +45,8 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
   - [x] Basic functionality
   - [ ] Add log entry when archiving plant
 
-- **Validation (applies to plant creation and modification):**
+- **Validation:**
+
   - [ ] Check plant name for characters outside a–z, A–Z, 0–9 and '-'
   - [x] Set required dates based on plant stage
   - [ ] Validate stage start dates in relation to each other
@@ -53,6 +54,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 ### Other Planned Features
 
 - **Plant Journal:**
+
   - [ ] Add support for journal entry creation
   - [ ] Add ability to delete journal entries
 
