@@ -46,7 +46,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - **Listing Plants:**
 
   - [x] Basic functionality
-  - [ ] Filter based on request headers
+  - [ ] Filter based on request parameters
 
 - **Deleting Plants:**
 
@@ -127,7 +127,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Response:** Object of plant created
 
-**Request data fields:**
+**Valid HTTP request parameters:**
 
 |              Field: | Type:                                            | Notes:                                        |
 | ------------------: | ------------------------------------------------ | --------------------------------------------- |
@@ -151,7 +151,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Response:** Array of plant objects
 
-**Request data fields:**
+**Valid HTTP request parameters:**
 
 List of plants will be filtered by the request parameters provided.
 
@@ -159,7 +159,6 @@ List of plants will be filtered by the request parameters provided.
 | ------------------: | ------------------------------------------------ | -------------------- |
 |          **status** | `active`\|`archived`\|`inactive`                 | Defaults to 'active' |
 |            **name** | _string_                                         |                      |
-|       **plantAbbr** | _string_                                         | Auto-generated       |
 |           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` |                      |
 |       **startedOn** | _date (YYYY-MM-DD)_                              |                      |
 |    **vegStartedOn** | _date (YYYY-MM-DD)_                              |                      |
@@ -180,13 +179,13 @@ List of plants will be filtered by the request parameters provided.
 
 **Response:** Plant object with updates applied
 
-**Request data fields:**
+**Valid HTTP request parameters:**
 
 |              Field: | Type:                                            | Notes:                                         |
 | ------------------: | ------------------------------------------------ | ---------------------------------------------- |
 |            **name** | _string_                                         |                                                |
 |          **source** | `seed`\|`clone`                                  |                                                |
-|           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` |                                                |
+|           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` | See notes below\*                              |
 |           **notes** | _string_                                         |                                                |
 |       **startedOn** | _date (YYYY-MM-DD)_                              | Must be <= `vegStartedOn`                      |
 |    **vegStartedOn** | _date (YYYY-MM-DD)_                              | Must be >= `startedOn` and < `flowerStartedOn` |
@@ -196,8 +195,37 @@ List of plants will be filtered by the request parameters provided.
 
 **Notes:**
 
-- If the plant stage changes, the dates will be updated accordingly:
-  - E.g.: if the plant stage is changing from `flower` to `veg`, `flowerStartedOn` will be unset
+\*If the plant stage changes, the dates will be updated accordingly. For example:
+
+- If the plant stage is changing from `flower` to `veg`, `flowerStartedOn` will be unset and `veg` will be set to today (unless provided in the request parameters).
+- If the plant stage is changing from `veg` to `flower`, `flowerStartedOn` is set to today
+
+##### Examples
+
+To move a plant from `seedling` to `veg`, send the following to `PUT /api/v1/plants/{plantId}`:
+
+```json
+{
+  "stage": "veg"
+}
+```
+
+To move a plant from `seedling` to `veg` and set the start date to `'2024-04-20'`, send a `PUT` request to `/api/v1/plants/{plantId}` with the following request parameters:
+
+```json
+{
+  "stage": "veg",
+  "vegStartedOn": "2024-04-20"
+}
+```
+
+To rename a plant from `'Tomato Plant 1'` to `'Roma Tomato Plant 1'`, send a `PUT` request to `/api/v1/plants/{plantId}` with the following request parameters:
+
+```json
+{
+  "name": "Roma Tomato Plant 1"
+}
+```
 
 ### DELETE OPERATIONS
 
