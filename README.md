@@ -20,77 +20,6 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - Projected harvest date is auto-calculated and updated with each stage change
 - Automatically generates unique plant IDs if not provided
 
-### Current Functionality
-
-- **Creating Plants:**
-
-  - [x] Basic functionality
-  - [x] Auto-generate `plantAbbr`
-  - [x] Add log entry when creating plant
-  - [ ] Validate plant before creation _(partial—see below)_
-  - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
-
-- **Modifying Plants:**
-
-  - [x] Basic functionality
-  - [x] Regenerate `plantAbbr` if name changed
-  - [x] Update dates when changing status
-    - [x] Set "started on" dates to current date unless provided
-    - [x] Unset "started on" dates that occur after current stage
-  - [x] Add log entry when updating plant
-  - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
-  - [ ] Validate plant before updating _(partial—see below)_
-  - [ ] Add ability to update multiple plants at once
-  - [ ] Add ability to mark plants as dead
-
-- **Listing Plants:**
-
-  - [x] Basic functionality
-  - [ ] Filter based on request parameters
-
-- **Deleting Plants:**
-
-  - [x] Basic functionality
-  - [ ] Add log entry when deleting plant
-
-- **Archiving Plants:**
-
-  - [x] Basic functionality
-  - [ ] Add log entry when archiving plant
-
-- **Validation:**
-
-  - [x] Set required dates based on plant stage
-  - [ ] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
-  - [ ] Validate stage start dates in relation to each other
-
-### Other Planned Features
-
-- **Authentication:**
-
-  - [ ] Implement OAauth and JWT-based authentication for API
-  - [ ] Implement password-based authentication for GUI
-
-- **Plant Journal:**
-
-  - [ ] Add support for journal entry creation
-  - [ ] Add ability to delete journal entries
-
-- **Frontend GUI:**
-
-  - [ ] Implement frontend GUI
-    - **Plants:**
-      - [ ] Add ability to create plants
-      - [ ] Add ability to view plants
-      - [ ] Add ability to edit plants
-      - [ ] Add ability to delete plants
-      - [ ] Add ability to move plants between stages
-      - [ ] Add ability to mark plant as dead
-    - **Plant Journal:**
-      - [ ] Add ability to add plant journal entries
-      - [ ] Add ability to edit plant journal entries
-      - [ ] Add ability to delete plant journal entries
-
 ---
 
 ## Plant Schema
@@ -367,3 +296,76 @@ If an error occurs, an `HTTP 500` response will be returned with the error messa
 ```json
 { "error": "Something bad happened." }
 ```
+
+---
+
+## Current Functionality
+
+- **Creating Plants:**
+
+  - [x] Basic functionality
+  - [x] Auto-generate `plantAbbr`
+  - [x] Add log entry when creating plant
+  - [ ] Validate plant before creation _(partial—see below)_
+  - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
+
+- **Modifying Plants:**
+
+  - [x] Basic functionality
+  - [x] Regenerate `plantAbbr` if name changed
+  - [x] Update dates when changing status
+    - [x] Set "started on" dates to current date unless provided
+    - [x] Unset "started on" dates that occur after current stage
+  - [x] Add log entry when updating plant
+  - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
+  - [ ] Validate plant before updating _(partial—see below)_
+  - [ ] Add ability to update multiple plants at once
+  - [ ] Add ability to mark plants as dead
+
+- **Listing Plants:**
+
+  - [x] Basic functionality
+  - [ ] Filter based on request parameters
+
+- **Deleting Plants:**
+
+  - [x] Basic functionality
+  - [ ] Add log entry when deleting plant
+
+- **Archiving Plants:**
+
+  - [x] Basic functionality
+  - [ ] Add log entry when archiving plant
+
+- **Validation:**
+
+  - [x] Set required dates based on plant stage
+  - [ ] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
+  - [ ] Validate stage start dates in relation to each other
+
+### Other Planned Features
+
+- **Authentication:**
+
+  - [ ] Implement OAauth and JWT-based authentication for API
+  - [ ] Implement password-based authentication for GUI
+
+- **Plant Journal:**
+
+  - [ ] Add support for journal entry creation
+  - [ ] Add ability to delete journal entries
+
+- **Frontend GUI:**
+
+  - [ ] Implement frontend GUI
+    - **Plants:**
+      - [ ] Add ability to create plants
+      - [ ] Add ability to view plants
+      - [ ] Add ability to edit plants
+      - [ ] Add ability to delete plants
+      - [ ] Add ability to move plants between stages
+      - [ ] Add ability to mark plant as dead
+    - **Plant Journal:**
+      - [ ] Add ability to add plant journal entries
+      - [ ] Add ability to edit plant journal entries
+      - [ ] Add ability to delete plant journal entries
