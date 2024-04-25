@@ -51,11 +51,11 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
   - [x] Set required dates based on plant stage
   - [ ] Validate stage start dates in relation to each other
 
+### Other Planned Features
+
 - **Authentication:**
 
   - [ ] Implement OAauth and JWT-based authentication
-
-### Other Planned Features
 
 - **Plant Journal:**
 
