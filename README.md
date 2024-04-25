@@ -25,16 +25,28 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - **Creating Plants:**
 
   - [x] Basic functionality
-  - [ ] Validate plant before creation _(partial—see below)_
+  - [x] Auto-generate `plantAbbr`
   - [x] Add log entry when creating plant
+  - [ ] Validate plant before creation _(partial—see below)_
+  - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
 
 - **Modifying Plants:**
 
   - [x] Basic functionality
-  - [ ] Validate plant before updating _(partial—see below)_
+  - [x] Regenerate `plantAbbr` if name changed
+  - [x] Update dates when changing status
+    - [x] Set "started on" dates to current date unless provided
+    - [x] Unset "started on" dates that occur after current stage
   - [x] Add log entry when updating plant
+  - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
+  - [ ] Validate plant before updating _(partial—see below)_
   - [ ] Add ability to update multiple plants at once
   - [ ] Add ability to mark plants as dead
+
+- **Listing Plants:**
+
+  - [x] Basic functionality
+  - [ ] Filter based on request headers
 
 - **Deleting Plants:**
 
@@ -48,8 +60,8 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 - **Validation:**
 
-  - [ ] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
   - [x] Set required dates based on plant stage
+  - [ ] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
   - [ ] Validate stage start dates in relation to each other
 
 ### Other Planned Features
@@ -83,20 +95,20 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 ## Plant Schema
 
-|            Property: | Type:                                                 | Notes:         |
-| -------------------: | ----------------------------------------------------- | -------------- |
-|             **name** | _string_                                              | **Required**   |
-|        **plantAbbr** | _string_                                              | Auto-generated |
-|           **status** | `active`, `archived`, _or_ `inactive`                 | See below      |
-|           **source** | `seed` _or_ `clone`                                   |                |
-|            **stage** | `seedling`, `veg`, `flower`, `harvested`, _or_ `cure` |                |
-|            **notes** | _string_                                              |                |
-|        **startedOn** | _date (YYYY-MM-DD)_                                   |                |
-|     **vegStartedOn** | _date (YYYY-MM-DD)_                                   |                |
-|  **flowerStartedOn** | _date (YYYY-MM-DD)_                                   |                |
-| **potentialHarvest** | _date (YYYY-MM-DD)_                                   | Read-only      |
-|      **harvestedOn** | _date (YYYY-MM-DD)_                                   |                |
-|    **cureStartedOn** | _date (YYYY-MM-DD)_                                   |                |
+|            Property: | Type:                                            | Notes:         |
+| -------------------: | ------------------------------------------------ | -------------- |
+|             **name** | _string_                                         | **Required**   |
+|        **plantAbbr** | _string_                                         | Auto-generated |
+|           **status** | `active`\|`archived`\|`inactive`                 | See below      |
+|           **source** | `seed`\|`clone`                                  |                |
+|            **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` |                |
+|            **notes** | _string_                                         |                |
+|        **startedOn** | _date (YYYY-MM-DD)_                              |                |
+|     **vegStartedOn** | _date (YYYY-MM-DD)_                              |                |
+|  **flowerStartedOn** | _date (YYYY-MM-DD)_                              |                |
+| **potentialHarvest** | _date (YYYY-MM-DD)_                              | _Read-only_    |
+|      **harvestedOn** | _date (YYYY-MM-DD)_                              |                |
+|    **cureStartedOn** | _date (YYYY-MM-DD)_                              |                |
 
 **Notes:**
 
@@ -117,19 +129,19 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Request data fields:**
 
-|           Field: | Type:                                                 | Notes:                                        |
-| ---------------: | ----------------------------------------------------- | --------------------------------------------- |
-|         **name** | _string_                                              | **Required**                                  |
-|    **plantAbbr** | _string_                                              | Auto-generated                                |
-|       **source** | `seed` _or_ `clone`                                   | Defaults to `seed`                            |
-|        **notes** | _string_                                              |                                               |
-|        **stage** | `seedling`, `veg`, `flower`, `harvested`, _or_ `cure` | Defaults to `seedling`                        |
-|    **startedOn** | _date (YYYY-MM-DD)_                                   | Defaults to today                             |
-| **vegStartedOn** | _date (YYYY-MM-DD)_                                   | Must be > `startedOn` and < `flowerStartedOn` |
+|              Field: | Type:                                            | Notes:                                        |
+| ------------------: | ------------------------------------------------ | --------------------------------------------- |
+|            **name** | _string_                                         | **_Required_**                                |
+|          **source** | `seed`\|`clone`                                  | Defaults to `seed`                            |
+|           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` | Defaults to `seedling`                        |
+|           **notes** | _string_                                         |                                               |
+|       **startedOn** | _date (YYYY-MM-DD)_                              | Defaults to today                             |
+|    **vegStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `startedOn` and < `flowerStartedOn` |
+| **flowerStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `vegStartedOn`                      |
 
 **Notes:**
 
-- If the plant is a clone, stage will default to `veg` and `vegStartedOn` = `startedOn`
+- If the plant is a clone, stage will default to `veg` and `vegStartedOn` be set to the value of `startedOn`
 
 ### READ OPERATIONS
 
@@ -141,12 +153,13 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Request data fields:**
 
+List of plants will be filtered by the request parameters provided.
+
 |              Field: | Type:                                            | Notes:               |
 | ------------------: | ------------------------------------------------ | -------------------- |
 |          **status** | `active`\|`archived`\|`inactive`                 | Defaults to 'active' |
 |            **name** | _string_                                         |                      |
 |       **plantAbbr** | _string_                                         | Auto-generated       |
-|           **notes** | _string_                                         |                      |
 |           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` |                      |
 |       **startedOn** | _date (YYYY-MM-DD)_                              |                      |
 |    **vegStartedOn** | _date (YYYY-MM-DD)_                              |                      |
@@ -169,16 +182,17 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Request data fields:**
 
-|              Field: | Type:                                                 | Notes:                                         |
-| ------------------: | ----------------------------------------------------- | ---------------------------------------------- |
-|            **name** | _string_                                              |                                                |
-|           **notes** | _string_                                              |                                                |
-|           **stage** | `seedling`, `veg`, `flower`, `harvested`, _or_ `cure` |                                                |
-|       **startedOn** | _date (YYYY-MM-DD)_                                   | Must be <= `vegStartedOn`                      |
-|    **vegStartedOn** | _date (YYYY-MM-DD)_                                   | Must be >= `startedOn` and < `flowerStartedOn` |
-| **flowerStartedOn** | _date (YYYY-MM-DD)_                                   | Must be > `vegStartedOn` and < `harvestedOn`   |
-|     **harvestedOn** | _date (YYYY-MM-DD)_                                   | Must be > `harvestedOn` and < `cureStartedOn`  |
-|   **cureStartedOn** | _date (YYYY-MM-DD)_                                   | Must be > `harvestedOn`                        |
+|              Field: | Type:                                            | Notes:                                         |
+| ------------------: | ------------------------------------------------ | ---------------------------------------------- |
+|            **name** | _string_                                         |                                                |
+|          **source** | `seed`\|`clone`                                  |                                                |
+|           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` |                                                |
+|           **notes** | _string_                                         |                                                |
+|       **startedOn** | _date (YYYY-MM-DD)_                              | Must be <= `vegStartedOn`                      |
+|    **vegStartedOn** | _date (YYYY-MM-DD)_                              | Must be >= `startedOn` and < `flowerStartedOn` |
+| **flowerStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `vegStartedOn` and < `harvestedOn`   |
+|     **harvestedOn** | _date (YYYY-MM-DD)_                              | Must be > `harvestedOn` and < `cureStartedOn`  |
+|   **cureStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `harvestedOn`                        |
 
 **Notes:**
 
