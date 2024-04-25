@@ -120,7 +120,7 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 |           Field: | Type:                                                 | Notes:                                        |
 | ---------------: | ----------------------------------------------------- | --------------------------------------------- |
 |         **name** | _string_                                              | **Required**                                  |
-|      **plantId** | _string_                                              | Auto-generated                                |
+|    **plantAbbr** | _string_                                              | Auto-generated                                |
 |       **source** | `seed` _or_ `clone`                                   | Defaults to `seed`                            |
 |        **notes** | _string_                                              |                                               |
 |        **stage** | `seedling`, `veg`, `flower`, `harvested`, _or_ `cure` | Defaults to `seedling`                        |
@@ -141,18 +141,19 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Request data fields:**
 
-|              Field: | Type:                                                 | Notes:               |
-| ------------------: | ----------------------------------------------------- | -------------------- |
-|        **statuses** | _'active','archived','inactive'_                      | Defaults to 'active' |
-|            **name** | _string_                                              |                      |
-|           **notes** | _string_                                              |                      |
-|           **stage** | `seedling`, `veg`, `flower`, `harvested`, _or_ `cure` |                      |
-|       **startedOn** | _date (YYYY-MM-DD)_                                   |                      |
-|    **vegStartedOn** | _date (YYYY-MM-DD)_                                   |                      |
-| **flowerStartedOn** | _date (YYYY-MM-DD)_                                   |                      |
-|     **harvestedOn** | _date (YYYY-MM-DD)_                                   |                      |
-|   **cureStartedOn** | _date (YYYY-MM-DD)_                                   |                      |
-|      **archivedOn** | _date (YYYY-MM-DD)_                                   |                      |
+|              Field: | Type:                                            | Notes:               |
+| ------------------: | ------------------------------------------------ | -------------------- |
+|          **status** | `active`\|`archived`\|`inactive`                 | Defaults to 'active' |
+|            **name** | _string_                                         |                      |
+|       **plantAbbr** | _string_                                         | Auto-generated       |
+|           **notes** | _string_                                         |                      |
+|           **stage** | `seedling`\|`veg`\|`flower`\|`harvested`\|`cure` |                      |
+|       **startedOn** | _date (YYYY-MM-DD)_                              |                      |
+|    **vegStartedOn** | _date (YYYY-MM-DD)_                              |                      |
+| **flowerStartedOn** | _date (YYYY-MM-DD)_                              |                      |
+|     **harvestedOn** | _date (YYYY-MM-DD)_                              |                      |
+|   **cureStartedOn** | _date (YYYY-MM-DD)_                              |                      |
+|      **archivedOn** | _date (YYYY-MM-DD)_                              |                      |
 
 #### Get a particular plant
 
