@@ -76,8 +76,10 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 |      **harvestedOn** | _date (YYYY-MM-DD)_                                |           |
 |    **cureStartedOn** | _date (YYYY-MM-DD)_                                |           |
 
-**Notes about plant status:**
-Archived plants are hidden by default. Inactive plants are plants that have been "deleted" through the API. They are only marked as inactive so they can be "undeleted" if necessary.
+**Notes:**
+
+- Archived plants are hidden by default.
+- Inactive plants are plants that have been "deleted" through the API. They are only marked as inactive so they can be "undeleted" if necessary.
 
 ---
 
