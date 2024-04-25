@@ -112,22 +112,16 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 
 **Notes:**
 
-- Archived plants are hidden by default.
+- Archived and inactive plants are hidden by default.
 - Inactive plants are plants that have been "deleted" through the API. They are only marked as inactive so they can be "undeleted" if necessary.
 
 ---
 
-## API Documentation
-
-### CREATE OPERATIONS
-
-#### Create a new plant
+## Create a new plant
 
 `POST /api/v1/plants`
 
-**Response:** Object of plant created
-
-**Valid HTTP request parameters:**
+### Valid HTTP request parameters
 
 |              Field: | Type:                                            | Notes:                                        |
 | ------------------: | ------------------------------------------------ | --------------------------------------------- |
@@ -139,17 +133,17 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 |    **vegStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `startedOn` and < `flowerStartedOn` |
 | **flowerStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `vegStartedOn`                      |
 
-**Notes:**
-
 - If the plant is a clone, stage will default to `veg` and `vegStartedOn` be set to the value of `startedOn`
 
-### READ OPERATIONS
+### Possible responses
 
-#### Get all plants
+- `HTTP 201` if successful (with newly-created plant object in body)
+- `HTTP 409` if an active plant with the same name already exists
+- `HTTP 500` if an error occurred (see API Errors below)
+
+## Get all plants
 
 `GET /api/v1/plants`
-
-**Response:** Array of plant objects
 
 **Valid HTTP request parameters:**
 
@@ -167,13 +161,16 @@ List of plants will be filtered by the request parameters provided.
 |   **cureStartedOn** | _date (YYYY-MM-DD)_                              |                      |
 |      **archivedOn** | _date (YYYY-MM-DD)_                              |                      |
 
-#### Get a particular plant
+**Possible responses:**
+
+- `HTTP 200` if successful with array of plant objects in body
+- `HTTP 500` if an error occurred
+
+## Get a particular plant
 
 `GET /api/v1/plants/{plantId}`
 
-### UPDATE OPERATIONS
-
-#### Update a plant
+## Update a plant
 
 `PUT /api/v1/plants/{plantId}`
 
@@ -193,14 +190,12 @@ List of plants will be filtered by the request parameters provided.
 |     **harvestedOn** | _date (YYYY-MM-DD)_                              | Must be > `harvestedOn` and < `cureStartedOn`  |
 |   **cureStartedOn** | _date (YYYY-MM-DD)_                              | Must be > `harvestedOn`                        |
 
-**Notes:**
-
 \*If the plant stage changes, the dates will be updated accordingly. For example:
 
 - If the plant stage is changing from `flower` to `veg`, `flowerStartedOn` will be unset and `veg` will be set to today (unless provided in the request parameters).
 - If the plant stage is changing from `veg` to `flower`, `flowerStartedOn` is set to today
 
-##### Examples
+### Examples
 
 To move a plant from `seedling` to `veg`, send the following to `PUT /api/v1/plants/{plantId}`:
 
@@ -227,6 +222,19 @@ To rename a plant from `'Tomato Plant 1'` to `'Roma Tomato Plant 1'`, send a `PU
 }
 ```
 
-### DELETE OPERATIONS
+## Delete a plant
 
 `DELETE /api/v1/plants/{plantId}`
+
+**Possible responses:**
+
+- `HTTP 204` if successful
+- `HTTP 500` if an error occurred (see API Errors below)
+
+## API Errors
+
+If an error occurs, an `HTTP 500` response will be returned with the error message in the response. For example:
+
+```json
+{ "error": "Something bad happened." }
+```
