@@ -134,7 +134,7 @@ Successfully found plants. Contains array of matching plant objects in response 
     "vegStartedOn": "2024-04-23T00:00:00.000+00:00"
   },
   {
-    "_id": "662849f8b87798f29434dc23",
+    "_id": "98f29434dc23662849f8b877",
     "status": "active",
     "source": "seed",
     "name": "Cherry Tomato 1",
@@ -291,7 +291,7 @@ To rename a plant from `'Tomato Plant 1'` to `'Roma Tomato Plant 1'`, send a `PU
 
 ## API Errors
 
-If an error occurs, an `HTTP 500` response will be returned with the error message in the response. For example:
+If an error occurs, a response will be returned with the error message in the body. For example:
 
 ```json
 { "error": "Something bad happened." }
@@ -299,7 +299,7 @@ If an error occurs, an `HTTP 500` response will be returned with the error messa
 
 ---
 
-## Current Functionality
+## Completeness level
 
 - **Creating Plants:**
 
@@ -343,8 +343,6 @@ If an error occurs, an `HTTP 500` response will be returned with the error messa
   - [ ] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
   - [ ] Validate stage start dates in relation to each other
 
-### Other Planned Features
-
 - **Authentication:**
 
   - [ ] Implement OAauth and JWT-based authentication for API
@@ -354,6 +352,8 @@ If an error occurs, an `HTTP 500` response will be returned with the error messa
 
   - [ ] Add support for journal entry creation
   - [ ] Add ability to delete journal entries
+
+### Other Planned Features
 
 - **Frontend GUI:**
 
