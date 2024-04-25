@@ -66,6 +66,15 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - **Frontend GUI:**
 
   - [ ] Implement frontend GUI
+    - **Plants:**
+      - [ ] Add ability to create plants
+      - [ ] Add ability to view plants
+      - [ ] Add ability to edit plants
+      - [ ] Add ability to delete plants
+    - **Plant Journal:**
+      - [ ] Add ability to add plant journal entries
+      - [ ] Add ability to edit plant journal entries
+      - [ ] Add ability to delete plant journal entries
 
 ---
 
