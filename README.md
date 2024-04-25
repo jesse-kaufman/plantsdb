@@ -66,7 +66,6 @@ Currently, the backend API is in develpoment. Eventually there will be a fronten
 - **Frontend GUI:**
 
   - [ ] Implement frontend GUI
-  - [ ] Implement
 
 ---
 
