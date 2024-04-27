@@ -306,7 +306,7 @@ If an error occurs, a response will be returned with the error message in the bo
   - [x] Basic functionality
   - [x] Auto-generate `plantAbbr`
   - [x] Add log entry when creating plant
-  - [ ] Validate plant before creation _(partial—see below)_
+  - [ ] Validate plant before creation _(see Validation section below)_
   - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
 
 - **Modifying Plants:**
@@ -318,7 +318,7 @@ If an error occurs, a response will be returned with the error message in the bo
     - [x] Unset "started on" dates that occur after current stage
   - [x] Add log entry when updating plant
   - [ ] Set `vegStartedOn` = `startedOn` if `source` == "clone"
-  - [ ] Validate plant before updating _(partial—see below)_
+  - [ ] Validate plant before updating _(see Validation section below)_
   - [ ] Add ability to update multiple plants at once
   - [ ] Add ability to mark plants as dead
 
