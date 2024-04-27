@@ -2,7 +2,7 @@ const plantModel = require("../models/plantModel");
 const { getNewStageDates } = require("../utils/plantStages");
 const { getValidPlantStatuses } = require("../utils/plantEnums");
 const { addLogEntry } = require("../utils/log");
-const { getPlantById } = require("../utils/plants");
+const { getPlantById, generatePlantAbbr } = require("../utils/plants");
 
 /**
  * Gets an existing plant from the database
@@ -92,7 +92,7 @@ exports.addPlant = async (req, res) => {
 
   // If plant name abbreviation is not provided, generate one
   if (!req.body.plantAbbr) {
-    await newPlant.generatePlantAbbr();
+    plant.plantAbbr = await generatePlantAbbr(newPlant.name);
   }
 
   try {
@@ -182,11 +182,16 @@ exports.updatePlant = async (req, res) => {
 
     try {
       // Generate new plantId from new name
-      await plant.generatePlantAbbr();
+      newPlant.plantAbbr = await generatePlantAbbr(plant.name);
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
     }
+  }
+
+  if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
+    plant.plantAbbr = newPlant.plantAbbr;
+    changeList.push("Plant abbreviation changed to " + newPlant.plantAbbr);
   }
 
   // Plant stage changed?
