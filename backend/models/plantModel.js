@@ -35,13 +35,6 @@ const plantSchema = new mongoose.Schema(
       enum: getValidPlantSources(),
       default: "seed",
     },
-    name: {
-      type: String,
-      required: true,
-    },
-    notes: {
-      type: String,
-    },
     stage: {
       type: String,
       required: true,
@@ -80,6 +73,9 @@ const plantSchema = new mongoose.Schema(
     archivedOn: {
       type: Date,
       required: () => this.status === "archived",
+    },
+    notes: {
+      type: String,
     },
   },
   { timestamps: true }
