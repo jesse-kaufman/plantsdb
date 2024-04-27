@@ -15,6 +15,8 @@ router
   // Plant log routes
   .get("/:plantId/logs", logController.getLogs)
   .get("/:plantId/logs/:logId", logController.getLog)
-  .post("/:plantId/logs/", logController.addLog);
+  .post("/:plantId/logs/", logController.addLog)
+  .put("/:plantId/logs/", logController.notAllowed)
+  .delete("/:plantId", logController.notAllowed);
 
 module.exports = router;
