@@ -25,7 +25,6 @@ exports.generatePlantAbbr = async function (name) {
     } else {
       // Use only first letter of non-numeric parts
       newPlantAbbr += part.charAt(0).toUpperCase();
-      console.log("part: " + part);
     }
   });
 
