@@ -340,7 +340,7 @@ If an error occurs, a response will be returned with the error message in the bo
 - **Validation:**
 
   - [x] Set required dates based on plant stage
-  - [ ] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
+  - [x] Check plant name for characters outside `a–z`, `A–Z`, `0–9` and `-`
   - [ ] Validate stage start dates in relation to each other
 
 - **Authentication:**
