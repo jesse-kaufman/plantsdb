@@ -291,9 +291,12 @@ exports.deletePlant = async (req, res) => {
       { _id: req.params.plantId },
       { status: "inactive" }
     );
-    res.status(200).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
   }
+
+  res.status(200).json(plant);
+
+  addLogEntry(req.params.plantId, "Plant deleted");
 };
