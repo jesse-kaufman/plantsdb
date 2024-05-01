@@ -214,25 +214,40 @@ exports.updatePlant = async (req, res) => {
   }
 
   // Veg start date changed?
-  if (newPlant.vegStartedOn !== plant.vegStartedOn) {
+  if (
+    newPlant.vegStartedOn &&
+    new Date(newPlant.vegStartedOn).toJSON() !== plant.vegStartedOn?.toJSON()
+  ) {
     plant.vegStartedOn = newPlant.vegStartedOn;
     changeList.push("Veg start date");
   }
 
   // Flower start date changed?
-  if (newPlant.flowerStartedOn !== plant.flowerStartedOn) {
+  if (
+    newPlant.flowerStartedOn &&
+    new Date(newPlant.flowerStartedOn).toJSON() !==
+      plant.flowerStartedOn?.toJSON()
+  ) {
+    console.log(new Date(newPlant.flowerStartedOn).toJSON());
+    console.log(plant.flowerStartedOn?.toJSON());
     plant.flowerStartedOn = newPlant.flowerStartedOn;
     changeList.push("Flower start date");
   }
 
   // Cure start date changed?
-  if (newPlant.cureStartedOn !== plant.cureStartedOn) {
+  if (
+    newPlant.cureStartedOn &&
+    new Date(newPlant.cureStartedOn).toJSON() !== plant.cureStartedOn?.toJSON()
+  ) {
     plant.cureStartedOn = newPlant.cureStartedOn;
     changeList.push("Cure start date");
   }
 
   // Harvested on date changed?
-  if (newPlant.harvestedOn !== plant.harvestedOn) {
+  if (
+    newPlant.harvestedOn &&
+    new Date(newPlant.harvestedOn).toJSON() !== plant.harvestedOn?.toJSON()
+  ) {
     plant.harvestedOn = newPlant.harvestedOn;
     changeList.push("Harvested on date");
   }
