@@ -25,6 +25,16 @@ app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
 app.use(cors());
 
+// Setup Express error handlers for dev environment
+if (process.env.NODE_ENV === "development") {
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+}
+
+// Setup Express error handlers for production environment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.errorHandler());
+}
+
 // Plant routes
 const plantRoutes = require("./routes/plantRoutes");
 app.use("/api/v1/plants", plantRoutes);
