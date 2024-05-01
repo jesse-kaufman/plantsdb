@@ -11,27 +11,29 @@ const { getPlantById, generatePlantAbbr } = require("../utils/plants");
  * @param {*} res The response object
  */
 exports.getPlant = async (req, res) => {
-  let status = "active";
-  const statuses = getValidPlantStatuses();
+  let statuses = ["active"];
+  let plant = null;
 
-  if (req.query.status && req.query.status in statuses) {
-    status = req.query.status;
+  if (req.query.status && req.query.status in getValidPlantStatuses()) {
+    statuses = req.query.status;
   }
 
+  //
+  // Find the plant
+  //
   try {
-    //
-    // Find the plant
-    //
-    const plant = await getPlantById(req.params.plantId, status);
-    if (plant) {
-      res.status(200).json(plant);
-    } else {
-      res.status(404).json({ error: "Plant not found" });
-    }
+    plant = await getPlantById(req.params.plantId, statuses);
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
   }
+
+  if (!plant) {
+    res.status(404).json({ error: "Plant not found" });
+    return;
+  }
+
+  res.status(200).json(plant);
 };
 
 /**
