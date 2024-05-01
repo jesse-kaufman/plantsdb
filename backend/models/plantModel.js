@@ -60,6 +60,7 @@ const plantSchema = new mongoose.Schema(
     },
     startedOn: {
       type: Date,
+      required: true,
       default: moment().format("YYYY-MM-DD"),
     },
     vegStartedOn: {
