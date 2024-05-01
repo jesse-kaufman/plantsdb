@@ -69,10 +69,18 @@ const plantSchema = new mongoose.Schema(
         () => ["veg", "flower", "harvested", "cure"].includes(this.stage),
         "required if stage is veg, flower, harvested, or cure",
       ],
+      validate: {
+        validator: () => this.vegStartedOn > this.startedOn,
+        message: () => "Veg started date must be after start date.",
+      },
     },
     flowerStartedOn: {
       type: Date,
       required: () => ["flower", "cure"].includes(this.stage),
+      validate: {
+        validator: () => this.flowerStartedOn > this.vegStartedOn,
+        message: () => "Flower started date must be after veg started date.",
+      },
     },
     potentialHarvest: {
       type: Date,
@@ -83,10 +91,18 @@ const plantSchema = new mongoose.Schema(
     harvestedOn: {
       type: Date,
       required: () => ["harvested", "cure"].includes(this.stage),
+      validator: {
+        validate: () => this.harvestedOn > this.flowerStartedOn,
+        message: () => "Harvested date must be after flower started date.",
+      },
     },
     cureStartedOn: {
       type: Date,
       required: () => this.stage === "cure",
+      validator: {
+        validate: () => this.cureStartedOn > this.harvestedOn,
+        message: () => "Cure started date must be after harvested date.",
+      },
     },
     archivedOn: {
       type: Date,
