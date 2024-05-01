@@ -137,18 +137,16 @@ exports.updatePlant = async (req, res) => {
   //
   // Find the plant
   //
-  try {
-    plant = await plantModel.findOne({
-      _id: req.params.plantId,
-      status: "active",
-    });
 
-    if (!plant) {
-      res.status(404).json({ error: "Plant not found" });
-      return;
-    }
+  try {
+    plant = await getPlantById(req.params.plantId);
   } catch (err) {
     res.status(500).json({ error: err.message });
+    return;
+  }
+
+  if (!plant) {
+    res.status(404).json({ error: "Plant not found" });
     return;
   }
 
