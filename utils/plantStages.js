@@ -1,4 +1,4 @@
-const moment = require("moment");
+const dayjs = require("dayjs");
 
 /**
  * Returns the update db query for the specified stage and dates.
@@ -33,10 +33,10 @@ exports.getNewStageDates = (stage, dates) => {
 const seedling = (dates) => {
   const startedOn = dates.startedOn
     ? dates.startedOn
-    : moment().format("YYYY-MM-DD");
+    : dayjs().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
-  const potentialHarvest = moment(startedOn)
+  const potentialHarvest = dayjs(startedOn)
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
@@ -59,10 +59,10 @@ const seedling = (dates) => {
 const veg = (dates) => {
   const vegStartedOn = dates.vegStartedOn
     ? dates.vegStartedOn
-    : moment().format("YYYY-MM-DD");
+    : dayjs().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
-  const potentialHarvest = moment(vegStartedOn)
+  const potentialHarvest = dayjs(vegStartedOn)
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
@@ -80,10 +80,10 @@ const flower = (dates) => {
   // Set new flower date
   const flowerStartedOn = dates.flowerStartedOn
     ? dates.flowerStartedOn
-    : moment().format("YYYY-MM-DD");
+    : dayjs().format("YYYY-MM-DD");
 
   // Calculate new potential harvest date
-  const potentialHarvest = moment(flowerStartedOn)
+  const potentialHarvest = dayjs(flowerStartedOn)
     .add(4, "weeks")
     .format("YYYY-MM-DD");
 
@@ -107,7 +107,7 @@ const flower = (dates) => {
 const harvest = (dates) => {
   const harvestedOn = dates.harvestedOn
     ? dates.harvestedOn
-    : moment().format("YYYY-MM-DD");
+    : dayjs().format("YYYY-MM-DD");
 
   return {
     potentialHarvest: undefined,
@@ -128,8 +128,8 @@ const harvest = (dates) => {
  */
 const cure = (dates) => {
   const cureStartedOn = dates.cureStartedOn
-    ? moment(setData.cureStartedOn).format("YYYY-MM-DD")
-    : moment().format("YYYY-MM-DD");
+    ? dayjs(setData.cureStartedOn).format("YYYY-MM-DD")
+    : dayjs().format("YYYY-MM-DD");
 
   return {
     potentialHarvest: undefined,
@@ -148,5 +148,5 @@ const cure = (dates) => {
 const archive = () => ({
   status: "archived",
   potentialHarvest: undefined,
-  archivedOn: moment().format("YYYY-MM-DD"),
+  archivedOn: dayjs().format("YYYY-MM-DD"),
 });

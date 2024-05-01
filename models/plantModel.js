@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const moment = require("moment");
+const dayjs = require("dayjs");
+
 const {
   getValidPlantStatuses,
   getValidPlantSources,
@@ -60,7 +61,7 @@ const plantSchema = new mongoose.Schema(
     startedOn: {
       type: Date,
       required: true,
-      default: moment().format("YYYY-MM-DD"),
+      default: dayjs().format("YYYY-MM-DD"),
     },
     vegStartedOn: {
       type: Date,
@@ -92,7 +93,7 @@ const plantSchema = new mongoose.Schema(
     potentialHarvest: {
       type: Date,
       default: () => {
-        return moment().add(9, "weeks").format("YYYY-MM-DD");
+        return dayjs().add(9, "weeks").format("YYYY-MM-DD");
       },
     },
     harvestedOn: {
