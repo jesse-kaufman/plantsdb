@@ -20,7 +20,7 @@ const plantSchema = new mongoose.Schema(
       max: [255, "Plant name must be shorter than 255 characters"],
       validate: {
         validator: (value) => {
-          let retval = /^[\p{Letter}\p{Punctuation}\p{Number}]+$/gmu.test(
+          let retval = /^[\p{Letter}\\ \p{Punctuation}\p{Number}]+$/gmu.test(
             value
           );
 
@@ -65,19 +65,27 @@ const plantSchema = new mongoose.Schema(
     vegStartedOn: {
       type: Date,
       required: [
-        () => ["veg", "flower", "harvested", "cure"].includes(this.stage),
+        function () {
+          return ["veg", "flower", "harvested", "cure"].includes(this.stage);
+        },
         "required if stage is veg, flower, harvested, or cure.",
       ],
       validate: {
-        validator: () => this.vegStartedOn > this.startedOn,
+        validator: function () {
+          return this.vegStartedOn >= this.startedOn;
+        },
         message: () => "Veg started date must be after start date.",
       },
     },
     flowerStartedOn: {
       type: Date,
-      required: () => ["flower", "cure"].includes(this.stage),
+      required: function () {
+        return ["flower", "cure"].includes(this.stage);
+      },
       validate: {
-        validator: () => this.flowerStartedOn > this.vegStartedOn,
+        validator: function () {
+          return this.flowerStartedOn >= this.vegStartedOn;
+        },
         message: () => "Flower started date must be after veg started date.",
       },
     },
@@ -89,23 +97,33 @@ const plantSchema = new mongoose.Schema(
     },
     harvestedOn: {
       type: Date,
-      required: () => ["harvested", "cure"].includes(this.stage),
+      required: function () {
+        return ["harvested", "cure"].includes(this.stage);
+      },
       validator: {
-        validate: () => this.harvestedOn > this.flowerStartedOn,
+        validate: function () {
+          return this.harvestedOn >= this.flowerStartedOn;
+        },
         message: () => "Harvested date must be after flower started date.",
       },
     },
     cureStartedOn: {
       type: Date,
-      required: () => this.stage === "cure",
+      required: function () {
+        this.stage === "cure";
+      },
       validator: {
-        validate: () => this.cureStartedOn > this.harvestedOn,
+        validate: function () {
+          this.cureStartedOn >= this.harvestedOn;
+        },
         message: () => "Cure started date must be after harvested date.",
       },
     },
     archivedOn: {
       type: Date,
-      required: () => this.status === "archived",
+      required: function () {
+        return this.status === "archived";
+      },
     },
     notes: {
       type: String,
