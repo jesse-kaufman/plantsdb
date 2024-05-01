@@ -86,19 +86,17 @@ exports.addPlant = async (req, res) => {
       status: "active",
       name: req.body.name,
     });
-
-    if (plant) {
-      res.status(409).json({ error: "A plant with that name already exists" });
-      return;
-    }
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
   }
 
-  //
+  if (plant) {
+    res.status(409).json({ error: "A plant with that name already exists" });
+    return;
+  }
+
   // Create new plant object from data sent
-  //
   try {
     newPlant = new plantModel(req.body);
   } catch (err) {
@@ -111,6 +109,7 @@ exports.addPlant = async (req, res) => {
     plant.plantAbbr = await generatePlantAbbr(newPlant.name);
   }
 
+  // Save plant to the database
   try {
     await plant.save();
   } catch (err) {
@@ -118,7 +117,7 @@ exports.addPlant = async (req, res) => {
     return;
   }
 
-  // Make entry in log
+  // Make log entry
   addLogEntry(plant._id, "Created new plant");
 
   res.status(201).json(plant);
