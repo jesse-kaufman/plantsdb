@@ -21,9 +21,8 @@ const plantSchema = new mongoose.Schema(
       max: [255, "Plant name must be shorter than 255 characters"],
       validate: {
         validator: (value) => {
-          let retval = /^[\p{Letter}\\ \p{Punctuation}\p{Number}]+$/gmu.test(
-            value
-          );
+          let retval =
+            /^[\p{Letter}\\ \p{Punctuation}\p{Number}]{3,255}}$/gmu.test(value);
 
           return retval;
         },
