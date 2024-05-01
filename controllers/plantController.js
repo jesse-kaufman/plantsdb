@@ -265,22 +265,17 @@ exports.updatePlant = async (req, res) => {
   //
   try {
     await plant.save();
-    res.status(200).json(plant);
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
   }
 
-  // Make entry in log
-  try {
-    addLogEntry(
-      req.params.plantId,
-      "Updated plant:\n• " + changeList.join("\n• ")
-    );
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
+  res.status(200).json(plant);
+
+  addLogEntry(
+    req.params.plantId,
+    "Updated plant:\n• " + changeList.join("\n• ")
+  );
 };
 
 /**
