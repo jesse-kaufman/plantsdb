@@ -20,17 +20,16 @@ const plantSchema = new mongoose.Schema(
       max: [255, "Plant name must be shorter than 255 characters"],
       validate: {
         validator: (value) => {
-          let retval =
-            /^[\p{Letter}\p{Other_Symbol}\p{Punctuation}\p{Number}]+$/gmu.test(
-              value
-            );
+          let retval = /^[\p{Letter}\p{Punctuation}\p{Number}]+$/gmu.test(
+            value
+          );
 
           return retval;
         },
         message: (props) =>
           "'" +
           props.value +
-          "' is not valid. Plant names must only contain letters, numbers, punctuation, and emoji characters.",
+          "' is not valid. Plant names must only contain letters, numbers, and punctuation.",
       },
     },
     plantAbbr: {
@@ -67,7 +66,7 @@ const plantSchema = new mongoose.Schema(
       type: Date,
       required: [
         () => ["veg", "flower", "harvested", "cure"].includes(this.stage),
-        "required if stage is veg, flower, harvested, or cure",
+        "required if stage is veg, flower, harvested, or cure.",
       ],
       validate: {
         validator: () => this.vegStartedOn > this.startedOn,
