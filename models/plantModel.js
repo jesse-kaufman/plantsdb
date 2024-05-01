@@ -17,8 +17,6 @@ const plantSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      min: [3, "Plant name must be at least 3 characters."],
-      max: [255, "Plant name must be shorter than 255 characters"],
       validate: {
         validator: (value) => {
           let retval =
