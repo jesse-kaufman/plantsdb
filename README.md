@@ -330,7 +330,7 @@ If an error occurs, a response will be returned with the error message in the bo
 - **Deleting Plants:**
 
   - [x] Basic functionality
-  - [ ] Add log entry when deleting plant
+  - [x] Add log entry when deleting plant
 
 - **Archiving Plants:**
 
