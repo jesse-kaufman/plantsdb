@@ -36,14 +36,12 @@ const plantSchema = new mongoose.Schema(
     plantAbbr: {
       type: String,
       required: true,
-      min: [2, "Plant abbreviation must be at least 2 characters"],
-      max: [10, "Plant abbreviation must be shorter than 10 characters"],
       validate: {
-        validator: (value) => /[a-zA-Z0-9\-]+/.test(value),
+        validator: (value) => /[a-zA-Z0-9\-]{2,10}/.test(value),
         message: (props) =>
           "'" +
           props.value +
-          "' is not valid. Plant names must only contain letters, numbers, and '-' characters.",
+          "' is not valid. Plant abbreviations must only contain letters, numbers, and '-' characters.",
       },
     },
     source: {
