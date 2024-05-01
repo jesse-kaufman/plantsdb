@@ -37,25 +37,36 @@ exports.getPlant = async (req, res) => {
 };
 
 /**
- * Gets all the plants from the database
+ * Gets a list of plants from the database
  *
  * @param {*} req The request object
  * @param {*} res The response object
  */
 exports.getPlants = async (req, res) => {
   // Default to only showing active plants
-  let = req.query.statuses ? req.query.statuses : ["active"];
+  let statuses = ["active"];
+  let plants = [];
+
+  if (req.query.statuses) {
+    for (const status in req.query.statuses) {
+      if (status in getValidPlantStatuses()) {
+        statuses.push(status);
+      }
+    }
+    statuses = req.query.statuses;
+  }
 
   //
   // Get all matching plants
   //
   try {
-    const plants = await plantModel.find({ status: { $in: statuses } });
-    res.status(200).json(plants);
+    plants = await plantModel.find({ status: { $in: statuses } });
   } catch (err) {
     res.status(500).json({ error: err.message });
     return;
   }
+
+  res.status(200).json(plants);
 };
 
 /**
