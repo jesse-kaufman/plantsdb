@@ -137,7 +137,6 @@ exports.updatePlant = async (req, res) => {
   //
   // Find the plant
   //
-
   try {
     plant = await getPlantById(req.params.plantId);
   } catch (err) {
