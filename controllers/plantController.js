@@ -153,6 +153,17 @@ exports.updatePlant = async (req, res) => {
   // Fill in missing properties in newPlant with ones from the database
   newPlant = { ...plant.toJSON(), ...newPlant };
 
+  // Plant status changed
+  if (newPlant.status !== plant.status) {
+    if (newPlant.status === "archived") {
+      changeList.push("Plant archived.");
+    } else if (newPlant.status === "active" && plant.status === "archived") {
+      changeList.push("Plant unarchived.");
+    } else if (newPlant.status === "active" && plant.status === "inactive") {
+      changeList.push("Plant undeleted.");
+    }
+  }
+
   // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
     plant.stage = newPlant.stage;
