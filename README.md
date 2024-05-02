@@ -326,6 +326,7 @@ If an error occurs, a response will be returned with the error message in the bo
 
   - [x] Basic functionality
   - [ ] Filter based on request parameters
+    - [x] Filter based on plant status
 
 - **Deleting Plants:**
 
@@ -335,12 +336,13 @@ If an error occurs, a response will be returned with the error message in the bo
 - **Archiving Plants:**
 
   - [x] Basic functionality
-  - [ ] Add log entry when archiving plant
+  - [x] Add log entry when archiving plant
 
 - **Validation:**
 
   - [x] Set required dates based on plant stage
-  - [x] Check plant name for characters outside letters, numbers, punctuation, and emoji
+  - [x] Check plant name for characters outside letters, numbers, and punctuation
+    - [ ] Add support for emoji in plant name
   - [x] Check plantAbbr for characters outside `a–z`, `A–Z`, `0–9` and `-`
   - [x] Validate stage start dates in relation to each other
 
@@ -351,7 +353,7 @@ If an error occurs, a response will be returned with the error message in the bo
 
 - **Plant Journal:**
 
-  - [ ] Add support for journal entries for plants
+  - [ ] Add support for plant journal entries
   - [ ] Add ability to delete journal entries
 
 ### Other Planned Features
