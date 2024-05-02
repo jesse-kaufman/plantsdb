@@ -20,7 +20,7 @@ const plantSchema = new mongoose.Schema(
       validate: {
         validator: (value) => {
           let retval =
-            /^[\p{Letter}\\ \p{Punctuation}\p{Number}]{3,255}}$/gmu.test(value);
+            /^[\p{Letter}\\ \p{Punctuation}\p{Number}]{3,255}$/gmu.test(value);
 
           return retval;
         },
