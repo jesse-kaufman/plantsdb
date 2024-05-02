@@ -351,7 +351,7 @@ If an error occurs, a response will be returned with the error message in the bo
 
 - **Plant Journal:**
 
-  - [ ] Add support for journal entry creation
+  - [ ] Add support for journal entries for plants
   - [ ] Add ability to delete journal entries
 
 ### Other Planned Features
