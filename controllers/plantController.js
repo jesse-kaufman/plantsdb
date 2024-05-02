@@ -133,6 +133,7 @@ exports.updatePlant = async (req, res) => {
   let plant = null;
   let changeList = [];
   let newPlant = req.body;
+  let stageDates = null;
 
   //
   // Find the plant
@@ -168,34 +169,34 @@ exports.updatePlant = async (req, res) => {
     plant.stage = newPlant.stage;
     changeList.push("Stage changed to " + newPlant.stage);
 
+    const dates = {
+      vegStartedOn: newPlant.vegStartedOn
+        ? newPlant.vegStartedOn
+        : plant.vegStartedOn,
+      flowerStartedOn: newPlant.flowerStartedOn
+        ? newPlant.flowerStartedOn
+        : plant.flowerStartedOn,
+      cureStartedOn: newPlant.cureStartedOn
+        ? newPlant.cureStartedOn
+        : plant.cureStartedOn,
+      harvestedOn: newPlant.harvestedOn
+        ? newPlant.harvestedOn
+        : plant.harvestedOn,
+    };
+
     try {
-      const dates = {
-        vegStartedOn: newPlant.vegStartedOn
-          ? newPlant.vegStartedOn
-          : plant.vegStartedOn,
-        flowerStartedOn: newPlant.flowerStartedOn
-          ? newPlant.flowerStartedOn
-          : plant.flowerStartedOn,
-        cureStartedOn: newPlant.cureStartedOn
-          ? newPlant.cureStartedOn
-          : plant.cureStartedOn,
-        harvestedOn: newPlant.harvestedOn
-          ? newPlant.harvestedOn
-          : plant.harvestedOn,
-      };
-
       // Get dates based on new stage and request body
-      const stageDates = getNewStageDates(newPlant.stage, dates);
-
-      // Add data to newPlant object
-      newPlant = {
-        ...newPlant,
-        ...stageDates,
-      };
+      stageDates = getNewStageDates(newPlant.stage, dates);
     } catch (err) {
       res.status(500).json({ error: err.message });
       return;
     }
+
+    // Add data to newPlant object
+    newPlant = {
+      ...newPlant,
+      ...stageDates,
+    };
   }
 
   // Check if plant name has changed
@@ -212,6 +213,7 @@ exports.updatePlant = async (req, res) => {
     }
   }
 
+  // Plant abbr changed?
   if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
     plant.plantAbbr = newPlant.plantAbbr;
     changeList.push("Plant abbreviation changed to " + newPlant.plantAbbr);
@@ -238,8 +240,6 @@ exports.updatePlant = async (req, res) => {
     new Date(newPlant.flowerStartedOn).toJSON() !==
       plant.flowerStartedOn?.toJSON()
   ) {
-    console.log(new Date(newPlant.flowerStartedOn).toJSON());
-    console.log(plant.flowerStartedOn?.toJSON());
     plant.flowerStartedOn = newPlant.flowerStartedOn;
     changeList.push("Flower start date");
   }
