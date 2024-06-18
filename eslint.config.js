@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import globals from "globals";
 import pluginJs from "@eslint/js";
 
@@ -23,7 +24,6 @@ const config = [
       "guard-for-in": "error",
       // "init-declarations": ["error", "never", { ignoreForLoopInit: true }],
       "max-depth": "error",
-      // eslint-disable-next-line no-magic-numbers
       "max-nested-callbacks": ["error", 3],
       "new-cap": "error",
       "no-await-in-loop": "error",
@@ -36,7 +36,7 @@ const config = [
       "no-loop-func": "error",
       "no-magic-numbers": [
         "warn",
-        { ignoreArrayIndexes: true, ignoreDefaultValues: true },
+        { ignoreArrayIndexes: true, ignore: [0], enforceConst: true },
       ],
       "no-multi-assign": "error",
       "no-multi-str": "error",
@@ -79,7 +79,7 @@ const config = [
       //"sort-keys": "error",
       camelcase: ["warn", { properties: "never" }],
       complexity: ["warn", { max: 5 }],
-      curly: "warn",
+      //curly: "warn",
       eqeqeq: ["error", "smart"],
     },
   },
