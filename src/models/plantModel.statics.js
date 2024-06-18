@@ -1,4 +1,5 @@
 import { addLogEntry } from "../utils/log.js";
+import qs from "../utils/plantQueryService.js";
 
 /**
  * Gets plant by ID.
@@ -7,11 +8,9 @@ import { addLogEntry } from "../utils/log.js";
  * @param {*} status
  * @returns
  */
-const getById = async function (plantId, status = "active") {
-  const query = {
-    _id: plantId,
-    status: status,
-  };
+const getById = async function (plantId, status) {
+  const query = qs.setup({ plantId, status }, this);
+
   return await this.findOne(query);
 };
 
@@ -20,20 +19,8 @@ const getById = async function (plantId, status = "active") {
  * @param {*} statuses
  * @returns
  */
-const getAll = async function (statuses) {
-  console.log(statuses);
-  const statusFilter = statuses.map((status) => {
-    console.log(`status: ${status}`);
-    if (this.validStatuses.includes(status)) {
-      return status;
-    }
-    return null;
-  });
-  const query = {
-    status: { $in: statusFilter },
-  };
-
-  console.log(query);
+const getAll = async function ({ status, stage }) {
+  const query = qs.setup({ status, stage }, this);
   return await this.find(query);
 };
 
@@ -43,4 +30,5 @@ const deleteOne = async function (plantId) {
   addLogEntry(plantId, "Plant deleted");
   return plant;
 };
+
 export default { getById, getAll, deleteOne };

@@ -14,9 +14,13 @@ import plantValidators from "../utils/plantValidators.js";
 export const getPlant = async (req, res) => {
   let plant = null;
 
-  // Get the plant
-  plant = await PlantModel.getById(req.params.plantId, req.query.status);
-
+  try {
+    // Get the plant
+    plant = await PlantModel.getById(req.params.plantId, req.query.status);
+  } catch (err) {
+    console.log(err);
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
+  }
   if (!plant) {
     res.status(httpCodes.NOT_FOUND).json({ error: "Plant not found" });
     return;
@@ -32,8 +36,16 @@ export const getPlant = async (req, res) => {
  * @param {*} res The response object
  */
 export const getPlants = async (req, res) => {
-  const plants = await PlantModel.getAll(req.query.status);
-  res.status(httpCodes.OK).json(plants);
+  try {
+    const plants = await PlantModel.getAll({
+      status: req.query.status,
+      stage: req.query.stage,
+    });
+    res.status(httpCodes.OK).json(plants);
+  } catch (err) {
+    console.log(err);
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
+  }
 };
 
 /**
@@ -85,13 +97,13 @@ export const addPlant = async (req, res) => {
  * @param {*} res The response object
  */
 export const updatePlant = async (req, res) => {
-  let plant = null;
+  let plant;
   const changeList = [];
   let newPlant = req.body;
-  let stageDates = null;
+  let stageDates;
 
   // Find the plant
-  plant = await PlantModel.getById(req.params.plantId);
+  plant = await PlantModel.getById(req.params.plantId, req.query.status);
 
   if (!plant) {
     res.status(httpCodes.NOT_FOUND).json({ error: "Plant not found" });
@@ -211,7 +223,6 @@ export const updatePlant = async (req, res) => {
   }
 
   // If we have no changes to make, return immediately
-  // eslint-disable-next-line no-magic-numbers
   if (changeList.length === 0) {
     res.status(httpCodes.OK).json(plant);
     return;

@@ -144,6 +144,7 @@ const PlantSchema = new Schema(
 PlantSchema.statics.getById = statics.getById;
 PlantSchema.statics.getAll = statics.getAll;
 PlantSchema.statics.deleteOne = statics.deleteOne;
+PlantSchema.statics.setupQuery = statics.setupQuery;
 PlantSchema.statics.validStatuses = validStatuses;
 PlantSchema.statics.validSources = validSources;
 PlantSchema.statics.validStages = validStages;
