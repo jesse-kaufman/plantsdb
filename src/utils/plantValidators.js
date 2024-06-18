@@ -4,7 +4,6 @@ const isValidId = async (plantId) => {
     status: "active",
     plantId: plantId.trim(),
   });
-  // eslint-disable-next-line no-magic-numbers
   if (count === 0) {
     return true;
   }

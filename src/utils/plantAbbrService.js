@@ -14,10 +14,8 @@ export const generatePlantAbbr = async (name) => {
     if (/^\d.*$/.test(part)) {
       // Use entire part if it is numeric
       newPlantAbbr += part;
-      // eslint-disable-next-line no-magic-numbers
     } else if (/^[a-zA-Z]$/.test(part.charAt(0).toUpperCase())) {
       // Use only first letter of non-numeric parts
-      // eslint-disable-next-line no-magic-numbers
       newPlantAbbr += part.charAt(0).toUpperCase();
     }
   });
