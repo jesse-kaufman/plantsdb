@@ -18,7 +18,7 @@ export const getPlant = async (req, res) => {
     // Get the plant
     plant = await PlantModel.getById(req.params.plantId, req.query.status);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
   }
   if (!plant) {
@@ -43,7 +43,7 @@ export const getPlants = async (req, res) => {
     });
     res.status(httpCodes.OK).json(plants);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
   }
 };
