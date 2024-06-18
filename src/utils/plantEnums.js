@@ -3,21 +3,21 @@
  *
  * @returns {Array} List of valid plant statuses
  */
-exports.getValidPlantStatuses = () => ["active", "inactive", "archived"];
+export const getValidPlantStatuses = () => ["active", "inactive", "archived"];
 
 /**
  * Gets list of possible plant sources
  *
  * @returns {Array} List of valid plant sources
  */
-exports.getValidPlantSources = () => ["seed", "clone"];
+export const getValidPlantSources = () => ["seed", "clone"];
 
 /**
  * Returns an array of valid stages for a plant.
  *
  * @returns {Array} An array of valid stages.
  */
-exports.getValidPlantStages = () => [
+export const getValidPlantStages = () => [
   "seedling",
   "veg",
   "flower",

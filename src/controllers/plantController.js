@@ -1,8 +1,9 @@
-const plantModel = require("../models/plantModel");
-const { getNewStageDates } = require("../utils/plantStages");
-const { getValidPlantStatuses } = require("../utils/plantEnums");
-const { addLogEntry } = require("../utils/log");
-const { getPlantById, generatePlantAbbr } = require("../utils/plants");
+import PlantModel from "../models/plantModel.js";
+import { addLogEntry } from "../utils/log.js";
+import { generatePlantAbbr } from "../utils/plantAbbrService.js";
+import { getNewStageDates } from "../utils/plantStages.js";
+import { httpCodes } from "../config/config.js";
+import plantValidators from "../utils/plantValidators.js";
 
 /**
  * Gets an existing plant from the database
@@ -10,30 +11,18 @@ const { getPlantById, generatePlantAbbr } = require("../utils/plants");
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.getPlant = async (req, res) => {
-  let statuses = ["active"];
+export const getPlant = async (req, res) => {
   let plant = null;
 
-  if (req.query.status && req.query.status in getValidPlantStatuses()) {
-    statuses = req.query.status;
-  }
-
-  //
-  // Find the plant
-  //
-  try {
-    plant = await getPlantById(req.params.plantId, statuses);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
+  // Get the plant
+  plant = await PlantModel.getById(req.params.plantId, req.query.status);
 
   if (!plant) {
-    res.status(404).json({ error: "Plant not found" });
+    res.status(httpCodes.NOT_FOUND).json({ error: "Plant not found" });
     return;
   }
 
-  res.status(200).json(plant);
+  res.status(httpCodes.OK).json(plant);
 };
 
 /**
@@ -42,31 +31,9 @@ exports.getPlant = async (req, res) => {
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.getPlants = async (req, res) => {
-  // Default to only showing active plants
-  let statuses = ["active"];
-  let plants = [];
-
-  if (req.query.statuses) {
-    for (const status in req.query.statuses) {
-      if (status in getValidPlantStatuses()) {
-        statuses.push(status);
-      }
-    }
-    statuses = req.query.statuses;
-  }
-
-  //
-  // Get all matching plants
-  //
-  try {
-    plants = await plantModel.find({ status: { $in: statuses } });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
-
-  res.status(200).json(plants);
+export const getPlants = async (req, res) => {
+  const plants = await PlantModel.getAll(req.query.status);
+  res.status(httpCodes.OK).json(plants);
 };
 
 /**
@@ -75,52 +42,40 @@ exports.getPlants = async (req, res) => {
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.addPlant = async (req, res) => {
+export const addPlant = async (req, res) => {
   let newPlant = null;
 
   //
   // Check if a plant with the same name already exists
   //
-  try {
-    const plant = await plantModel.findOne({
-      status: "active",
-      name: req.body.name,
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
-
-  if (plant) {
-    res.status(409).json({ error: "A plant with that name already exists" });
+  const plantExists = await plantValidators.isValidName(req.body.name);
+  if (plantExists === false) {
+    res
+      .status(httpCodes.CONFLICT)
+      .json({ error: "A plant with that name already exists" });
     return;
   }
 
   // Create new plant object from data sent
-  try {
-    newPlant = new plantModel(req.body);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
+  newPlant = new PlantModel(req.body);
 
   // If plant name abbreviation is not provided, generate one
   if (!req.body.plantAbbr) {
-    plant.plantAbbr = await generatePlantAbbr(newPlant.name);
+    newPlant.plantAbbr = generatePlantAbbr(newPlant.name);
   }
 
   // Save plant to the database
   try {
-    await plant.save();
+    await newPlant.save();
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
     return;
   }
 
   // Make log entry
-  addLogEntry(plant._id, "Created new plant");
+  addLogEntry(newPlant._id, "Created new plant");
 
-  res.status(201).json(plant);
+  res.status(httpCodes.CREATED).json(newPlant);
 };
 
 /**
@@ -129,24 +84,17 @@ exports.addPlant = async (req, res) => {
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.updatePlant = async (req, res) => {
+export const updatePlant = async (req, res) => {
   let plant = null;
-  let changeList = [];
+  const changeList = [];
   let newPlant = req.body;
   let stageDates = null;
 
-  //
   // Find the plant
-  //
-  try {
-    plant = await getPlantById(req.params.plantId);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
+  plant = await PlantModel.getById(req.params.plantId);
 
   if (!plant) {
-    res.status(404).json({ error: "Plant not found" });
+    res.status(httpCodes.NOT_FOUND).json({ error: "Plant not found" });
     return;
   }
 
@@ -167,7 +115,7 @@ exports.updatePlant = async (req, res) => {
   // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
     plant.stage = newPlant.stage;
-    changeList.push("Stage changed to " + newPlant.stage);
+    changeList.push(`Stage changed to ${newPlant.stage}`);
 
     const dates = {
       vegStartedOn: newPlant.vegStartedOn
@@ -188,7 +136,7 @@ exports.updatePlant = async (req, res) => {
       // Get dates based on new stage and request body
       stageDates = getNewStageDates(newPlant.stage, dates);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
       return;
     }
 
@@ -208,7 +156,7 @@ exports.updatePlant = async (req, res) => {
       // Generate new plantId from new name
       newPlant.plantAbbr = await generatePlantAbbr(plant.name);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
       return;
     }
   }
@@ -216,13 +164,13 @@ exports.updatePlant = async (req, res) => {
   // Plant abbr changed?
   if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
     plant.plantAbbr = newPlant.plantAbbr;
-    changeList.push("Plant abbreviation changed to " + newPlant.plantAbbr);
+    changeList.push(`Plant abbreviation changed to ${newPlant.plantAbbr}`);
   }
 
   // Plant stage changed?
   if (newPlant.stage && newPlant.stage !== plant.stage) {
     plant.stage = newPlant.stage;
-    changeList.push("Stage changed to " + newPlant.stage);
+    changeList.push(`Stage changed to ${newPlant.stage}`);
   }
 
   // Veg start date changed?
@@ -262,11 +210,10 @@ exports.updatePlant = async (req, res) => {
     changeList.push("Harvested on date");
   }
 
-  console.log(changeList);
-
   // If we have no changes to make, return immediately
+  // eslint-disable-next-line no-magic-numbers
   if (changeList.length === 0) {
-    res.status(200).json(plant);
+    res.status(httpCodes.OK).json(plant);
     return;
   }
 
@@ -276,15 +223,15 @@ exports.updatePlant = async (req, res) => {
   try {
     await plant.save();
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
     return;
   }
 
-  res.status(200).json(plant);
+  res.status(httpCodes.OK).json(plant);
 
   addLogEntry(
     req.params.plantId,
-    "Updated plant:\n• " + changeList.join("\n• ")
+    `Updated plant:\n• ${changeList.join("\n• ")}`
   );
 };
 
@@ -294,19 +241,7 @@ exports.updatePlant = async (req, res) => {
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.deletePlant = async (req, res) => {
-  try {
-    // Find and delete the plant
-    const plant = await plantModel.updateOne(
-      { _id: req.params.plantId },
-      { status: "inactive" }
-    );
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
-  }
-
-  res.status(200).json(plant);
-
-  addLogEntry(req.params.plantId, "Plant deleted");
+export const deletePlant = async (req, res) => {
+  const plant = await PlantModel.deleteOne(req.params.id);
+  res.status(httpCodes.OK).json(plant);
 };

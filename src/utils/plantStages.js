@@ -1,29 +1,5 @@
-const dayjs = require("dayjs");
-
-/**
- * Returns the update db query for the specified stage and dates.
- * @param {string} stage - The stage of the plant to update.
- * @param {object} dates - An object containing dates relevant to the stage.
- * @returns {object} The update db query for the specified stage and dates.
- */
-exports.getNewStageDates = (stage, dates) => {
-  switch (stage) {
-    case "seedling":
-      return seedling(dates);
-    case "veg":
-      return veg(dates);
-    case "flower":
-      return flower(dates);
-    case "harvest":
-      return harvest(dates);
-    case "cure":
-      return cure(dates);
-    case "archive":
-      return archive(dates);
-    default:
-      throw new Error("Invalid stage");
-  }
-};
+import config from "../config/config.js";
+import dayjs from "dayjs";
 
 /**
  * Changes the stage of the plant to "seedling".
@@ -37,7 +13,7 @@ const seedling = (dates) => {
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(startedOn)
-    .add(4, "weeks")
+    .add(config.flowerWeeks, "weeks")
     .format("YYYY-MM-DD");
 
   return {
@@ -63,7 +39,7 @@ const veg = (dates) => {
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(vegStartedOn)
-    .add(4, "weeks")
+    .add(config.flowerWeeks, "weeks")
     .format("YYYY-MM-DD");
 
   return {
@@ -84,7 +60,7 @@ const flower = (dates) => {
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(flowerStartedOn)
-    .add(4, "weeks")
+    .add(config.flowerWeeks, "weeks")
     .format("YYYY-MM-DD");
 
   return {
@@ -128,7 +104,7 @@ const harvest = (dates) => {
  */
 const cure = (dates) => {
   const cureStartedOn = dates.cureStartedOn
-    ? dayjs(setData.cureStartedOn).format("YYYY-MM-DD")
+    ? dayjs(dates.cureStartedOn).format("YYYY-MM-DD")
     : dayjs().format("YYYY-MM-DD");
 
   return {
@@ -150,3 +126,28 @@ const archive = () => ({
   potentialHarvest: undefined,
   archivedOn: dayjs().format("YYYY-MM-DD"),
 });
+
+/**
+ * Returns the update db query for the specified stage and dates.
+ * @param {string} stage - The stage of the plant to update.
+ * @param {object} dates - An object containing dates relevant to the stage.
+ * @returns {object} The update db query for the specified stage and dates.
+ */
+export const getNewStageDates = (stage, dates) => {
+  switch (stage) {
+    case "seedling":
+      return seedling(dates);
+    case "veg":
+      return veg(dates);
+    case "flower":
+      return flower(dates);
+    case "harvest":
+      return harvest(dates);
+    case "cure":
+      return cure(dates);
+    case "archive":
+      return archive(dates);
+    default:
+      throw new Error("Invalid stage");
+  }
+};

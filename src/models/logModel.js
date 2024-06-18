@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const logSchema = new mongoose.Schema(
+const LogSchema = new Schema(
   {
     plantId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Plant",
       required: true,
     },
@@ -20,4 +20,4 @@ const logSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Logs", logSchema);
+export default model("Logs", LogSchema);

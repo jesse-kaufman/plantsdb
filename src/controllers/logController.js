@@ -1,4 +1,5 @@
-const logModel = require("../models/logModel");
+import LogModel from "../models/logModel.js";
+import { httpCodes } from "../config/config.js";
 
 /**
  * Gets an existing plant log entry from the database
@@ -6,18 +7,17 @@ const logModel = require("../models/logModel");
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.getLog = async (req, res) => {
+export const getLog = async (req, res) => {
   try {
     //
     // Find the plant log entry
     //
-    const log = await logModel.findById({
+    const log = await LogModel.findById({
       _id: req.params.logId,
     });
-    res.status(200).json(log);
+    res.status(httpCodes.OK).json(log);
   } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
   }
 };
 
@@ -27,12 +27,12 @@ exports.getLog = async (req, res) => {
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.getLogs = async (req, res) => {
+export const getLogs = async (req, res) => {
   //
   // Filter by statuses requested
   //
   if (!req.params.plantId) {
-    res.status(500).json({ error: "No plantId provided." });
+    res.status(httpCodes.SERVER_ERROR).json({ error: "No plantId provided." });
     return;
   }
 
@@ -40,13 +40,12 @@ exports.getLogs = async (req, res) => {
   // Get all matching plants
   //
   try {
-    const logs = await logModel.find({
+    const logs = await find({
       plantId: req.params.plantId,
     });
-    res.status(200).json(logs);
+    res.status(httpCodes.OK).json(logs);
   } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
   }
 };
 
@@ -56,7 +55,7 @@ exports.getLogs = async (req, res) => {
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.addLog = async (req, res) => {
+export const addLog = async (req, res) => {
   // XXX: Validate the input here
   const plantId = req.params.plantId;
   const newLog = {
@@ -68,28 +67,30 @@ exports.addLog = async (req, res) => {
   // Save the new log entry
   //
   try {
-    const log = new logModel(newLog);
+    const log = new LogModel(newLog);
     await log.save();
-    res.status(201).json(log);
+    res.status(httpCodes.CREATED).json(log);
   } catch (err) {
-    res.status(500).json({ error: err.message });
-    return;
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
   }
 };
 
 /**
- * Returns an HTTP 405: "Method not allowed" error message
+ * Returns an HTTP httpCodes.NOT_ALLOWED: "Method not allowed" error message
  *
  * @param {*} req The request object
  * @param {*} res The response object
  */
-exports.notAllowed = async (req, res) => {
+export const notAllowed = (req, res) => {
   switch (req.method) {
     case "DELETE":
-      res.status(405).json({ error: "Deleting log entries is prohibited." });
+      res
+        .status(httpCodes.NOT_ALLOWED)
+        .json({ error: "Deleting log entries is prohibited." });
       return;
     case "PUT":
-      res.status(405).json({ error: "Updating log entries is prohibited." });
-      return;
+      res
+        .status(httpCodes.NOT_ALLOWED)
+        .json({ error: "Updating log entries is prohibited." });
   }
 };
