@@ -6,17 +6,17 @@ import statics from "./plantModel.statics.js";
 /**
  * List of valid plant statuses.
  */
-export const validStatuses = ["active", "inactive", "archived"];
+const validStatuses = ["active", "inactive", "archived"];
 
 /**
  * List of possible plant sources.
  */
-export const validSources = ["seed", "clone"];
+const validSources = ["seed", "clone"];
 
 /**
  * Valid plant stages.
  */
-export const validStages = ["seedling", "veg", "flower", "harvested", "cure"];
+const validStages = ["seedling", "veg", "flower", "harvested", "cure"];
 
 const PlantSchema = new Schema(
   {
