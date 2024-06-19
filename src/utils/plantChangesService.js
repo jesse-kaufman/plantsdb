@@ -32,6 +32,7 @@ const getPropChangeMsg = (propName, oldProp, newProp) => {
     "cureStartedOn",
     "harvestedOn",
     "archivedOn",
+    "potentialHarvest",
   ];
 
   if (ignoredProps.includes(propName)) return;
