@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 const getStatusChangeMsg = (oldStatus, newStatus) => {
   // Status did not change
   if (oldStatus === newStatus) return null;
@@ -20,7 +22,7 @@ const getDateChangeMsg = (propName, oldDate, newDate) => {
     return;
   }
   if (newDateObj.toJSON() !== oldDateObj.toJSON()) {
-    return `${propName} changed to ${newDateObj.toISOString()}`;
+    return `${propName} changed to ${dayjs(newDateObj).format("YYYY-MM-DD")}`;
   }
 };
 
