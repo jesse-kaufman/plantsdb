@@ -138,7 +138,46 @@ const PlantSchema = new Schema(
       type: String,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    virtuals: {
+      startedOnDate: {
+        get() {
+          return dayjs(this.startedOn).format("YYYY-MM-DD");
+        },
+      },
+      vegStartedOnDate: {
+        get() {
+          if (this.vegStartedOn != null) {
+            return dayjs(this.vegStartedOn).format("YYYY-MM-DD");
+          }
+        },
+      },
+      flowerStartedOnDate: {
+        get() {
+          if (this.flowerStartedOn != null) {
+            return dayjs(this.flowerStartedOn).format("YYYY-MM-DD");
+          }
+        },
+      },
+      harvestedOnDate: {
+        get() {
+          if (this.harvestedOn != null) {
+            return dayjs(this.harvestedOn).format("YYYY-MM-DD");
+          }
+        },
+      },
+      cureStartedOnDate: {
+        get() {
+          if (this.cureStartedOn != null) {
+            return dayjs(this.cureStartedOn).format("YYYY-MM-DD");
+          }
+        },
+      },
+    },
+  }
 );
 
 PlantSchema.statics.getById = statics.getById;
