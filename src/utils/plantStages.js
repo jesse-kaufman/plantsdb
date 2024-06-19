@@ -7,9 +7,7 @@ import dayjs from "dayjs";
  * @returns {object} The update db query.
  */
 const seedling = (dates) => {
-  const startedOn = dates.startedOn
-    ? dates.startedOn
-    : dayjs().format("YYYY-MM-DD");
+  const startedOn = dates.startedOn ? dates.startedOn : dayjs();
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(startedOn)
@@ -17,7 +15,7 @@ const seedling = (dates) => {
     .format("YYYY-MM-DD");
 
   return {
-    startedOn: `${startedOn}T00:00:00`,
+    startedOn: startedOn,
     potentialHarvest: `${potentialHarvest}T00:00:00`,
     vegStartedOn: undefined,
     flowerStartedOn: undefined,
