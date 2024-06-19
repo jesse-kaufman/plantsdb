@@ -10,7 +10,6 @@ import qs from "../utils/plantQueryService.js";
  */
 const getById = async function (plantId, status) {
   const query = qs.setup({ plantId, status }, this);
-
   return await this.findOne(query);
 };
 

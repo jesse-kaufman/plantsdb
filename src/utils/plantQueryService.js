@@ -64,9 +64,7 @@ const setup = function (config, PlantSchema) {
   const stageFilter = setupStageFilter(stage, validStages);
 
   // Default to filtering by statusFilter
-  let query = {
-    status: statusFilter,
-  };
+  let query = { status: statusFilter };
 
   // Add stage filter to query if set
   if (stageFilter) {
