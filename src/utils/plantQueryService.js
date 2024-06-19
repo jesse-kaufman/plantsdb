@@ -4,6 +4,7 @@
  * Provides functions to build a query for use in selecting plants from
  * the database.
  */
+import mongoose from "mongoose";
 
 /**
  * Sets up the status filter for the plant query
@@ -74,7 +75,10 @@ const setup = function (config, PlantSchema) {
 
   // Add plantId filter to query if set
   if (plantId != null) {
-    query = { ...query, _id: plantId };
+    query = {
+      ...query,
+      _id: mongoose.Types.ObjectId.createFromHexString(plantId),
+    };
   }
 
   return query;
