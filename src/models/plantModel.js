@@ -176,6 +176,13 @@ const PlantSchema = new Schema(
           }
         },
       },
+      potentialHarvestDate: {
+        get() {
+          if (this.potentialHarvest != null) {
+            return dayjs(this.potentialHarvest).format("YYYY-MM-DD");
+          }
+        },
+      },
     },
   }
 );
