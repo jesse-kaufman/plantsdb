@@ -17,8 +17,8 @@ const seedling = (dates) => {
     .format("YYYY-MM-DD");
 
   return {
-    startedOn: startedOn,
-    potentialHarvest: potentialHarvest,
+    startedOn: `${startedOn}T00:00:00`,
+    potentialHarvest: `${potentialHarvest}T00:00:00`,
     vegStartedOn: undefined,
     flowerStartedOn: undefined,
     harvestedOn: undefined,
@@ -43,8 +43,8 @@ const veg = (dates) => {
     .format("YYYY-MM-DD");
 
   return {
-    potentialHarvest: potentialHarvest,
-    vegStartedOn: vegStartedOn,
+    potentialHarvest: `${potentialHarvest}T00:00:00`,
+    vegStartedOn: `${vegStartedOn}T00:00:00`,
     flowerStartedOn: undefined,
     harvestedOn: undefined,
     cureStartedOn: undefined,
@@ -64,9 +64,9 @@ const flower = (dates) => {
     .format("YYYY-MM-DD");
 
   return {
-    potentialHarvest: potentialHarvest,
-    vegStartedOn: dates.vegStartedOn,
-    flowerStartedOn: flowerStartedOn,
+    potentialHarvest: `${potentialHarvest}T00:00:00`,
+    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
+    flowerStartedOn: `${flowerStartedOn}T00:00:00`,
     harvestedOn: undefined,
     cureStartedOn: undefined,
     archivedOn: undefined,
@@ -87,9 +87,9 @@ const harvest = (dates) => {
 
   return {
     potentialHarvest: undefined,
-    vegStartedOn: dates.vegStartedOn,
-    flowerStartedOn: dates.flowerStartedOn,
-    harvestedOn: harvestedOn,
+    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
+    flowerStartedOn: `${dates.flowerStartedOn}T00:00:00`,
+    harvestedOn: `${harvestedOn}T00:00:00`,
     cureStartedOn: undefined,
     archivedOn: undefined,
   };
@@ -109,10 +109,10 @@ const cure = (dates) => {
 
   return {
     potentialHarvest: undefined,
-    vegStartedOn: dates.vegStartedOn,
-    flowerStartedOn: dates.flowerStartedOn,
-    harvestedOn: dates.harvestedOn,
-    cureStartedOn: cureStartedOn,
+    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
+    flowerStartedOn: `${dates.flowerStartedOn}T00:00:00`,
+    harvestedOn: `${dates.harvestedOn}T00:00:00`,
+    cureStartedOn: `${cureStartedOn}T00:00:00`,
     archivedOn: undefined,
   };
 };
@@ -124,7 +124,7 @@ const cure = (dates) => {
 const archive = () => ({
   status: "archived",
   potentialHarvest: undefined,
-  archivedOn: dayjs().format("YYYY-MM-DD"),
+  archivedOn: new Date().toISOString(),
 });
 
 /**
