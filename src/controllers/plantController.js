@@ -1,6 +1,7 @@
 import PlantModel from "../models/plantModel.js";
 import { addLogEntry } from "../utils/log.js";
 import { generatePlantAbbr } from "../utils/plantAbbrService.js";
+import getChangeList from "../utils/plantChangesService.js";
 import { getNewStageDates } from "../utils/plantStages.js";
 import { httpCodes } from "../config/config.js";
 import plantValidators from "../utils/plantValidators.js";
@@ -36,11 +37,10 @@ export const getPlant = async (req, res) => {
  * @param {*} res The response object
  */
 export const getPlants = async (req, res) => {
+  const { status, stage } = req.query;
+
   try {
-    const plants = await PlantModel.getAll({
-      status: req.query.status,
-      stage: req.query.stage,
-    });
+    const plants = await PlantModel.getAll({ status, stage });
     res.status(httpCodes.OK).json(plants);
   } catch (err) {
     console.error(err);
@@ -97,51 +97,36 @@ export const addPlant = async (req, res) => {
  * @param {*} res The response object
  */
 export const updatePlant = async (req, res) => {
-  let plant;
-  const changeList = [];
   let newPlant = req.body;
   let stageDates;
 
   // Find the plant
-  plant = await PlantModel.getById(req.params.plantId, req.query.status);
+  const plant = await PlantModel.getById(req.params.plantId, req.query.status);
 
   if (!plant) {
     res.status(httpCodes.NOT_FOUND).json({ error: "Plant not found" });
     return;
   }
 
+  // Make sure new plant doesn't have a different ID
+  newPlant._id = req.params.plantId;
+
   // Fill in missing properties in newPlant with ones from the database
   newPlant = { ...plant.toJSON(), ...newPlant };
 
-  // Plant status changed
-  if (newPlant.status !== plant.status) {
-    if (newPlant.status === "archived") {
-      changeList.push("Plant archived.");
-    } else if (newPlant.status === "active" && plant.status === "archived") {
-      changeList.push("Plant unarchived.");
-    } else if (newPlant.status === "active" && plant.status === "inactive") {
-      changeList.push("Plant undeleted.");
-    }
+  if (newPlant.status === "archived") {
+    newPlant.archivedOn = new Date().toISOString();
   }
 
   // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
-    plant.stage = newPlant.stage;
-    changeList.push(`Stage changed to ${newPlant.stage}`);
+    // plant.stage = newPlant.stage;
 
     const dates = {
-      vegStartedOn: newPlant.vegStartedOn
-        ? newPlant.vegStartedOn
-        : plant.vegStartedOn,
-      flowerStartedOn: newPlant.flowerStartedOn
-        ? newPlant.flowerStartedOn
-        : plant.flowerStartedOn,
-      cureStartedOn: newPlant.cureStartedOn
-        ? newPlant.cureStartedOn
-        : plant.cureStartedOn,
-      harvestedOn: newPlant.harvestedOn
-        ? newPlant.harvestedOn
-        : plant.harvestedOn,
+      vegStartedOn: newPlant.vegStartedOn,
+      flowerStartedOn: newPlant.flowerStartedOn,
+      cureStartedOn: newPlant.cureStartedOn,
+      harvestedOn: newPlant.harvestedOn,
     };
 
     try {
@@ -159,10 +144,21 @@ export const updatePlant = async (req, res) => {
     };
   }
 
+  const changeList = getChangeList(plant.toJSON({ virtuals: true }), newPlant);
+
+  // Update plant object
+  for (const prop in newPlant) {
+    if (Object.hasOwn(newPlant, prop)) {
+      if (newPlant[prop] == null) {
+        delete plant[prop];
+      }
+      plant[prop] = newPlant[prop];
+    }
+  }
+
   // Check if plant name has changed
   if (newPlant.name !== plant.name) {
     plant.name = newPlant.name;
-    changeList.push("Plant name");
 
     try {
       // Generate new plantId from new name
@@ -176,50 +172,6 @@ export const updatePlant = async (req, res) => {
   // Plant abbr changed?
   if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
     plant.plantAbbr = newPlant.plantAbbr;
-    changeList.push(`Plant abbreviation changed to ${newPlant.plantAbbr}`);
-  }
-
-  // Plant stage changed?
-  if (newPlant.stage && newPlant.stage !== plant.stage) {
-    plant.stage = newPlant.stage;
-    changeList.push(`Stage changed to ${newPlant.stage}`);
-  }
-
-  // Veg start date changed?
-  if (
-    newPlant.vegStartedOn &&
-    new Date(newPlant.vegStartedOn).toJSON() !== plant.vegStartedOn?.toJSON()
-  ) {
-    plant.vegStartedOn = newPlant.vegStartedOn;
-    changeList.push("Veg start date");
-  }
-
-  // Flower start date changed?
-  if (
-    newPlant.flowerStartedOn &&
-    new Date(newPlant.flowerStartedOn).toJSON() !==
-      plant.flowerStartedOn?.toJSON()
-  ) {
-    plant.flowerStartedOn = newPlant.flowerStartedOn;
-    changeList.push("Flower start date");
-  }
-
-  // Cure start date changed?
-  if (
-    newPlant.cureStartedOn &&
-    new Date(newPlant.cureStartedOn).toJSON() !== plant.cureStartedOn?.toJSON()
-  ) {
-    plant.cureStartedOn = newPlant.cureStartedOn;
-    changeList.push("Cure start date");
-  }
-
-  // Harvested on date changed?
-  if (
-    newPlant.harvestedOn &&
-    new Date(newPlant.harvestedOn).toJSON() !== plant.harvestedOn?.toJSON()
-  ) {
-    plant.harvestedOn = newPlant.harvestedOn;
-    changeList.push("Harvested on date");
   }
 
   // If we have no changes to make, return immediately
