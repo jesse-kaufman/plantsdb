@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import config from "../config/config.js";
 import dayjs from "dayjs";
+import methods from "./plantModel.methods.js";
 import statics from "./plantModel.statics.js";
 
 /**
@@ -187,6 +188,13 @@ const PlantSchema = new Schema(
   }
 );
 
+PlantSchema.post("save", async function () {
+  const { changes, oldPlant } = this.$locals;
+
+  // After saving, log the changes made to the plant
+  await this.logChanges(changes, oldPlant);
+});
+
 PlantSchema.statics.getById = statics.getById;
 PlantSchema.statics.getAll = statics.getAll;
 PlantSchema.statics.deleteOne = statics.deleteOne;
@@ -194,5 +202,8 @@ PlantSchema.statics.setupQuery = statics.setupQuery;
 PlantSchema.statics.validStatuses = validStatuses;
 PlantSchema.statics.validSources = validSources;
 PlantSchema.statics.validStages = validStages;
+
+// Add instance methods to schema
+PlantSchema.methods.logChanges = methods.logChanges;
 
 export default model("Plant", PlantSchema);

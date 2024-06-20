@@ -47,24 +47,27 @@ const getPropChangeMsg = (propName, oldProp, newProp) => {
     return getDateChangeMsg(propName, oldProp, newProp);
   }
 
-  if (newProp !== oldProp) {
-    return `${propName} changed to ${newProp}`;
-  }
+  // Any other properties that changed
+  return `${propName} changed to ${newProp}`;
 };
 
 /**
  * Gets the change list for a plant update
  *
+ * @param {*} changes Changes made to the plant
  * @param {*} oldPlant The old plant object
- * @param {*} newPlant The new plant object
  * @return {Array} The change list
  */
-const getChangeList = (oldPlant, newPlant) => {
+export const getChangeList = ({ $set }, oldPlant) => {
   const changeList = [];
 
-  for (const prop in newPlant) {
-    if (Object.hasOwn(newPlant, prop)) {
-      const msg = getPropChangeMsg(prop, oldPlant[prop], newPlant[prop]);
+  // Walk thorough list of properties being set
+  for (const prop in $set) {
+    // Verify that the property exists
+    if (Object.hasOwn($set, prop)) {
+      // Get the change message for the property
+      const msg = getPropChangeMsg(prop, oldPlant[prop], $set[prop]);
+      // Add message to array if not null
       if (msg != null) changeList.push(msg);
     }
   }
@@ -72,4 +75,4 @@ const getChangeList = (oldPlant, newPlant) => {
   return changeList;
 };
 
-export default getChangeList;
+export default { getChangeList };

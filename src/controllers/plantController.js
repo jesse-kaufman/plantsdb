@@ -108,6 +108,9 @@ export const updatePlant = async (req, res) => {
     return;
   }
 
+  // Save a copy of the old plant for later
+  plant.$locals.oldPlant = plant.toJSON();
+
   // Make sure new plant doesn't have a different ID
   newPlant._id = req.params.plantId;
 
@@ -144,8 +147,6 @@ export const updatePlant = async (req, res) => {
     };
   }
 
-  const changeList = getChangeList(plant.toJSON({ virtuals: true }), newPlant);
-
   // Update plant object
   for (const prop in newPlant) {
     if (Object.hasOwn(newPlant, prop)) {
@@ -174,15 +175,17 @@ export const updatePlant = async (req, res) => {
     plant.plantAbbr = newPlant.plantAbbr;
   }
 
+  // Get changes to plant as MongoDB query object
+  plant.$locals.changes = plant.getChanges();
+
   // If we have no changes to make, return immediately
-  if (changeList.length === 0) {
+  if (plant.$locals.changes.$set == null) {
+    console.log("No changes made to plant");
     res.status(httpCodes.OK).json(plant);
     return;
   }
 
-  //
   // Save the plant
-  //
   try {
     await plant.save();
   } catch (err) {
@@ -191,11 +194,6 @@ export const updatePlant = async (req, res) => {
   }
 
   res.status(httpCodes.OK).json(plant);
-
-  addLogEntry(
-    req.params.plantId,
-    `Updated plant:\n• ${changeList.join("\n• ")}`
-  );
 };
 
 /**
