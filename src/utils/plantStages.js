@@ -7,15 +7,15 @@ import dayjs from "dayjs";
  * @returns {object} The update db query.
  */
 const seedling = (dates) => {
-  const startedOn = dates.startedOn ? dates.startedOn : dayjs();
+  const startedOn = dayjs(dates?.startedOn);
 
   // Calculate new potential harvest date
-  const potentialHarvest = dayjs(startedOn)
+  const potentialHarvest = startedOn
     .add(config.flowerWeeks, "weeks")
     .format("YYYY-MM-DD");
 
   return {
-    startedOn: startedOn,
+    startedOn: `${startedOn.format("YYYY-MM-DD")}T00:00:00`,
     potentialHarvest: `${potentialHarvest}T00:00:00`,
     vegStartedOn: undefined,
     flowerStartedOn: undefined,
