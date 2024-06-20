@@ -1,3 +1,4 @@
+/* eslint-disable capitalized-comments */
 /* eslint-disable no-magic-numbers */
 import globals from "globals";
 import pluginJs from "@eslint/js";
@@ -36,7 +37,7 @@ const config = [
       "no-loop-func": "error",
       "no-magic-numbers": [
         "warn",
-        { ignoreArrayIndexes: true, ignore: [0], enforceConst: true },
+        { ignoreArrayIndexes: true, ignore: [0, 1], enforceConst: true },
       ],
       "no-multi-assign": "error",
       "no-multi-str": "error",
