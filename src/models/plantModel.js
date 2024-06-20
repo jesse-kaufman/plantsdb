@@ -74,7 +74,10 @@ const PlantSchema = new Schema(
       validate: {
         validator: function () {
           // Veg started date must be after plant start date
-          return this.vegStartedOn >= this.startedOn;
+          return (
+            dayjs(dayjs(this.vegStartedOn).format("YYYY-MM-DD")) >=
+            dayjs(dayjs(this.startedOn).format("YYYY-MM-DD"))
+          );
         },
         message: () => "Veg started date must be after start date.",
       },
