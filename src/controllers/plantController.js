@@ -106,23 +106,22 @@ export const updatePlant = async (req, res) => {
     return;
   }
 
-  // Save a copy of the old plant for later
+  // Save a copy of the old plant for middleware
   plant.$locals.oldPlant = plant.toJSON();
 
-  // Make sure new plant doesn't have a different ID
+  // Make sure new plant has the same ID as request
   newPlant._id = req.params.plantId;
 
   // Fill in missing properties in newPlant with ones from the database
   newPlant = { ...plant.toJSON(), ...newPlant };
 
+  // If plant is being archived, set archivedOn
   if (newPlant.status === "archived") {
     newPlant.archivedOn = new Date().toISOString();
   }
 
   // Get the data to update plant stage and set dates accordingly
   if (newPlant.stage && newPlant.stage !== plant.stage) {
-    // plant.stage = newPlant.stage;
-
     const dates = {
       vegStartedOn: newPlant.vegStartedOn,
       flowerStartedOn: newPlant.flowerStartedOn,
@@ -130,13 +129,8 @@ export const updatePlant = async (req, res) => {
       harvestedOn: newPlant.harvestedOn,
     };
 
-    try {
-      // Get dates based on new stage and request body
-      stageDates = getNewStageDates(newPlant.stage, dates);
-    } catch (err) {
-      res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
-      return;
-    }
+    // Get dates based on new stage and request body
+    stageDates = getNewStageDates(newPlant.stage, dates);
 
     // Add data to newPlant object
     newPlant = {
