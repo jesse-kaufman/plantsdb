@@ -14,16 +14,19 @@ const getStatusChangeMsg = (oldStatus, newStatus) => {
   if (oldStatus === "inactive") return "Plant undeleted.";
 };
 
-const getDateChangeMsg = (propName, oldDate, newDate) => {
-  const newDateObj = new Date(newDate);
-  const oldDateObj = new Date(oldDate);
+/**
+ * Gets change message for date property.
+ *
+ * @param {*} propName The property name
+ * @param {*} oldDate The previous value
+ * @param {*} newDate The new value
+ * @returns {string}
+ */
+const getDateChangeMsg = (propName, newDate) => {
+  if (!newDate) return;
 
-  if (!newDate) {
-    return;
-  }
-  if (newDateObj.toJSON() !== oldDateObj.toJSON()) {
-    return `${propName} changed to ${dayjs(newDateObj).format("YYYY-MM-DD")}`;
-  }
+  const newDateObj = new Date(newDate);
+  return `${propName} changed to ${dayjs(newDateObj).format("YYYY-MM-DD")}`;
 };
 
 const getPropChangeMsg = (propName, oldProp, newProp) => {
@@ -49,7 +52,7 @@ const getPropChangeMsg = (propName, oldProp, newProp) => {
 
   // Property is a date, get custom message
   if (dateProps.includes(propName)) {
-    return getDateChangeMsg(propName, oldProp, newProp);
+    return getDateChangeMsg(propName, newProp);
   }
 
   // Any other properties that changed
