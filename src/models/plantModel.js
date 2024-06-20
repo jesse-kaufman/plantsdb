@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 import config from "../config/config.js";
 import dayjs from "dayjs";
 import methods from "./plantModel.methods.js";
+import middleware from "./plantModel.middleware.js";
 import statics from "./plantModel.statics.js";
 
 /**
@@ -191,12 +192,7 @@ const PlantSchema = new Schema(
   }
 );
 
-PlantSchema.post("save", async function () {
-  const { changes, oldPlant } = this.$locals;
-
-  // After saving, log the changes made to the plant
-  await this.logChanges(changes, oldPlant);
-});
+PlantSchema.post("save", middleware.postSave);
 
 // Add static methods to schema
 PlantSchema.statics.getById = statics.getById;
