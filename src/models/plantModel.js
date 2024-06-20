@@ -76,11 +76,16 @@ const PlantSchema = new Schema(
         validator: function () {
           // Veg started date must be after plant start date
           return (
+            /*
+             * Inner dayjs() formats the date as YYYY-MM-DD firt (so times and
+             * timezones don't affect the date). The outer dayjs() creates
+             * a new date to compare the dates.
+             */
             dayjs(dayjs(this.vegStartedOn).format("YYYY-MM-DD")) >=
             dayjs(dayjs(this.startedOn).format("YYYY-MM-DD"))
           );
         },
-        message: () => "Veg started date must be after start date.",
+        message: "Veg started date must be after start date.",
       },
     },
     flowerStartedOn: {
@@ -92,7 +97,15 @@ const PlantSchema = new Schema(
       validate: {
         validator: function () {
           // Flower started date must be after veg started date
-          return this.flowerStartedOn >= this.vegStartedOn;
+          return (
+            /*
+             * Inner dayjs() formats the date as YYYY-MM-DD firt (so times and
+             * timezones don't affect the date). The outer dayjs() creates
+             * a new date to compare the dates.
+             */
+            dayjs(dayjs(this.flowerStartedOn).format("YYYY-MM-DD")) >=
+            dayjs(dayjs(this.vegStartedOn).format("YYYY-MM-DD"))
+          );
         },
         message: "Flower started date must be after veg started date.",
       },
@@ -113,7 +126,15 @@ const PlantSchema = new Schema(
       validator: {
         validate: function () {
           // Harvest date must be after flower start date
-          return this.harvestedOn >= this.flowerStartedOn;
+          return (
+            /*
+             * Inner dayjs() formats the date as YYYY-MM-DD firt (so times and
+             * timezones don't affect the date). The outer dayjs() creates
+             * a new date to compare the dates.
+             */
+            dayjs(dayjs(this.harvestedOn).format("YYYY-MM-DD")) >=
+            dayjs(dayjs(this.flowerStartedOn).format("YYYY-MM-DD"))
+          );
         },
         message: "Harvested date must be after flower started date.",
       },
@@ -127,7 +148,15 @@ const PlantSchema = new Schema(
       validator: {
         validate: function () {
           // Cure started date must be after harvest date
-          return this.cureStartedOn >= this.harvestedOn;
+          return (
+            /*
+             * Inner dayjs() formats the date as YYYY-MM-DD firt (so times and
+             * timezones don't affect the date). The outer dayjs() creates
+             * a new date to compare the dates.
+             */
+            dayjs(dayjs(this.cureStartedOn).format("YYYY-MM-DD")) >=
+            dayjs(dayjs(this.harvestedOn).format("YYYY-MM-DD"))
+          );
         },
         message: "Cure started date must be after harvested date.",
       },
