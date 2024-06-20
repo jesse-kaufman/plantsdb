@@ -27,7 +27,9 @@ const getDateChangeMsg = (propName, oldDate, newDate) => {
 };
 
 const getPropChangeMsg = (propName, oldProp, newProp) => {
+  /** Properties to ignore */
   const ignoredProps = ["_id", "createdAt", "updatedAt"];
+  /** Date properties */
   const dateProps = [
     "vegStartedOn",
     "flowerStartedOn",
@@ -37,12 +39,15 @@ const getPropChangeMsg = (propName, oldProp, newProp) => {
     "potentialHarvest",
   ];
 
+  // Ignore properties in ignoredProps array above
   if (ignoredProps.includes(propName)) return;
 
+  // Property is plant status, get custom message
   if (propName === "status") {
     return getStatusChangeMsg(oldProp, newProp);
   }
 
+  // Property is a date, get custom message
   if (dateProps.includes(propName)) {
     return getDateChangeMsg(propName, oldProp, newProp);
   }
