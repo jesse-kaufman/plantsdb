@@ -156,7 +156,7 @@ export const updatePlant = async (req, res) => {
   plant.$locals.changes = plant.getChanges();
 
   // If we have no changes to make, return immediately
-  if (plant.$locals.changes.$set == null) {
+  if (plant.isModified() === false) {
     console.log("No changes made to plant");
     res.status(httpCodes.OK).json(plant);
     return;
