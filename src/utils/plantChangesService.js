@@ -29,6 +29,14 @@ const getDateChangeMsg = (propName, newDate) => {
   return `${propName} changed to ${dayjs(newDateObj).format("YYYY-MM-DD")}`;
 };
 
+/**
+ * Gets change message for a given property.
+ *
+ * @param {*} propName
+ * @param {*} oldProp
+ * @param {*} newProp
+ * @returns {string}
+ */
 const getPropChangeMsg = (propName, oldProp, newProp) => {
   /** Properties to ignore */
   const ignoredProps = ["_id", "createdAt", "updatedAt"];
