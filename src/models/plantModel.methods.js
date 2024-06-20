@@ -15,7 +15,7 @@ const logChanges = async function (changes) {
 /**
  * Generates a unique plant abbreviation based on the given plant name.
  */
-const generatePlantAbbr = async function () {
+const generateAbbr = async function () {
   if (this.$locals.oldPlant.name !== this.name) return;
 
   console.log("Generating new plant abbreviation");
