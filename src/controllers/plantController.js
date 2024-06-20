@@ -1,7 +1,6 @@
 import PlantModel from "../models/plantModel.js";
 import { addLogEntry } from "../utils/log.js";
 import { generatePlantAbbr } from "../utils/plantAbbrService.js";
-import getChangeList from "../utils/plantChangesService.js";
 import { getNewStageDates } from "../utils/plantStages.js";
 import { httpCodes } from "../config/config.js";
 import plantValidators from "../utils/plantValidators.js";
