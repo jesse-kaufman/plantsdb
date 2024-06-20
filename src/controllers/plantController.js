@@ -1,6 +1,5 @@
 import PlantModel from "../models/plantModel.js";
 import { addLogEntry } from "../utils/log.js";
-import { generatePlantAbbr } from "../utils/plantAbbrService.js";
 import { getNewStageDates } from "../utils/plantStages.js";
 import { httpCodes } from "../config/config.js";
 import plantValidators from "../utils/plantValidators.js";
@@ -72,7 +71,7 @@ export const addPlant = async (req, res) => {
 
   // If plant name abbreviation is not provided, generate one
   if (!req.body.plantAbbr) {
-    newPlant.plantAbbr = generatePlantAbbr(newPlant.name);
+    newPlant.plantAbbr = newPlant.generatePlantAbbr();
   }
 
   // Save plant to the database
@@ -156,25 +155,10 @@ export const updatePlant = async (req, res) => {
     }
   }
 
-  // Check if plant name has changed
-  if (newPlant.name !== plant.name) {
-    plant.name = newPlant.name;
+  // Generate new plantId from new name
+  await plant.generatePlantAbbr();
 
-    try {
-      // Generate new plantId from new name
-      newPlant.plantAbbr = await generatePlantAbbr(plant.name);
-    } catch (err) {
-      res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
-      return;
-    }
-  }
-
-  // Plant abbr changed?
-  if (newPlant.plantAbbr && newPlant.plantAbbr !== plant.plantAbbr) {
-    plant.plantAbbr = newPlant.plantAbbr;
-  }
-
-  // Get changes to plant as MongoDB query object
+  // Save changes to made plant to $locals for middleware
   plant.$locals.changes = plant.getChanges();
 
   // If we have no changes to make, return immediately
