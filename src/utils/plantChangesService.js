@@ -42,6 +42,7 @@ const getPropChangeMsg = (propName, oldProp, newProp) => {
   const ignoredProps = ["_id", "createdAt", "updatedAt"];
   /** Date properties */
   const dateProps = [
+    "startedOn",
     "vegStartedOn",
     "flowerStartedOn",
     "cureStartedOn",
