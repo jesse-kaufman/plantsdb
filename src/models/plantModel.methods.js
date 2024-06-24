@@ -1,5 +1,6 @@
 import { addLogEntry } from "../utils/log.js";
 import { getChangeList } from "../utils/plantChangesService.js";
+import { getNewStageDates } from "../utils/plantStages.js";
 
 /**
  * Creates a new log entry listing the changes made to the plant

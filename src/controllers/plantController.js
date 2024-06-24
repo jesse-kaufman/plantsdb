@@ -1,6 +1,5 @@
 import PlantModel from "../models/plantModel.js";
 import { addLogEntry } from "../utils/log.js";
-import { getNewStageDates } from "../utils/plantStages.js";
 import { httpCodes } from "../config/config.js";
 import plantValidators from "../utils/plantValidators.js";
 
@@ -20,6 +19,7 @@ export const getPlant = async (req, res) => {
     console.error(err);
     res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
   }
+
   if (!plant) {
     res.status(httpCodes.NOT_FOUND).json({ error: "Plant not found" });
     return;
