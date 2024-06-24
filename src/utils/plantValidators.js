@@ -1,35 +1,35 @@
-import PlantModel from "../models/plantModel.js";
+import PlantModel from '../models/plantModel.js'
 const isValidId = async (plantId) => {
   const count = await PlantModel.countDocuments({
-    status: "active",
+    status: 'active',
     plantId: plantId.trim(),
-  });
+  })
   if (count === 0) {
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}
 
 const isValidName = async (plantName) => {
   const plant = await PlantModel.findOne({
-    status: "active",
+    status: 'active',
     name: plantName.trim(),
-  });
+  })
 
   if (plant != null) {
-    return true;
+    return true
   }
 
-  return false;
-};
+  return false
+}
 
 const isValidDates = () => {
-  return false;
-};
+  return false
+}
 
 export default {
   isValidId,
   isValidName,
   isValidDates,
-};
+}

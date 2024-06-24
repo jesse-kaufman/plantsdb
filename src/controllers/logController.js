@@ -1,5 +1,5 @@
-import LogModel from "../models/logModel.js";
-import { httpCodes } from "../config/config.js";
+import LogModel from '../models/logModel.js'
+import { httpCodes } from '../config/config.js'
 
 /**
  * Gets an existing plant log entry from the database
@@ -14,12 +14,12 @@ export const getLog = async (req, res) => {
     //
     const log = await LogModel.findById({
       _id: req.params.logId,
-    });
-    res.status(httpCodes.OK).json(log);
+    })
+    res.status(httpCodes.OK).json(log)
   } catch (err) {
-    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message })
   }
-};
+}
 
 /**
  * Gets all the log entries for a plant from the database
@@ -32,8 +32,8 @@ export const getLogs = async (req, res) => {
   // Filter by statuses requested
   //
   if (!req.params.plantId) {
-    res.status(httpCodes.SERVER_ERROR).json({ error: "No plantId provided." });
-    return;
+    res.status(httpCodes.SERVER_ERROR).json({ error: 'No plantId provided.' })
+    return
   }
 
   //
@@ -42,12 +42,12 @@ export const getLogs = async (req, res) => {
   try {
     const logs = await find({
       plantId: req.params.plantId,
-    });
-    res.status(httpCodes.OK).json(logs);
+    })
+    res.status(httpCodes.OK).json(logs)
   } catch (err) {
-    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message })
   }
-};
+}
 
 /**
  * Adds a new plant log entry to the database
@@ -57,23 +57,23 @@ export const getLogs = async (req, res) => {
  */
 export const addLog = async (req, res) => {
   // XXX: Validate the input here
-  const plantId = req.params.plantId;
+  const plantId = req.params.plantId
   const newLog = {
     plantId: plantId,
     message: req.body.message,
-  };
+  }
 
   //
   // Save the new log entry
   //
   try {
-    const log = new LogModel(newLog);
-    await log.save();
-    res.status(httpCodes.CREATED).json(log);
+    const log = new LogModel(newLog)
+    await log.save()
+    res.status(httpCodes.CREATED).json(log)
   } catch (err) {
-    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message })
   }
-};
+}
 
 /**
  * Returns an HTTP httpCodes.NOT_ALLOWED: "Method not allowed" error message
@@ -83,14 +83,14 @@ export const addLog = async (req, res) => {
  */
 export const notAllowed = (req, res) => {
   switch (req.method) {
-    case "DELETE":
+    case 'DELETE':
       res
         .status(httpCodes.NOT_ALLOWED)
-        .json({ error: "Deleting log entries is prohibited." });
-      return;
-    case "PUT":
+        .json({ error: 'Deleting log entries is prohibited.' })
+      return
+    case 'PUT':
       res
         .status(httpCodes.NOT_ALLOWED)
-        .json({ error: "Updating log entries is prohibited." });
+        .json({ error: 'Updating log entries is prohibited.' })
   }
-};
+}

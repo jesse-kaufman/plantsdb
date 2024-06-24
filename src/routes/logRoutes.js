@@ -4,16 +4,16 @@ import {
   getLog,
   getLogs,
   notAllowed,
-} from "../controllers/logController.js";
-import { Router } from "express";
+} from '../controllers/logController.js'
+import { Router } from 'express'
 
-const router = new Router();
+const router = new Router()
 
 router
-  .get("/", getLogs)
-  .get("/:logId", getLog)
-  .post("/", addLog)
-  .put("/:logId", notAllowed)
-  .delete("/:logId", notAllowed);
+  .get('/', getLogs)
+  .get('/:logId', getLog)
+  .post('/', addLog)
+  .put('/:logId', notAllowed)
+  .delete('/:logId', notAllowed)
 
-export default router;
+export default router

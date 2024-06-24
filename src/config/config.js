@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv'
 
-// Enviroment variables
-dotenv.config();
+// Environment variables
+dotenv.config()
 
 const config = {
   flowerWeeks: 4,
   totalWeeks: 9,
   apiPort: 8420,
-};
+}
 
 export const httpCodes = {
   OK: 200,
@@ -19,6 +19,6 @@ export const httpCodes = {
   METHOD_NOT_ALLOWED: 405,
   CONFLICT: 409,
   SERVER_ERROR: 500,
-};
+}
 
-export default config;
+export default config

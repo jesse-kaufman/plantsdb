@@ -4,7 +4,7 @@
  * Provides functions to build a query for use in selecting plants from
  * the database.
  */
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 /**
  * Sets up the status filter for the plant query
@@ -13,19 +13,19 @@ import mongoose from "mongoose";
  * @returns
  */
 const setupStatusFilter = (status, validStatuses) => {
-  if (status === "any") return {};
+  if (status === 'any') return {}
 
   if (Array.isArray(status) === true) {
     const statusArray = status.map((statusItem) =>
-      validStatuses.includes(statusItem) ? statusItem : null
-    );
-    return { $in: statusArray };
+      validStatuses.includes(statusItem) ? statusItem : null,
+    )
+    return { $in: statusArray }
   }
 
-  if (status != null) return status;
+  if (status != null) return status
 
-  return "active";
-};
+  return 'active'
+}
 
 /**
  * Sets up the stage filter for the plant query
@@ -38,17 +38,17 @@ const setupStageFilter = (stage, validStages) => {
   // Variable stages is an array, filter out any invalid stages.
   if (Array.isArray(stage) === true) {
     const stageArray = stage.map((stageItem) =>
-      validStages.includes(stageItem) ? stageItem : null
-    );
-    return { $in: stageArray };
+      validStages.includes(stageItem) ? stageItem : null,
+    )
+    return { $in: stageArray }
   }
 
   // Variable stages is set but not an array, return string
-  if (stage != null) return stage;
+  if (stage != null) return stage
 
   // Variable stages is not set, return null
-  return null;
-};
+  return null
+}
 
 /**
  * Sets up plant query
@@ -58,17 +58,17 @@ const setupStageFilter = (stage, validStages) => {
  * @returns
  */
 const setup = function (config, PlantSchema) {
-  const { plantId, status, stage } = config;
-  const { validStatuses, validStages } = PlantSchema;
-  const statusFilter = setupStatusFilter(status, validStatuses);
-  const stageFilter = setupStageFilter(stage, validStages);
+  const { plantId, status, stage } = config
+  const { validStatuses, validStages } = PlantSchema
+  const statusFilter = setupStatusFilter(status, validStatuses)
+  const stageFilter = setupStageFilter(stage, validStages)
 
   // Default to filtering by statusFilter
-  let query = { status: statusFilter };
+  let query = { status: statusFilter }
 
   // Add stage filter to query if set
   if (stageFilter) {
-    query = { ...query, stage: stageFilter };
+    query = { ...query, stage: stageFilter }
   }
 
   // Add plantId filter to query if set
@@ -76,14 +76,14 @@ const setup = function (config, PlantSchema) {
     query = {
       ...query,
       _id: mongoose.Types.ObjectId.createFromHexString(plantId),
-    };
+    }
   }
 
-  return query;
-};
+  return query
+}
 
 export default {
   setup,
   setupStatusFilter,
   setupStageFilter,
-};
+}

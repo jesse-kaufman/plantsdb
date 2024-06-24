@@ -1,5 +1,5 @@
-import { addLogEntry } from "../utils/log.js";
-import qs from "../utils/plantQueryService.js";
+import { addLogEntry } from '../utils/log.js'
+import qs from '../utils/plantQueryService.js'
 
 /**
  * Gets plant by ID.
@@ -9,9 +9,9 @@ import qs from "../utils/plantQueryService.js";
  * @returns
  */
 const getById = async function (plantId, status) {
-  const query = qs.setup({ plantId, status }, this);
-  return await this.findOne(query);
-};
+  const query = qs.setup({ plantId, status }, this)
+  return await this.findOne(query)
+}
 
 /**
  * Gets all plants based on optional criteria.
@@ -19,15 +19,15 @@ const getById = async function (plantId, status) {
  * @returns
  */
 const getAll = async function ({ status, stage }) {
-  const query = qs.setup({ status, stage }, this);
-  return await this.find(query);
-};
+  const query = qs.setup({ status, stage }, this)
+  return await this.find(query)
+}
 
 const deleteOne = async function (plantId) {
   // Find and mark plant inactive
-  const plant = await this.updateOne({ _id: plantId }, { status: "inactive" });
-  addLogEntry(plantId, "Plant deleted");
-  return plant;
-};
+  const plant = await this.updateOne({ _id: plantId }, { status: 'inactive' })
+  addLogEntry(plantId, 'Plant deleted')
+  return plant
+}
 
-export default { getById, getAll, deleteOne };
+export default { getById, getAll, deleteOne }

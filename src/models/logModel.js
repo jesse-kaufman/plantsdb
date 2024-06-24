@@ -1,10 +1,10 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose'
 
 const LogSchema = new Schema(
   {
     plantId: {
       type: Schema.Types.ObjectId,
-      ref: "Plant",
+      ref: 'Plant',
       required: true,
     },
     message: {
@@ -13,11 +13,11 @@ const LogSchema = new Schema(
     },
     level: {
       type: String,
-      enum: ["info", "warn", "error"],
-      default: "info",
+      enum: ['info', 'warn', 'error'],
+      default: 'info',
     },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export default model("Logs", LogSchema);
+export default model('Logs', LogSchema)
