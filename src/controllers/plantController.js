@@ -106,7 +106,7 @@ export const updatePlant = async (req, res) => {
   try {
     // Update plant object
     const wasModified = plant.doUpdate(req.params.plantId, req.body)
-    if (wasModified) {
+    if (!wasModified) {
       console.log('No changes made to plant')
     }
   } catch (e) {
