@@ -20,7 +20,7 @@ export const getPlant = async (req, res) => {
     res.status(httpCodes.SERVER_ERROR).json({ error: err.message })
   }
 
-  if (!plant) {
+  if (plant == null) {
     res.status(httpCodes.NOT_FOUND).json({ error: 'Plant not found' })
     return
   }
@@ -70,7 +70,7 @@ export const addPlant = async (req, res) => {
   newPlant = new PlantModel(req.body)
 
   // If plant name abbreviation is not provided, generate one
-  if (!req.body.plantAbbr) {
+  if (req.body?.plantAbbr === '') {
     newPlant.plantAbbr = newPlant.generatePlantAbbr()
   }
 
@@ -98,7 +98,7 @@ export const updatePlant = async (req, res) => {
   // Find the plant
   const plant = await PlantModel.getById(req.params.plantId, req.query.status)
 
-  if (!plant) {
+  if (plant == null) {
     res.status(httpCodes.NOT_FOUND).json({ error: 'Plant not found' })
     return
   }
