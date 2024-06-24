@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose'
 import config from '../config/config.js'
 import dayjs from 'dayjs'
 import methods from './plantModel.methods.js'
+import plantLog from '../utils/plantLogService.js'
 import middleware from './plantModel.middleware.js'
 import statics from './plantModel.statics.js'
 
@@ -235,7 +236,7 @@ PlantSchema.statics.validSources = validSources
 PlantSchema.statics.validStages = validStages
 
 // Add instance methods to schema
-PlantSchema.methods.logChanges = methods.logChanges
+PlantSchema.methods.logChanges = plantLog.logChanges
 PlantSchema.methods.generateAbbr = methods.generateAbbr
 PlantSchema.methods.doUpdate = methods.doUpdate
 

@@ -2,48 +2,6 @@ import { addLogEntry } from '../utils/log.js'
 import { getChangeList } from '../utils/plantChangeService.js'
 import { getNewStageDates } from '../utils/plantStages.js'
 
-/**
- * Creates a new log entry listing the changes made to the plant
- *
- * @param {*} changes
- */
-const logChanges = async function (changes) {
-  const changeList = getChangeList(changes, this.$locals.oldPlant)
-  console.log(changeList)
-  await addLogEntry(this._id, `Updated plant:\n• ${changeList.join('\n• ')}`)
-}
-
-/**
- * Generates a unique plant abbreviation based on the given plant name.
- */
-const generateAbbr = async function () {
-  if (this.$locals.oldPlant.name !== this.name) return
-
-  console.log('Generating new plant abbreviation')
-  let newPlantAbbr = ''
-
-  this.name.split(' ').forEach((part) => {
-    if (/^\d.*$/.test(part)) {
-      // Use entire part if it is numeric
-      newPlantAbbr += part
-    } else if (/^[a-zA-Z]$/.test(part.charAt(0).toUpperCase())) {
-      // Use only first letter of non-numeric parts
-      newPlantAbbr += part.charAt(0).toUpperCase()
-    }
-  })
-
-  newPlantAbbr = newPlantAbbr.trim()
-
-  // Count existing plants with same plantId base
-  const count = await this.constructor.countDocuments({
-    status: 'active',
-    plantId: { $regex: `^${newPlantAbbr}\\-\\d$` },
-  })
-
-  // Add 1 to the count of matching plants to create suffix
-  this.plantAbbr = `${newPlantAbbr}-${count + 1}`
-}
-
 export const doUpdate = async function (plantId, data) {
   // Save a copy of the old plant for middleware
   this.$locals.oldPlant = this.toJSON()
@@ -81,18 +39,48 @@ export const doUpdate = async function (plantId, data) {
   // Update plant object
   this.overwrite(plantUpdate)
 
-  // Generate new plantAbbr
+  // Generate new plantAbbr (if needed)
   await this.generateAbbr()
-  console.log('Before:', this.$locals.oldPlant)
-  console.log('After:', plantUpdate)
 
   // Save changes to made plant to $locals for middleware
   this.$locals.changes = this.getChanges()
-  console.log(this.$locals.changes)
 
+  // Save the plant
   this.save()
 
+  // Return true if modified, otherwise false
   return this.isModified()
 }
 
-export default { logChanges, generateAbbr, doUpdate }
+/**
+ * Generates a unique plant abbreviation based on the given plant name.
+ */
+const generateAbbr = async function () {
+  if (this.$locals.oldPlant.name !== this.name) return
+
+  console.log('Generating new plant abbreviation')
+  let newPlantAbbr = ''
+
+  this.name.split(' ').forEach((part) => {
+    if (/^\d.*$/.test(part)) {
+      // Use entire part if it is numeric
+      newPlantAbbr += part
+    } else if (/^[a-zA-Z]$/.test(part.charAt(0).toUpperCase())) {
+      // Use only first letter of non-numeric parts
+      newPlantAbbr += part.charAt(0).toUpperCase()
+    }
+  })
+
+  newPlantAbbr = newPlantAbbr.trim()
+
+  // Count existing plants with same plantId base
+  const count = await this.constructor.countDocuments({
+    status: 'active',
+    plantId: { $regex: `^${newPlantAbbr}\\-\\d$` },
+  })
+
+  // Add 1 to the count of matching plants to create suffix
+  this.plantAbbr = `${newPlantAbbr}-${count + 1}`
+}
+
+export default { doUpdate, generateAbbr }
