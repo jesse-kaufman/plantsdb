@@ -237,5 +237,6 @@ PlantSchema.statics.validStages = validStages;
 // Add instance methods to schema
 PlantSchema.methods.logChanges = methods.logChanges;
 PlantSchema.methods.generateAbbr = methods.generateAbbr;
+PlantSchema.methods.doUpdate = methods.doUpdate;
 
 export default model("Plant", PlantSchema);

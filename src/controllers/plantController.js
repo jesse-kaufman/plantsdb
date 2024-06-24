@@ -95,9 +95,6 @@ export const addPlant = async (req, res) => {
  * @param {*} res The response object
  */
 export const updatePlant = async (req, res) => {
-  let newPlant = req.body;
-  let stageDates;
-
   // Find the plant
   const plant = await PlantModel.getById(req.params.plantId, req.query.status);
 
@@ -106,67 +103,15 @@ export const updatePlant = async (req, res) => {
     return;
   }
 
-  // Save a copy of the old plant for middleware
-  plant.$locals.oldPlant = plant.toJSON();
-
-  // Make sure new plant has the same ID as request
-  newPlant._id = req.params.plantId;
-
-  // Fill in missing properties in newPlant with ones from the database
-  newPlant = { ...plant.toJSON(), ...newPlant };
-
-  // If plant is being archived, set archivedOn
-  if (newPlant.status === "archived") {
-    newPlant.archivedOn = new Date().toISOString();
-  }
-
-  // Get the data to update plant stage and set dates accordingly
-  if (newPlant.stage && newPlant.stage !== plant.stage) {
-    const dates = {
-      vegStartedOn: newPlant.vegStartedOn,
-      flowerStartedOn: newPlant.flowerStartedOn,
-      cureStartedOn: newPlant.cureStartedOn,
-      harvestedOn: newPlant.harvestedOn,
-    };
-
-    // Get dates based on new stage and request body
-    stageDates = getNewStageDates(newPlant.stage, dates);
-
-    // Add data to newPlant object
-    newPlant = {
-      ...newPlant,
-      ...stageDates,
-    };
-  }
-
-  // Update plant object
-  for (const prop in newPlant) {
-    if (Object.hasOwn(newPlant, prop)) {
-      if (newPlant[prop] == null) {
-        delete plant[prop];
-      }
-      plant[prop] = newPlant[prop];
-    }
-  }
-
-  // Generate new plantId from new name
-  await plant.generatePlantAbbr();
-
-  // Save changes to made plant to $locals for middleware
-  plant.$locals.changes = plant.getChanges();
-
-  // If we have no changes to make, return immediately
-  if (plant.isModified() === false) {
-    console.log("No changes made to plant");
-    res.status(httpCodes.OK).json(plant);
-    return;
-  }
-
-  // Save the plant
   try {
-    await plant.save();
-  } catch (err) {
-    res.status(httpCodes.SERVER_ERROR).json({ error: err.message });
+    // Update plant object
+    const wasModified = plant.doUpdate(req.params.plantId, req.body);
+    if (wasModified) {
+      console.log("No changes made to plant");
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(httpCodes.SERVER_ERROR).json({ error: e.message });
     return;
   }
 
