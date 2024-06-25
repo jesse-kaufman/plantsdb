@@ -1,4 +1,3 @@
-import { addLogEntry } from '../utils/log.js'
 import { getChangeList } from '../utils/plantChangeService.js'
 import { getNewStageDates } from '../utils/plantStages.js'
 import dayjs from 'dayjs'
