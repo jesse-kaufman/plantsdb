@@ -1,4 +1,3 @@
-import { addLogEntry } from '../utils/log.js'
 import qs from '../utils/plantQueryService.js'
 
 /**
@@ -26,7 +25,7 @@ const getAll = async function ({ status, stage }) {
 const deleteOne = async function (plantId) {
   // Find and mark plant inactive
   const plant = await this.updateOne({ _id: plantId }, { status: 'inactive' })
-  addLogEntry(plantId, 'Plant deleted')
+  PlantModel.addLogEntry(plantId, 'Plant deleted')
   return plant
 }
 

@@ -1,5 +1,4 @@
 import PlantModel from '../models/plantModel.js'
-import { addLogEntry } from '../utils/log.js'
 import { httpCodes } from '../config/config.js'
 import plantValidators from '../utils/plantValidators.js'
 
@@ -83,7 +82,7 @@ export const addPlant = async (req, res) => {
   }
 
   // Make log entry
-  addLogEntry(newPlant._id, 'Created new plant')
+  PlantModel.addLogEntry(newPlant._id, 'Created new plant')
 
   res.status(httpCodes.CREATED).json(newPlant)
 }
