@@ -23,7 +23,7 @@ export const log = async function (message) {
   await LogModel.logInfo(this._id, message)
 }
 
-export const logInfo = async (message) => {
+export const logInfo = async function (message) {
   await LogModel.logInfo(this._id, message)
 }
 
