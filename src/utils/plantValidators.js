@@ -17,7 +17,7 @@ const isValidName = async (plantName) => {
     name: plantName.trim(),
   })
 
-  if (plant != null) {
+  if (plant == null) {
     return true
   }
 
