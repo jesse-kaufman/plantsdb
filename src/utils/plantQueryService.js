@@ -13,7 +13,7 @@ import mongoose from 'mongoose'
  * @param {*} PlantSchema
  * @returns
  */
-function setup(config, PlantSchema) {
+const setup = (config, PlantSchema) => {
   const { plantId, status, stage } = config
   const { validStatuses, validStages } = PlantSchema
   const statusFilter = setupStatusFilter(status, validStatuses)
@@ -37,13 +37,14 @@ function setup(config, PlantSchema) {
 
   return query
 }
+
 /**
  * Sets up the status filter for the plant query
  * @param {*} status
  * @param {*} validStatuses
  * @returns
  */
-function setupStatusFilter(status, validStatuses) {
+const setupStatusFilter = (status, validStatuses) => {
   if (status === 'any') return {}
 
   if (Array.isArray(status) === true) {
@@ -65,7 +66,7 @@ function setupStatusFilter(status, validStatuses) {
  * @param {*} validStages
  * @returns object|null
  */
-function setupStageFilter(stage, validStages) {
+const setupStageFilter = (stage, validStages) => {
   // Variable stages is an array, filter out any invalid stages.
   if (Array.isArray(stage) === true) {
     const stageArray = stage.map((stageItem) =>
