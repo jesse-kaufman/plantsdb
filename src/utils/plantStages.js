@@ -92,7 +92,7 @@ const getHarvestDates = (dates) => {
  * current date or the provided date.
  *
  * @param {object} data - The data object containing the plant document.
- * @returns {object} The updat db query.
+ * @returns {object} The update db query.
  */
 const getCureDates = (dates) => {
 
