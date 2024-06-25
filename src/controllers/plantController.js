@@ -68,6 +68,9 @@ export const addPlant = async (req, res) => {
   // Create new plant object from data sent
   newPlant = new PlantModel(req.body)
 
+  // Mark plant as new for middleware
+  newPlant.$locals.isNew = true
+
   // If plant name abbreviation is not provided, generate one
   if (!newPlant.plantAbbr) {
     await newPlant.generateAbbr()
@@ -80,9 +83,6 @@ export const addPlant = async (req, res) => {
     res.status(httpCodes.SERVER_ERROR).json({ error: err.message })
     return
   }
-
-  // Make log entry
-  PlantModel.addLogEntry(newPlant._id, 'Created new plant')
 
   res.status(httpCodes.CREATED).json(newPlant)
 }

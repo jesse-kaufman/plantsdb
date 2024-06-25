@@ -7,15 +7,16 @@ import dayjs from 'dayjs'
  * @param {*} oldPlant The old plant object
  * @return {Array} The change list
  */
-export const getChangeList = ({ $set }, oldPlant) => {
+export const getChangeList = (changes, oldPlant) => {
+  const setProps = changes?.$set
   const changeList = []
 
   // Walk thorough list of properties being set
-  for (const prop in $set) {
+  for (const prop in setProps) {
     // Verify that the property exists
-    if (Object.hasOwn($set, prop)) {
+    if (Object.hasOwn(setProps, prop)) {
       // Get the change message for the property
-      const msg = getPropChangeMsg(prop, oldPlant[prop], $set[prop])
+      const msg = getPropChangeMsg(prop, oldPlant[prop], setProps[prop])
       // Add message to array if not null
       if (msg != null) changeList.push(msg)
     }

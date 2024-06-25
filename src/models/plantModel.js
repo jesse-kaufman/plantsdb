@@ -236,8 +236,6 @@ PlantSchema.statics.validSources = validSources
 PlantSchema.statics.validStages = validStages
 
 // Add instance methods to schema
-PlantSchema.methods.logChanges = plantLog.logChanges
-PlantSchema.methods.generateAbbr = methods.generateAbbr
-PlantSchema.methods.doUpdate = methods.doUpdate
+PlantSchema.methods = { ...plantLog, ...methods }
 
 export default model('Plant', PlantSchema)
