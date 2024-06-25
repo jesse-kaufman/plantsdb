@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
  * @param {object} data - The data object containing request data.
  * @returns {object} The update db query.
  */
-const seedling = (dates) => {
+const getSeedlingDates = (dates) => {
   const startedOn = dayjs(dates?.startedOn)
 
   // Calculate new potential harvest date
@@ -30,10 +30,7 @@ const seedling = (dates) => {
  * @param {object} dates Object containing dates
  * @returns {object} The update db query.
  */
-const veg = (dates) => {
-  const vegStartedOn = dates.vegStartedOn
-    ? dates.vegStartedOn
-    : dayjs().format('YYYY-MM-DD')
+const getVegDates = (dates) => {
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(vegStartedOn)
@@ -50,7 +47,7 @@ const veg = (dates) => {
   }
 }
 
-const flower = (dates) => {
+const getFlowerDates = (dates) => {
   // Set new flower date
   const flowerStartedOn = dates.flowerStartedOn
     ? dates.flowerStartedOn
@@ -78,10 +75,7 @@ const flower = (dates) => {
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-const harvest = (dates) => {
-  const harvestedOn = dates.harvestedOn
-    ? dates.harvestedOn
-    : dayjs().format('YYYY-MM-DD')
+const getHarvestDates = (dates) => {
 
   return {
     potentialHarvest: undefined,
@@ -100,10 +94,7 @@ const harvest = (dates) => {
  * @param {object} data - The data object containing the plant document.
  * @returns {object} The updat db query.
  */
-const cure = (dates) => {
-  const cureStartedOn = dates.cureStartedOn
-    ? dayjs(dates.cureStartedOn).format('YYYY-MM-DD')
-    : dayjs().format('YYYY-MM-DD')
+const getCureDates = (dates) => {
 
   return {
     potentialHarvest: undefined,
@@ -119,11 +110,15 @@ const cure = (dates) => {
  * Sets the status of the plant to "archived" and sets the archivedOn field to the current date.
  * @returns {object} The updated plant document.
  */
-const archive = () => ({
-  status: 'archived',
-  potentialHarvest: undefined,
-  archivedOn: new Date().toISOString(),
-})
+function getArchiveDates() {
+  const archivedOn = dayjs(dates?.archivedOn).format('YYYY-MM-DD')
+
+  return {
+    status: 'archived',
+    potentialHarvest: undefined,
+    archivedOn: archivedOn,
+  }
+}
 
 /**
  * Returns the update db query for the specified stage and dates.
@@ -134,17 +129,17 @@ const archive = () => ({
 export const getNewStageDates = (stage, dates) => {
   switch (stage) {
     case 'seedling':
-      return seedling(dates)
+      return getSeedlingDates(dates)
     case 'veg':
-      return veg(dates)
+      return getVegDates(dates)
     case 'flower':
-      return flower(dates)
+      return getFlowerDates(dates)
     case 'harvest':
-      return harvest(dates)
+      return getHarvestDates(dates)
     case 'cure':
-      return cure(dates)
+      return getCureDates(dates)
     case 'archive':
-      return archive(dates)
+      return getArchiveDates(dates)
     default:
       throw new Error('Invalid stage')
   }
