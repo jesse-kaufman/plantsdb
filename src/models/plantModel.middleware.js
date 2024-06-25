@@ -1,7 +1,19 @@
+/**
+ * Logs changes made to the plant after saving
+ */
 const postSave = async function () {
-  const { changes, oldPlant } = this.$locals
+  const { changes, oldPlant, isNew } = this.$locals
 
-  // After saving, log the changes made to the plant
+  if (this.status === 'inactive') {
+    await this.log('Plant deleted')
+    return
+  }
+
+  if (isNew) {
+    await this.log('Plant created')
+    return
+  }
+
   await this.logChanges(changes, oldPlant)
 }
 
