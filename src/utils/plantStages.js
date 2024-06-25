@@ -31,6 +31,7 @@ const getSeedlingDates = (dates) => {
  * @returns {object} The update db query.
  */
 const getVegDates = (dates) => {
+  const vegStartedOn = dayjs(dates?.vegStartedOn).format('YYYY-MM-DD')
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(vegStartedOn)
@@ -48,10 +49,10 @@ const getVegDates = (dates) => {
 }
 
 const getFlowerDates = (dates) => {
-  // Set new flower date
-  const flowerStartedOn = dates.flowerStartedOn
-    ? dates.flowerStartedOn
-    : dayjs().format('YYYY-MM-DD')
+  // Set new flower start date
+  const flowerStartedOn = dayjs(dates?.flowerStartedOn).format('YYYY-MM-DD')
+  // Set new veg start date
+  const vegStartedOn = dayjs(dates?.vegStartedOn).format('YYYY-MM-DD')
 
   // Calculate new potential harvest date
   const potentialHarvest = dayjs(flowerStartedOn)
@@ -60,7 +61,7 @@ const getFlowerDates = (dates) => {
 
   return {
     potentialHarvest: `${potentialHarvest}T00:00:00`,
-    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
+    vegStartedOn: `${vegStartedOn}T00:00:00`,
     flowerStartedOn: `${flowerStartedOn}T00:00:00`,
     harvestedOn: undefined,
     cureStartedOn: undefined,
@@ -76,11 +77,17 @@ const getFlowerDates = (dates) => {
  * @returns {object} The update db query.
  */
 const getHarvestDates = (dates) => {
+  // Set veg date
+  const vegStartedOn = dayjs(dates?.vegStartedOn).format('YYYY-MM-DD')
+  // Set flower date
+  const flowerStartedOn = dayjs(dates?.flowerStartedOn).format('YYYY-MM-DD')
+  // Set harvest date
+  const harvestedOn = dayjs(dates?.harvestedOn).format('YYYY-MM-DD')
 
   return {
     potentialHarvest: undefined,
-    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
-    flowerStartedOn: `${dates.flowerStartedOn}T00:00:00`,
+    vegStartedOn: `${vegStartedOn}T00:00:00`,
+    flowerStartedOn: `${flowerStartedOn}T00:00:00`,
     harvestedOn: `${harvestedOn}T00:00:00`,
     cureStartedOn: undefined,
     archivedOn: undefined,
@@ -95,12 +102,20 @@ const getHarvestDates = (dates) => {
  * @returns {object} The update db query.
  */
 const getCureDates = (dates) => {
+  // Set veg start date
+  const vegStartedOn = dayjs(dates?.vegStartedOn).format('YYYY-MM-DD')
+  // Set flower start date
+  const flowerStartedOn = dayjs(dates?.flowerStartedOn).format('YYYY-MM-DD')
+  // Set harvest date
+  const harvestedOn = dayjs(dates?.harvestedOn).format('YYYY-MM-DD')
+  // Set cure start date
+  const cureStartedOn = dayjs(dates?.cureStartedOn).format('YYYY-MM-DD')
 
   return {
     potentialHarvest: undefined,
-    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
-    flowerStartedOn: `${dates.flowerStartedOn}T00:00:00`,
-    harvestedOn: `${dates.harvestedOn}T00:00:00`,
+    vegStartedOn: `${vegStartedOn}T00:00:00`,
+    flowerStartedOn: `${flowerStartedOn}T00:00:00`,
+    harvestedOn: `${harvestedOn}T00:00:00`,
     cureStartedOn: `${cureStartedOn}T00:00:00`,
     archivedOn: undefined,
   }
