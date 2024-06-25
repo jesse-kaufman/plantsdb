@@ -1,7 +1,7 @@
 import { addLogEntry } from '../utils/log.js'
 import { getChangeList } from '../utils/plantChangeService.js'
 import { getNewStageDates } from '../utils/plantStages.js'
-
+import dayjs from 'dayjs'
 export const doUpdate = async function (plantId, data) {
   // Save a copy of the old plant for middleware
   this.$locals.oldPlant = this.toJSON()
@@ -14,26 +14,30 @@ export const doUpdate = async function (plantId, data) {
    */
   let plantUpdate = { ...this.toJSON(), ...data, _id: plantId }
 
-  // If plant is being archived, set archivedOn
-  if (plantUpdate.status === 'archived') {
-    plantUpdate.archivedOn = new Date().toISOString()
-  }
-
   // Get the data to update plant stage and set dates accordingly
-  if (plantUpdate.stage && plantUpdate.stage !== this.stage) {
-    // Get dates based on new stage and request body
-    const stageDates = getNewStageDates(plantUpdate.stage, {
-      vegStartedOn: plantUpdate.vegStartedOn,
-      flowerStartedOn: plantUpdate.flowerStartedOn,
-      cureStartedOn: plantUpdate.cureStartedOn,
-      harvestedOn: plantUpdate.harvestedOn,
-    })
+  let {
+    startedOn,
+    vegStartedOn,
+    flowerStartedOn,
+    cureStartedOn,
+    harvestedOn,
+    archivedOn,
+  } = plantUpdate
 
-    // Add data to newPlant object
-    plantUpdate = {
-      ...plantUpdate,
-      ...stageDates,
-    }
+  // Get dates based on new stage and request body
+  const stageDates = getNewStageDates(plantUpdate.stage, {
+    startedOn,
+    vegStartedOn,
+    flowerStartedOn,
+    cureStartedOn,
+    harvestedOn,
+    archivedOn,
+  })
+
+  // Add data to newPlant object
+  plantUpdate = {
+    ...plantUpdate,
+    ...stageDates,
   }
 
   // Update plant object
