@@ -13,7 +13,7 @@ export const doUpdate = async function (plantId, data) {
    */
   let plantUpdate = { ...this.toJSON(), ...data, _id: plantId }
 
-  // Get the data to update plant stage and set dates accordingly
+  // Pull out dates from plant update object
   let {
     startedOn,
     vegStartedOn,
@@ -23,7 +23,7 @@ export const doUpdate = async function (plantId, data) {
     archivedOn,
   } = plantUpdate
 
-  // Get dates based on new stage and request body
+  // Get new dates based on stage and dates sent
   const stageDates = getNewStageDates(plantUpdate.stage, {
     startedOn,
     vegStartedOn,
