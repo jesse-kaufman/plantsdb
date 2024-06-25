@@ -1,6 +1,6 @@
 import { getChangeList } from '../utils/plantChangeService.js'
 import { getNewStageDates } from '../utils/plantStages.js'
-import dayjs from 'dayjs'
+
 export const doUpdate = async function (plantId, data) {
   // Save a copy of the old plant for middleware
   this.$locals.oldPlant = this.toJSON()
