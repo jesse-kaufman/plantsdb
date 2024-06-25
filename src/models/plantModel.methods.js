@@ -56,7 +56,7 @@ export const doUpdate = async function (plantId, data) {
  * Generates a unique plant abbreviation based on the given plant name.
  */
 const generateAbbr = async function () {
-  if (this.$locals.oldPlant.name !== this.name) return
+  if (this.$locals.oldPlant.name === this.name) return
 
   console.log('Generating new plant abbreviation')
   let newPlantAbbr = ''
