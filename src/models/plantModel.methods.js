@@ -49,8 +49,13 @@ export const doUpdate = async function (plantId, data) {
   // Save changes to made plant to $locals for middleware
   this.$locals.changes = this.getChanges()
 
-  // Save the plant
-  this.save()
+  try {
+    // Save the plant
+    this.save()
+  } catch (err) {
+    console.log(err)
+    throw err
+  }
 
   // Return true if modified, otherwise false
   return this.isModified()
