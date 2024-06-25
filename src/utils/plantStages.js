@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
  * @param {object} dates - An object containing dates relevant to the stage.
  * @returns {object} The update db query for the specified stage and dates.
  */
-export function getNewStageDates(stage, dates) {
+export const getNewStageDates = (stage, dates) => {
   // Setup ISO-formatted dates
   const startedOn = dates.startedOn
     ? `${dayjs(dates.startedOn).format('YYYY-MM-DD')}T00:00:00`
@@ -60,7 +60,7 @@ export function getNewStageDates(stage, dates) {
  * @param {object} data - The data object containing request data.
  * @returns {object} The update db query.
  */
-function getSeedlingDates(dates) {
+const getSeedlingDates = (dates) => {
   const startedOn = dayjs(dates?.startedOn).format('YYYY-MM-DD')
 
   // Calculate new potential harvest date
@@ -84,7 +84,7 @@ function getSeedlingDates(dates) {
  * @param {object} dates Object containing dates
  * @returns {object} The update db query.
  */
-function getVegDates(dates) {
+const getVegDates = (dates) => {
   // Default veg start date to today
   const vegStartedOn = dayjs(dates?.vegStartedOn).format('YYYY-MM-DD')
 
@@ -103,7 +103,7 @@ function getVegDates(dates) {
   }
 }
 
-function getFlowerDates(dates) {
+const getFlowerDates = (dates) => {
   // Default flower start date to today
   const flowerStartedOn = dayjs(dates?.flowerStartedOn).format('YYYY-MM-DD')
 
@@ -128,7 +128,7 @@ function getFlowerDates(dates) {
  * @param {object} data - The data object containing the request data.
  * @returns {object} The update db query.
  */
-function getHarvestDates(dates) {
+const getHarvestDates = (dates) => {
   // Default harvest date to today
   const harvestedOn = dayjs(dates?.harvestedOn).format('YYYY-MM-DD')
 
@@ -149,7 +149,7 @@ function getHarvestDates(dates) {
  * @param {object} data - The data object containing the plant document.
  * @returns {object} The update db query.
  */
-function getCureDates(dates) {
+const getCureDates = (dates) => {
   // Default cure start date to today
   const cureStartedOn = dayjs(dates?.cureStartedOn).format('YYYY-MM-DD')
 
@@ -167,7 +167,7 @@ function getCureDates(dates) {
  * Sets the status of the plant to "archived" and sets the archivedOn field to the current date.
  * @returns {object} The updated plant document.
  */
-function getArchiveDates(dates) {
+const getArchiveDates = (dates) => {
   const archivedOn = dayjs(dates?.archivedOn).format('YYYY-MM-DD')
 
   return {
