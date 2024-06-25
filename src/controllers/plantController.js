@@ -69,8 +69,8 @@ export const addPlant = async (req, res) => {
   newPlant = new PlantModel(req.body)
 
   // If plant name abbreviation is not provided, generate one
-  if (req.body?.plantAbbr === '') {
-    newPlant.plantAbbr = newPlant.generatePlantAbbr()
+  if (!newPlant.plantAbbr) {
+    await newPlant.generateAbbr()
   }
 
   // Save plant to the database

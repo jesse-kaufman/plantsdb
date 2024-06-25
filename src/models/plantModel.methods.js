@@ -63,7 +63,10 @@ export const doUpdate = async function (plantId, data) {
  * Generates a unique plant abbreviation based on the given plant name.
  */
 const generateAbbr = async function () {
-  if (this.$locals.oldPlant.name === this.name) return
+  if (this.$locals.oldPlant && this.$locals.oldPlant?.name === this.name) {
+    console.log('No changes made to plant name')
+    return
+  }
 
   console.log('Generating new plant abbreviation')
   let newPlantAbbr = ''
@@ -80,11 +83,13 @@ const generateAbbr = async function () {
 
   newPlantAbbr = newPlantAbbr.trim()
 
-  // Count existing plants with same plantId base
-  const count = await this.constructor.countDocuments({
+  const countQuery = {
     status: 'active',
-    plantId: { $regex: `^${newPlantAbbr}\\-\\d$` },
-  })
+    plantAbbr: { $regex: `^${newPlantAbbr}\\-\\d+$` },
+  }
+
+  // Count existing plants with same plantId base
+  const count = await this.constructor.countDocuments(countQuery)
 
   // Add 1 to the count of matching plants to create suffix
   this.plantAbbr = `${newPlantAbbr}-${count + 1}`
