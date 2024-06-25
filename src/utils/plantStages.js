@@ -94,6 +94,7 @@ const getVegDates = (dates) => {
     .format('YYYY-MM-DD')
 
   return {
+    ...dates,
     potentialHarvest: `${potentialHarvest}T00:00:00`,
     vegStartedOn: `${vegStartedOn}T00:00:00`,
     flowerStartedOn: undefined,
@@ -113,6 +114,7 @@ const getFlowerDates = (dates) => {
     .format('YYYY-MM-DD')
 
   return {
+    ...dates,
     potentialHarvest: `${potentialHarvest}T00:00:00`,
     flowerStartedOn: `${flowerStartedOn}T00:00:00`,
     harvestedOn: undefined,
@@ -133,9 +135,8 @@ const getHarvestDates = (dates) => {
   const harvestedOn = dayjs(dates?.harvestedOn).format('YYYY-MM-DD')
 
   return {
+    ...dates,
     potentialHarvest: undefined,
-    vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
-    flowerStartedOn: `${dates.flowerStartedOn}T00:00:00`,
     harvestedOn: `${harvestedOn}T00:00:00`,
     cureStartedOn: undefined,
     archivedOn: undefined,
@@ -154,6 +155,7 @@ const getCureDates = (dates) => {
   const cureStartedOn = dayjs(dates?.cureStartedOn).format('YYYY-MM-DD')
 
   return {
+    ...dates,
     potentialHarvest: undefined,
     vegStartedOn: `${dates.vegStartedOn}T00:00:00`,
     flowerStartedOn: `${dates.flowerStartedOn}T00:00:00`,
