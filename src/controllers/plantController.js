@@ -124,6 +124,20 @@ export const updatePlant = async (req, res) => {
  * @param {*} res The response object
  */
 export const deletePlant = async (req, res) => {
-  const plant = await PlantModel.deleteOne(req.params.id)
+  const plant = await PlantModel.getById(req.params.plantId, req.query.status)
+
+  if (plant == null) {
+    res.status(httpCodes.NOT_FOUND).json({ error: 'Plant not found' })
+    return
+  }
+
+  try {
+    await plant.doDelete()
+  } catch (err) {
+    console.error(err)
+    res.status(httpCodes.SERVER_ERROR).json({ error: err.message })
+    return
+  }
+
   res.status(httpCodes.OK).json(plant)
 }

@@ -22,11 +22,4 @@ const getAll = async function ({ status, stage }) {
   return await this.find(query)
 }
 
-const deleteOne = async function (plantId) {
-  // Find and mark plant inactive
-  const plant = await this.updateOne({ _id: plantId }, { status: 'inactive' })
-  PlantModel.addLogEntry(plantId, 'Plant deleted')
-  return plant
-}
-
-export default { getById, getAll, deleteOne }
+export default { getById, getAll }

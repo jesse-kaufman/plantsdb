@@ -1,5 +1,16 @@
 import { getNewStageDates } from '../utils/plantStages.js'
 
+export const doDelete = async function () {
+  // Set $locals for middleware
+  this.$locals.deleted = true
+
+  // Delete plant
+  this.status = 'inactive'
+  const result = await this.save()
+
+  return result
+}
+
 export const doUpdate = async function (plantId, data) {
   // Save a copy of the old plant for middleware
   this.$locals.oldPlant = this.toJSON()
@@ -95,4 +106,4 @@ const generateAbbr = async function () {
   this.plantAbbr = `${newPlantAbbr}-${count + 1}`
 }
 
-export default { doUpdate, generateAbbr }
+export default { doUpdate, generateAbbr, doDelete }
