@@ -21,7 +21,7 @@ export const doUpdate = async function (plantId, data) {
    *
    * ID is set after data object spread to prevent ID being overwritten
    */
-  let plantUpdate = { ...this.toJSON(), ...data, _id: plantId }
+  let newPlant = { ...this.toJSON(), ...data, _id: plantId }
 
   // Pull out dates from plant update object
   let {
@@ -31,10 +31,10 @@ export const doUpdate = async function (plantId, data) {
     cureStartedOn,
     harvestedOn,
     archivedOn,
-  } = plantUpdate
+  } = newPlant
 
   // Get new dates based on stage and dates sent
-  const stageDates = getNewStageDates(plantUpdate.stage, {
+  const stageDates = getNewStageDates(newPlant.stage, {
     startedOn,
     vegStartedOn,
     flowerStartedOn,
@@ -44,13 +44,13 @@ export const doUpdate = async function (plantId, data) {
   })
 
   // Add data to newPlant object
-  plantUpdate = {
-    ...plantUpdate,
+  newPlant = {
+    ...newPlant,
     ...stageDates,
   }
 
   // Update plant object
-  this.overwrite(plantUpdate)
+  this.overwrite(newPlant)
 
   // Generate new plantAbbr (if needed)
   await this.generateAbbr()
