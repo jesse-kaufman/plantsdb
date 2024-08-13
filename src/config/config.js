@@ -4,8 +4,9 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const config = {
-  flowerWeeks: 4,
-  totalWeeks: 9,
+  seedlingWeeks: 1,
+  flowerWeeks: 9,
+  vegWeeks: 4,
   apiPort: 8420,
 }
 

@@ -1,5 +1,3 @@
-import { getNewStageDates } from '../utils/plantStages.js'
-
 export const doDelete = async function () {
   // Set $locals for middleware
   this.$locals.deleted = true
@@ -24,7 +22,7 @@ export const doUpdate = async function (plantId, data) {
   let newPlant = { ...this.toJSON(), ...data, _id: plantId }
 
   // Pull out dates from plant update object
-  let {
+  const {
     startedOn,
     vegStartedOn,
     flowerStartedOn,
@@ -33,15 +31,20 @@ export const doUpdate = async function (plantId, data) {
     archivedOn,
   } = newPlant
 
-  // Get new dates based on stage and dates sent
-  const stageDates = getNewStageDates(newPlant.stage, {
+  const oldStageDates = {
     startedOn,
     vegStartedOn,
     flowerStartedOn,
     cureStartedOn,
     harvestedOn,
     archivedOn,
-  })
+  }
+
+  // Get new dates based on stage and dates sent
+  const stageDates = this.constructor.getNewStageDates(
+    newPlant.stage,
+    oldStageDates,
+  )
 
   // Add data to newPlant object
   newPlant = {

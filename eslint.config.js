@@ -1,16 +1,23 @@
 /* eslint-disable capitalized-comments */
 /* eslint-disable no-magic-numbers */
 import globals from 'globals'
+import jest from 'eslint-plugin-jest'
 import pluginJs from '@eslint/js'
 
 const config = [
   { ignores: ['**/node_modules/*', '**/public/js/*'] },
   {
-    languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node, ...globals.jest },
+    },
+  },
+  {
+    plugins: { jest },
   },
   pluginJs.configs.recommended,
   {
     rules: {
+      ...jest.configs.recommended.rules,
       'array-callback-return': 'error',
       'capitalized-comments': [
         'warn',

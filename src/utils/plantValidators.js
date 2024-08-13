@@ -4,11 +4,8 @@ const isValidId = async (plantId) => {
     status: 'active',
     plantId: plantId.trim(),
   })
-  if (count === 0) {
-    return true
-  }
 
-  return false
+  return count === 0
 }
 
 const isValidName = async (plantName) => {
@@ -17,11 +14,7 @@ const isValidName = async (plantName) => {
     name: plantName.trim(),
   })
 
-  if (plant == null) {
-    return true
-  }
-
-  return false
+  return plant == null
 }
 
 const isValidDates = () => {

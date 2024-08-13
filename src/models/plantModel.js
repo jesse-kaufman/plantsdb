@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose'
 import config from '../config/config.js'
 import dayjs from 'dayjs'
 import methods from './plantModel.methods.js'
-import plantLog from '../utils/plantLogService.js'
 import middleware from './plantModel.middleware.js'
+import plantLog from '../utils/plantLogService.js'
 import statics from './plantModel.statics.js'
 
 /**
@@ -225,10 +225,7 @@ const PlantSchema = new Schema(
 PlantSchema.post('save', middleware.postSave)
 
 // Add static methods to schema
-PlantSchema.statics.getById = statics.getById
-PlantSchema.statics.getAll = statics.getAll
-PlantSchema.statics.deleteOne = statics.deleteOne
-PlantSchema.statics.setupQuery = statics.setupQuery
+PlantSchema.statics = statics
 
 // Add plant config to schema
 PlantSchema.statics.validStatuses = validStatuses
