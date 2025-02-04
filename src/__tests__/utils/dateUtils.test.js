@@ -37,7 +37,9 @@ describe("addWeeksToDate", () => {
 
   it("should handle invalid date inputs", () => {
     const invalidDate = new Date("invalid-date")
-    const result = addWeeksToDate(invalidDate, 2)
-    expect(result).toBe({ NaN }) // Depending on your implementation, you may want this to fail gracefully.
+
+    expect(() => {
+      addWeeksToDate(invalidDate, 2)
+    }).toThrow("Invalid date")
   })
 })
