@@ -33,7 +33,7 @@ describe("calculatePotentialHarvest", () => {
     const expectedHarvestDate = new Date(2023, 7, 1) // Expecting a date in August after adding weeks
 
     // @ts-ignore
-    addWeeksToDate.mockReturnValue(expectedHarvestDate)
+    addWeeksToDate.mockReturnValueOnce(expectedHarvestDate)
 
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
 
@@ -48,8 +48,7 @@ describe("calculatePotentialHarvest", () => {
     const expectedHarvestDate = new Date(2023, 9, 1) // Expecting a date in October
 
     // @ts-ignore
-    addWeeksToDate.mockReturnValue(expectedHarvestDate)
-
+    addWeeksToDate.mockReturnValueOnce(expectedHarvestDate)
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
 
     expect(result).toBe(expectedHarvestDate)
@@ -66,11 +65,10 @@ describe("calculatePotentialHarvest", () => {
     const expectedHarvestDate = new Date(2023, 10, 1) // Expecting a date in November
 
     // @ts-ignore
-    addWeeksToDate.mockReturnValue(expectedHarvestDate)
-
+    addWeeksToDate.mockReturnValueOnce(expectedHarvestDate)
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
 
-    expect(result).toBe(expectedHarvestDate)
+    expect(result).toEqual(expectedHarvestDate)
     expect(addWeeksToDate).toHaveBeenCalledWith(
       mockDates.flowerStartedOn,
       weeksToAdd
@@ -80,13 +78,13 @@ describe("calculatePotentialHarvest", () => {
   test("should return null for harvested stage", () => {
     const stage = "harvested"
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
-    expect(result).toBeNull
+    expect(result).toBeNull()
   })
 
   test("should return null for cure stage", () => {
     const stage = "cure"
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
-    expect(result).toBeNull
+    expect(result).toBeNull()
   })
 
   test("should return null for unknown stage", () => {
