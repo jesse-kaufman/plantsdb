@@ -1,4 +1,4 @@
-import Plant from "../classes/Plant"
+import Plant from "../../plants/Plant.js"
 
 describe("Plant Constructor", () => {
   test("should throw an error if a non-object is passed to constructor", () => {
