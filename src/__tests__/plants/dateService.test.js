@@ -27,31 +27,27 @@ describe("calculatePotentialHarvest", () => {
   test("should calculate potential harvest date for seedling stage", () => {
     const stage = "seedling"
     const weeksToAdd =
-      mockConfig.seedlingWeeks + mockConfig.vegWeeks + mockConfig.flowerWeeks // seedlingWeeks + vegWeeks + flowerWeeks
-
-    // Mock the addWeeksToDate return value
-    const expectedHarvestDate = new Date(2023, 7, 1) // Expecting a date in August after adding weeks
+      mockConfig.seedlingWeeks + mockConfig.vegWeeks + mockConfig.flowerWeeks
+    const expectedHarvestDate = new Date(2023, 7, 1) // Expecting August 1, 2023
 
     // @ts-ignore
     addWeeksToDate.mockReturnValueOnce(expectedHarvestDate)
-
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
 
-    expect(result).toBe(expectedHarvestDate)
+    expect(result).toEqual(expectedHarvestDate)
     expect(addWeeksToDate).toHaveBeenCalledWith(mockDates.startedOn, weeksToAdd)
   })
 
   test("should calculate potential harvest date for vegetative stage", () => {
     const stage = "vegetative"
     const weeksToAdd = mockConfig.vegWeeks + mockConfig.flowerWeeks
-
-    const expectedHarvestDate = new Date(2023, 9, 1) // Expecting a date in October
+    const expectedHarvestDate = new Date(2023, 9, 1) // Expecting October 2, 2023
 
     // @ts-ignore
     addWeeksToDate.mockReturnValueOnce(expectedHarvestDate)
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
 
-    expect(result).toBe(expectedHarvestDate)
+    expect(result).toEqual(expectedHarvestDate)
     expect(addWeeksToDate).toHaveBeenCalledWith(
       mockDates.vegStartedOn,
       weeksToAdd
@@ -61,8 +57,7 @@ describe("calculatePotentialHarvest", () => {
   test("should calculate potential harvest date for flower stage", () => {
     const stage = "flower"
     const weeksToAdd = mockConfig.flowerWeeks
-
-    const expectedHarvestDate = new Date(2023, 10, 1) // Expecting a date in November
+    const expectedHarvestDate = new Date(2023, 10, 1) // Expecting November 1, 2023
 
     // @ts-ignore
     addWeeksToDate.mockReturnValueOnce(expectedHarvestDate)
@@ -90,7 +85,6 @@ describe("calculatePotentialHarvest", () => {
   test("should return null for unknown stage", () => {
     const stage = "unknown"
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
-
     expect(result).toBeNull()
   })
 })
