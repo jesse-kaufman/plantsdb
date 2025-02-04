@@ -1,6 +1,8 @@
-import PlantModel from "../models/plantModel.js"
-import { httpCodes } from "../config/config.js"
-import plantValidators from "../services/validation/plant-validation.js"
+/** @file Contains handlers for API requests. */
+
+import Plant from "./plants.model.js"
+import { httpCodes } from "../../config/config.js"
+import plantValidators from "./plants.validators.js"
 
 /**
  * Gets an existing plant from the database

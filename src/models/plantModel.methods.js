@@ -56,7 +56,7 @@ export const doUpdate = async function (plantId, data) {
   this.overwrite(newPlant)
 
   // Generate new plantAbbr (if needed)
-  await this.generateAbbr()
+  newPlant.plantAbbr = await this.generateAbbr()
 
   // Save changes to made plant to $locals for middleware
   this.$locals.changes = this.getChanges()
@@ -106,7 +106,7 @@ const generateAbbr = async function () {
   const count = await this.constructor.countDocuments(countQuery)
 
   // Add 1 to the count of matching plants to create suffix
-  this.plantAbbr = `${newPlantAbbr}-${count + 1}`
+  return `${newPlantAbbr}-${count + 1}`
 }
 
 export default { doUpdate, generateAbbr, doDelete }

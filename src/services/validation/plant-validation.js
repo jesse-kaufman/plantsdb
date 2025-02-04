@@ -1,8 +1,8 @@
-import PlantModel from '../models/plantModel.js'
+import PlantModel from "../../models/plantModel.js"
 
 const isValidId = async (plantId) => {
   const count = await PlantModel.countDocuments({
-    status: 'active',
+    status: "active",
     plantId: plantId.trim(),
   })
 
@@ -13,7 +13,7 @@ const nameExists = async (plantName) => {
   if (!plantName) return false
 
   const plant = await PlantModel.findOne({
-    status: 'active',
+    status: "active",
     name: plantName.trim(),
   })
 

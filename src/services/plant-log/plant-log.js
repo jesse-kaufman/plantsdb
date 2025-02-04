@@ -1,5 +1,5 @@
-import LogModel from '../models/logModel.js'
-import { getChangeList } from './plantChangeService.js'
+import LogModel from "../../models/logModel.js"
+import { getChangeList } from "./plant-change.js"
 
 /**
  * Creates a new log entry listing the changes made to the plant
@@ -8,15 +8,15 @@ import { getChangeList } from './plantChangeService.js'
  */
 export const logChanges = async function (changes) {
   const changeList = getChangeList(changes, this.$locals.oldPlant)
-  await LogModel.log(this._id, `Updated plant:\n• ${changeList.join('\n• ')}`)
+  await LogModel.log(this._id, `Updated plant:\n• ${changeList.join("\n• ")}`)
 }
 
 export const logError = async function (message) {
-  await LogModel.logError(this._id, message, 'error')
+  await LogModel.logError(this._id, message, "error")
 }
 
 export const logWarning = async function (message) {
-  await LogModel.logWarning(this._id, message, 'warn')
+  await LogModel.logWarning(this._id, message, "warn")
 }
 
 export const log = async function (message) {
