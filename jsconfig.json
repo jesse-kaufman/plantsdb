@@ -17,6 +17,5 @@
     "moduleResolution": "node",
     "outDir": "dist"
   },
-  "include": ["./src2/**/*.js"],
-  "verbose": true
+  "include": ["./src/*.js", "./src/**/*.js"]
 }
