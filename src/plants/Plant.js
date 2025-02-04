@@ -7,6 +7,8 @@
  * @class
  */
 export default class Plant {
+  static validStages = ["seedling", "veg", "flower", "harvested", "cure"]
+
   /** Name of plant. */
   #name
 
