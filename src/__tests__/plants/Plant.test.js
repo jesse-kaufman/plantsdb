@@ -1,4 +1,4 @@
-import Plant from "../../plants/Plant.js"
+import Plant from "../../plants/Plant"
 
 describe("Plant Constructor", () => {
   test("should throw an error if a non-object is passed to constructor", () => {
@@ -15,6 +15,7 @@ describe("Plant Constructor", () => {
 
 describe("Plant Name", () => {
   test("should throw an error when name is not provided", () => {
+    // @ts-expect-error
     expect(() => new Plant({})).toThrow("Name is required")
   })
   test("should throw an error when name is empty string", () => {
@@ -22,12 +23,13 @@ describe("Plant Name", () => {
   })
   test("should throw an error when name is not string", () => {
     // @ts-expect-error
+    expect(() => new Plant({ name: undefined })).toThrow("Name is required")
+    // @ts-expect-error
     expect(() => new Plant({ name: true })).toThrow("Invalid name")
     // @ts-expect-error
     expect(() => new Plant({ name: 123 })).toThrow("Invalid name")
     // @ts-expect-error
     expect(() => new Plant({ name: null })).toThrow("Invalid name")
-    expect(() => new Plant({ name: undefined })).toThrow("Name is required")
   })
   test("should initialize the name correctly", () => {
     const plant = new Plant({ name: "Bob" })
