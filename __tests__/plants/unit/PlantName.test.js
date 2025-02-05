@@ -1,29 +1,40 @@
 import Plant from "../../../src/plants/Plant"
 
-describe("Plant - Name property", () => {
-  test("should throw an error when name is not provided", () => {
-    // @ts-expect-error
-    expect(() => new Plant({})).toThrow("Name is required")
+describe("Plant name property", () => {
+  test("should set the name correctly", () => {
+    const plant = new Plant({ name: "Bob" })
+    plant.name = "Alice"
+    expect(plant.name).toBe("Alice")
   })
 
   test("should throw an error when name is empty string", () => {
+    // Test the constructor with an empty string
     expect(() => new Plant({ name: "" })).toThrow("Name is required")
+
+    // Test setting the name property to an empty string after initialization
+    expect(() => {
+      const plant = new Plant({ name: "Bob" })
+      plant.name = ""
+    }).toThrow("Name is required")
   })
 
-  test("should throw an error when name is not string", () => {
+  test("should throw TypeError when provided name is not string", () => {
     // @ts-expect-error
-    expect(() => new Plant({ name: undefined })).toThrow("Name is required")
+    expect(() => new Plant({ name: undefined })).toThrow(
+      TypeError("Name is required")
+    )
     // @ts-expect-error
-    expect(() => new Plant({ name: true })).toThrow("Invalid name")
+    expect(() => new Plant({ name: true })).toThrow(
+      TypeError("Name must be a string")
+    )
     // @ts-expect-error
-    expect(() => new Plant({ name: 123 })).toThrow("Invalid name")
+    expect(() => new Plant({ name: 123 })).toThrow(
+      TypeError("Name must be a string")
+    )
     // @ts-expect-error
-    expect(() => new Plant({ name: null })).toThrow("Invalid name")
-  })
-
-  test("should trim whitespace from name", () => {
-    const plant = new Plant({ name: "  Bob  " })
-    expect(plant.name).toBe("Bob")
+    expect(() => new Plant({ name: null })).toThrow(
+      TypeError("Name must be a string")
+    )
   })
 
   test("should throw an error if name is too short", () => {
@@ -32,14 +43,8 @@ describe("Plant - Name property", () => {
     )
   })
 
-  test("should initialize the name correctly", () => {
-    const plant = new Plant({ name: "Bob" })
+  test("should trim whitespace from name", () => {
+    const plant = new Plant({ name: "  Bob  " })
     expect(plant.name).toBe("Bob")
-  })
-
-  test("should set the name correctly", () => {
-    const plant = new Plant({ name: "Bob" })
-    plant.name = "Alice"
-    expect(plant.name).toBe("Alice")
   })
 })
