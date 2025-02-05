@@ -38,7 +38,6 @@ export default class Plant {
 
   /**
    * Gets the name of the plant.
-   *
    * @returns {string} Name of the plant.
    */
   get name() {
@@ -47,7 +46,6 @@ export default class Plant {
 
   /**
    * Sets the name of the plant.
-   *
    * @param {string} newName - The new name of the plant.
    * @throws {Error} If the new name is invalid.
    */
@@ -58,7 +56,6 @@ export default class Plant {
 
   /**
    * Gets the stage of the plant.
-   *
    * @returns {string} Stage of the plant.
    */
   get stage() {
@@ -67,7 +64,6 @@ export default class Plant {
 
   /**
    * Sets the stage of the plant.
-   *
    * @param {string} newStage - The new stage of the plant.
    * @throws {Error} If the new name is invalid.
    */
@@ -96,7 +92,6 @@ export default class Plant {
 
   /**
    * Validates the given plant object.
-   *
    * @param {object} plant - Plant data to initialize the instance.
    * @param {string} plant.name - Name of the plant.
    * @param {string} [plant.stage] - Name of the stage of the plant (optional only when creating instance)
@@ -115,7 +110,6 @@ export default class Plant {
 
   /**
    * Validates the provided name.
-   *
    * @param {string|undefined} name - Name to validate.
    * @throws {Error} If the name is not a string, is empty, or contains only whitespace.
    */
@@ -127,7 +121,6 @@ export default class Plant {
 
   /**
    * Validates the provided stage.
-   *
    * @param {string|undefined} stage - Stage to validate.
    * @param {boolean} required - Whether to allow undefined for the stage.
    * @throws {Error} If the stage is not a valid stage.
