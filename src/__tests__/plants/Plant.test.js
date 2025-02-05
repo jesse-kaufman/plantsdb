@@ -1,6 +1,6 @@
 import Plant from "../../plants/Plant"
 
-describe("Plant Constructor", () => {
+describe("Plant constructor", () => {
   test("should throw an error if a non-object is passed to constructor", () => {
     // @ts-expect-error
     expect(() => new Plant("Bob")).toThrow("Invalid plant object")
@@ -13,7 +13,7 @@ describe("Plant Constructor", () => {
   })
 })
 
-describe("Plant Name", () => {
+describe("Plant name", () => {
   test("should throw an error when name is not provided", () => {
     // @ts-expect-error
     expect(() => new Plant({})).toThrow("Name is required")
@@ -42,7 +42,7 @@ describe("Plant Name", () => {
   })
 })
 
-describe("Plant Stage", () => {
+describe("Plant stage", () => {
   test("should throw an error when stage sent to constructor is invalid", () => {
     // @ts-expect-error
     expect(() => new Plant({ name: "Bob", stage: 1 })).toThrow("Invalid stage")
