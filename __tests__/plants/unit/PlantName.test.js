@@ -23,7 +23,7 @@ describe("Plant - Name property", () => {
 
   test("should trim whitespace from name", () => {
     const plant = new Plant({ name: "  Bob  " })
-    expect(plant.name).toBe("Basil")
+    expect(plant.name).toBe("Bob")
   })
 
   test("should throw an error if name is too short", () => {
