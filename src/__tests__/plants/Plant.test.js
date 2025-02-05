@@ -67,3 +67,59 @@ describe("Plant Stage", () => {
     expect(plant.stage).toBe("flower")
   })
 })
+
+describe("Plant started on date", () => {
+  test("should throw an error when startedOn sent to constructor is invalid", () => {
+    // @ts-expect-error
+    expect(() => new Plant({ name: "Bob", startedOn: false })).toThrow(
+      "Invalid started on date"
+    )
+  })
+  test("should throw an error when startedOn is set to invalid value", () => {
+    const plant = new Plant({ name: "Bob" })
+    expect(() => (plant.startedOn = "invalid date")).toThrow(
+      "Invalid started on date"
+    )
+    // @ts-expect-error
+    expect(() => (plant.startedOn = undefined)).toThrow(
+      "Invalid started on date"
+    )
+  })
+  test("should throw an error when startedOn is in the future", () => {
+    const plant = new Plant({ name: "Bob" })
+    console.log(
+      new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0]
+    )
+
+    expect(
+      () =>
+        (plant.startedOn = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0])
+    ).toThrow("Started on date cannot be in the future")
+  })
+
+  test("should default to today's date when startedOn not provided to constructor", () => {
+    const plant = new Plant({ name: "Bob" })
+    expect(plant.startedOn).toEqual(
+      new Date(new Date().toISOString().split("T")[0])
+    )
+  })
+
+  test("should set the startedOn property correctly when provided to constructor", () => {
+    const plant = new Plant({
+      name: "Bob",
+      stage: "veg",
+      startedOn: "2023-01-01",
+    })
+    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
+  })
+
+  test("should set the startedOn property correctly", () => {
+    const plant = new Plant({ name: "Bob", stage: "veg" })
+    plant.startedOn = "2023-01-01"
+    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
+  })
+})

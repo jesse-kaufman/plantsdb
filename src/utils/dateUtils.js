@@ -11,3 +11,13 @@ export const addWeeksToDate = (date, weeks) => {
   newDate.setDate(newDate.getDate() + weeks * 7) // Add weeks (7 days per week)
   return newDate
 }
+
+/**
+ * Validates date string.
+ * @param {string} date
+ * @returns {boolean} True if date is valid, false otherwise.
+ */
+export const validateDate = (date) => {
+  const parsedDate = new Date(date)
+  return !isNaN(parsedDate.getTime())
+}

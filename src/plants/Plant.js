@@ -1,3 +1,5 @@
+import { validateDate } from "../utils/dateUtils"
+
 /**
  * Represents a plant with its properties and validation logic.
  *
@@ -11,8 +13,10 @@ export default class Plant {
 
   /** Name of plant. */
   #name
-  /** Plant stage */
+  /** Plant stage. */
   #stage
+  /** Date plant was started. */
+  #startedOn
 
   /**
    * Creates an instance of a Plant.
@@ -20,12 +24,16 @@ export default class Plant {
    * @param {object} newPlant - Plant data to initialize the instance.
    * @param {string} newPlant.name - Name of the plant.
    * @param {string} [newPlant.stage=""] - Optional stage of the plant (defaults to seedling).
+   * @param {string} [newPlant.startedOn=""] - Optional start date (defaults to today).
    * @throws {Error} If the provided plant object fails validation.
    */
   constructor(newPlant) {
     this.#validatePlant(newPlant, true)
     this.#name = newPlant.name
     this.#stage = newPlant.stage || "seedling"
+    this.#startedOn = newPlant.startedOn
+      ? new Date(newPlant.startedOn)
+      : new Date(new Date().toISOString().split("T")[0])
   }
 
   /**
@@ -69,12 +77,30 @@ export default class Plant {
   }
 
   /**
+   * Gets the start date of the plant.
+   * @returns {Date} Start date of the plant.
+   */
+  get startedOn() {
+    return this.#startedOn
+  }
+
+  /**
+   * Sets the start date of the plant.
+   * @param {string} newStarteOn - The new started on date.
+   * @throws {Error} If the new date is invalid.
+   */
+  set startedOn(newStarteOn) {
+    this.#validateStartedOn(newStarteOn)
+    this.#startedOn = new Date(newStarteOn)
+  }
+
+  /**
    * Validates the given plant object.
    *
    * @param {object} plant - Plant data to initialize the instance.
    * @param {string} plant.name - Name of the plant.
    * @param {string} [plant.stage] - Name of the stage of the plant (optional only when creating instance)
-   * @param {boolean} isNew - Whether the plant is a new object or not.
+   * @param {string} [plant.startedOn] - Start date of plant.
    * @throws {Error} If plant object is invalid or any properties fail validation.
    */
   #validatePlant(plant, isNew = false) {
@@ -83,7 +109,8 @@ export default class Plant {
     }
 
     this.#validateName(plant.name)
-    this.#validateStage(plant.stage, !isNew)
+    this.#validateStage(plant.stage, false)
+    this.#validateStartedOn(plant.startedOn, false)
   }
 
   /**
@@ -115,5 +142,26 @@ export default class Plant {
     // Stage is set and not a valid stage
     if (!Plant.validStages.includes(stage?.toString() || ""))
       throw new Error("Invalid stage")
+  }
+
+  /**
+   * Validates the provided startedOn date.
+   * @param {string} [startedOn]
+   * @returns
+   */
+  #validateStartedOn(startedOn, required = true) {
+    // Allow undefined startedOn if required is false
+    if (!required && startedOn === undefined) return
+
+    if (typeof startedOn !== "string")
+      throw new Error("Invalid started on date")
+
+    if (!validateDate(startedOn)) throw new Error("Invalid started on date")
+
+    const startedOnDate = new Date(startedOn)
+    const today = new Date(new Date().toISOString().split("T")[0])
+
+    if (startedOnDate > today)
+      throw new Error("Started on date cannot be in the future")
   }
 }
