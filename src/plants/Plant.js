@@ -164,6 +164,8 @@ export default class Plant {
     if (name === undefined) throw new Error("Name is required")
     if (typeof name !== "string") throw new Error("Invalid name")
     if (name.trim() === "") throw new Error("Name is required")
+    if (name.trim().length <= 2)
+      throw new Error("Name must be at least 2 characters")
   }
 
   /**
