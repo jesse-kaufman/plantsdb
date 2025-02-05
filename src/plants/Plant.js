@@ -33,7 +33,7 @@ export default class Plant {
    */
   constructor(newPlant) {
     this.#validatePlant(newPlant)
-    this.#name = newPlant.name
+    this.#name = newPlant.name.trim()
     this.#stage = newPlant.stage || "seedling"
     this.#status = newPlant.status || "active"
     this.#startedOn = newPlant.startedOn
