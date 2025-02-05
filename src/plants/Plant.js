@@ -146,7 +146,7 @@ export default class Plant {
    */
   #validatePlant(plant) {
     if (typeof plant !== "object" || plant === null) {
-      throw new Error("Invalid plant object")
+      throw new TypeError("Invalid plant object")
     }
 
     this.#validateName(plant.name)
@@ -161,8 +161,8 @@ export default class Plant {
    * @throws {Error} If the name is not a string, is empty, or contains only whitespace.
    */
   #validateName(name) {
-    if (name === undefined) throw new Error("Name is required")
-    if (typeof name !== "string") throw new Error("Invalid name")
+    if (name === undefined) throw new TypeError("Name is required")
+    if (typeof name !== "string") throw new TypeError("Name must be a string")
     if (name.trim() === "") throw new Error("Name is required")
     if (name.trim().length <= 2)
       throw new Error("Name must be at least 2 characters")
