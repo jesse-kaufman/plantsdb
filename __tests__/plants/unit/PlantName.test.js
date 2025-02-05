@@ -1,4 +1,4 @@
-import Plant from "../../../../src/plants/Plant"
+import Plant from "../../../src/plants/Plant"
 
 describe("Plant - Name property", () => {
   test("should throw an error when name is not provided", () => {

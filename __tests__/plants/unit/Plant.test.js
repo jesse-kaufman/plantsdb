@@ -19,7 +19,7 @@ describe("Plant constructor", () => {
   })
 })
 
-describe("Plant status", () => {
+describe("Plant - Status property", () => {
   test("should set status to `inactive` when delete() is called on an active plant", () => {
     const plant = new Plant({ name: "Bob", status: "active" })
     plant.delete()
@@ -47,7 +47,7 @@ describe("Plant status", () => {
   })
 })
 
-describe("Plant stage", () => {
+describe("Plant - Stage property", () => {
   test("should throw an error when stage sent to constructor is invalid", () => {
     // @ts-expect-error
     expect(() => new Plant({ name: "Bob", stage: 1 })).toThrow("Invalid stage")

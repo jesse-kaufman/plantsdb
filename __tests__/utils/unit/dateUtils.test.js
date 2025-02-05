@@ -1,4 +1,4 @@
-import { addWeeksToDate } from "../../utils/dateUtils"
+import { addWeeksToDate } from "../../../src/utils/dateUtils"
 
 describe("addWeeksToDate", () => {
   it("should add 1 week to the date", () => {
