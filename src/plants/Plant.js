@@ -10,9 +10,12 @@ import { validateDate } from "../utils/dateUtils"
  */
 export default class Plant {
   static validStages = ["seedling", "veg", "flower", "harvested", "cure"]
+  static validStatuses = ["active", "inactive", "archived"]
 
   /** Name of plant. */
   #name
+  /** Status of plant. */
+  #status
   /** Plant stage. */
   #stage
   /** Date plant was started. */
@@ -23,14 +26,16 @@ export default class Plant {
    *
    * @param {object} newPlant - Plant data to initialize the instance.
    * @param {string} newPlant.name - Name of the plant.
-   * @param {string} [newPlant.stage=""] - Optional stage of the plant (defaults to seedling).
-   * @param {string} [newPlant.startedOn=""] - Optional start date (defaults to today).
+   * @param {string} [newPlant.status=""] - Optional status (defaults to active).
+   * @param {string} [newPlant.stage="seedling"] - Optional stage of the plant (defaults to seedling).
+   * @param {string} [newPlant.startedOn] - Optional start date (defaults to today).
    * @throws {Error} If the provided plant object fails validation.
    */
   constructor(newPlant) {
     this.#validatePlant(newPlant)
     this.#name = newPlant.name
     this.#stage = newPlant.stage || "seedling"
+    this.#status = newPlant.status || "active"
     this.#startedOn = newPlant.startedOn
       ? new Date(newPlant.startedOn)
       : new Date(new Date().toISOString().split("T")[0])
@@ -52,6 +57,46 @@ export default class Plant {
   set name(newName) {
     this.#validateName(newName)
     this.#name = newName
+  }
+
+  /**
+   * Gets the status of the plant.
+   * @returns {string} Status of the plant.
+   */
+  get status() {
+    return this.#status
+  }
+
+  /**
+   * Sets the status of plant to inactive.
+   * TODO: Set deletedOn to today's date.
+   */
+  delete() {
+    this.#status = "inactive"
+  }
+
+  /**
+   * Sets the status of plant to active.
+   * TODO: Unset deletedOn
+   */
+  undelete() {
+    this.#status = "active"
+  }
+
+  /**
+   * Sets the status of plant to inactive.
+   * TODO: Set archivedOn to today's date.
+   */
+  archive() {
+    this.#status = "archived"
+  }
+
+  /**
+   * Sets the status of plant to inactive.
+   * TODO: Unset archivedOn.
+   */
+  unarchive() {
+    this.#status = "active"
   }
 
   /**
@@ -94,7 +139,8 @@ export default class Plant {
    * Validates the given plant object.
    * @param {object} plant - Plant data to initialize the instance.
    * @param {string} plant.name - Name of the plant.
-   * @param {string} [plant.stage] - Name of the stage of the plant (optional only when creating instance)
+   * @param {string} [plant.status] - Status of the plant (optional only when creating instance)
+   * @param {string} [plant.stage] - Stage of the plant (optional only when creating instance)
    * @param {string} [plant.startedOn] - Start date of plant.
    * @throws {Error} If plant object is invalid or any properties fail validation.
    */
@@ -104,6 +150,7 @@ export default class Plant {
     }
 
     this.#validateName(plant.name)
+    this.#validateStatus(plant.status, false)
     this.#validateStage(plant.stage, false)
     this.#validateStartedOn(plant.startedOn, false)
   }
@@ -117,6 +164,18 @@ export default class Plant {
     if (name === undefined) throw new Error("Name is required")
     if (typeof name !== "string") throw new Error("Invalid name")
     if (name.trim() === "") throw new Error("Name is required")
+  }
+
+  /**
+   * Validates the provided status.
+   * @param {string|undefined} status - Stage to validate.
+   * @param {boolean} required - Whether to allow undefined for the stage.
+   * @throws {Error} If the stage is not a valid stage.
+   */
+  #validateStatus(status) {
+    // Stage is set and not a valid stage
+    if (status !== undefined && !Plant.validStatuses.includes(status))
+      throw new Error("Invalid status")
   }
 
   /**

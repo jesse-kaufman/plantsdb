@@ -42,6 +42,40 @@ describe("Plant name", () => {
   })
 })
 
+describe("Plant status", () => {
+  test("should throw an error when status sent to constructor is invalid", () => {
+    // @ts-expect-error
+    expect(() => new Plant({ name: "Bob", status: 1 })).toThrow(
+      "Invalid status"
+    )
+  })
+  test("should set status to `inactive` when delete() is called on an active plant", () => {
+    const plant = new Plant({ name: "Bob", status: "active" })
+    plant.delete()
+    expect(plant.status).toEqual("inactive")
+  })
+  test("should set status to `inactive` when delete() is called on an archived plant", () => {
+    const plant = new Plant({ name: "Bob", status: "archived" })
+    plant.delete()
+    expect(plant.status).toEqual("inactive")
+  })
+  test("should set status to `active` when undelete() is called on an inactive plant", () => {
+    const plant = new Plant({ name: "Bob", status: "inactive" })
+    plant.undelete()
+    expect(plant.status).toEqual("active")
+  })
+  test("should set status to `archived` when archive() is called on an archived plant", () => {
+    const plant = new Plant({ name: "Bob", status: "archived" })
+    plant.archive()
+    expect(plant.status).toEqual("archived")
+  })
+  test("should set status to `active` when unarchive() is called on an archived plant", () => {
+    const plant = new Plant({ name: "Bob", status: "archived" })
+    plant.unarchive()
+    expect(plant.status).toEqual("active")
+  })
+})
+
 describe("Plant stage", () => {
   test("should throw an error when stage sent to constructor is invalid", () => {
     // @ts-expect-error
