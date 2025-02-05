@@ -192,7 +192,7 @@ export default class Plant {
     if (required && stage === undefined) throw new Error("Stage is required")
 
     // Stage is set and not a valid stage
-    if (!Plant.validStages.includes(stage?.toString() || ""))
+    if (stage !== undefined && !Plant.validStages.includes(stage))
       throw new Error("Invalid stage")
   }
 
