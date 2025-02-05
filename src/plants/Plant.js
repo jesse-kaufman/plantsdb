@@ -28,7 +28,7 @@ export default class Plant {
    * @throws {Error} If the provided plant object fails validation.
    */
   constructor(newPlant) {
-    this.#validatePlant(newPlant, true)
+    this.#validatePlant(newPlant)
     this.#name = newPlant.name
     this.#stage = newPlant.stage || "seedling"
     this.#startedOn = newPlant.startedOn
@@ -103,7 +103,7 @@ export default class Plant {
    * @param {string} [plant.startedOn] - Start date of plant.
    * @throws {Error} If plant object is invalid or any properties fail validation.
    */
-  #validatePlant(plant, isNew = false) {
+  #validatePlant(plant) {
     if (typeof plant !== "object" || plant === null) {
       throw new Error("Invalid plant object")
     }
