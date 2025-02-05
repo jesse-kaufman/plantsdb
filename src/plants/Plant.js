@@ -150,7 +150,7 @@ export default class Plant {
     }
 
     this.#validateName(plant.name)
-    this.#validateStatus(plant.status, false)
+    this.#validateStatus(plant.status)
     this.#validateStage(plant.stage, false)
     this.#validateStartedOn(plant.startedOn, false)
   }
@@ -171,7 +171,6 @@ export default class Plant {
   /**
    * Validates the provided status.
    * @param {string|undefined} status - Stage to validate.
-   * @param {boolean} required - Whether to allow undefined for the stage.
    * @throws {Error} If the stage is not a valid stage.
    */
   #validateStatus(status) {
