@@ -12,10 +12,8 @@ describe("Plant name property", () => {
     expect(() => new Plant({ name: "" })).toThrow("Name is required")
 
     // Test setting the name property to an empty string after initialization
-    expect(() => {
-      const plant = new Plant({ name: "Bob" })
-      plant.name = ""
-    }).toThrow("Name is required")
+    const plant = new Plant({ name: "Bob" })
+    expect(() => (plant.name = "")).toThrow("Name is required")
   })
 
   test("should throw TypeError when provided name is not string", () => {
