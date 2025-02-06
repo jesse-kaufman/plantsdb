@@ -96,7 +96,7 @@ export default class Plant {
    * TODO: Unset archivedOn.
    */
   unarchive() {
-    this.#status = "active"
+    if (this.#status === "archived") this.#status = "active"
   }
 
   /**
