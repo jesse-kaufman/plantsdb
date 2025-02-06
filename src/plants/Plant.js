@@ -80,7 +80,7 @@ export default class Plant {
    * TODO: Unset deletedOn
    */
   undelete() {
-    this.#status = "active"
+    if (this.#status === "inactive") this.#status = "active"
   }
 
   /**
