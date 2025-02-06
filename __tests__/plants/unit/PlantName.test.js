@@ -49,10 +49,12 @@ describe("Plant name property", () => {
   })
 
   test("should throw an error when provided name is too short", () => {
+    // Test sending short name to constructor
     expect(() => new Plant({ name: "A" })).toThrow(
       "Name must be at least 2 characters"
     )
 
+    // Test setting short name in setter
     const plant = new Plant({ name: "Bob" })
     expect(() =>
       (plant.name = "A").toThrow("Name must be at least 2 characters")
@@ -60,9 +62,11 @@ describe("Plant name property", () => {
   })
 
   test("should trim whitespace from name", () => {
+    // Test trimming whitespace in constructor
     const plant = new Plant({ name: "  Bob  " })
     expect(plant.name).toBe("Bob")
 
+    // Test trimming whitespace in setter
     plant.name = " Alice\t"
     expect(plant.name).toBe("Alice")
   })
