@@ -10,7 +10,6 @@ describe("Plant - Stage property", () => {
 
   test("should throw an error when setting stage to invalid value", () => {
     const plant = new Plant({ name: "Bob" })
-    // @ts-expect-error
     expect(() => (plant.stage = undefined)).toThrow("Stage is required")
     expect(() => (plant.stage = "")).toThrow("Invalid stage")
     expect(() => (plant.stage = true)).toThrow("Invalid stage")
