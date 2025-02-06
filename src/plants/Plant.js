@@ -46,7 +46,7 @@ export default class Plant {
    * @returns {string} Name of the plant.
    */
   get name() {
-    return this.#name
+    return this.#name.trim()
   }
 
   /**
