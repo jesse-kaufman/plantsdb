@@ -46,7 +46,7 @@ describe("Plant name property", () => {
     )
   })
 
-  test("should throw an error when trying to set name to undefined", () => {
+  test("should throw an error when setting name to undefined", () => {
     const plant = new Plant({ name: "Bob" })
     // @ts-expect-error
     expect(() => (plant.name = undefined)).toThrowError(
@@ -54,7 +54,7 @@ describe("Plant name property", () => {
     )
   })
 
-  test("should throw an error if name is too short", () => {
+  test("should throw an error when provided name is too short", () => {
     expect(() => new Plant({ name: "A" })).toThrow(
       "Name must be at least 2 characters"
     )
