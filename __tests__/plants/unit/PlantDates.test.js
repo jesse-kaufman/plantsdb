@@ -4,54 +4,80 @@
 
 import Plant from "../../../src/plants/Plant"
 
-const validateErrorThrown = (plant, datePropertyName, expectedErrorThrown) => {
-  let errorThrown = false
+const futureDate = new Date()
+futureDate.setDate(futureDate.getDate() + 1) // Set to tomorrow
+const tomorrow = futureDate.toISOString().split("T")[0]
 
-  // Common check: Ensure the date isn't in the future
-  if (new Date(plant[datePropertyName]) > new Date()) {
-    try {
-      throw new Error(`${datePropertyName} cannot be in the future`)
-    } catch (error) {
-      errorThrown = true
-      expect(error.message).toBe(expectedErrorMessage)
-    }
-  }
+/**
+ * Helper function to assert that setting an invalid date throws the expected error.
+ * @param {Plant} plant - The Plant instance to test.
+ * @param {string} datePropertyName - The name of the date property being tested.
+ * @param {any} expectedError - The expected error.
+ */
+function expectInvalidDateError(plant, property, expectedError) {
+  expect(() => (plant[property] = "invalid-date")).toThrow(expectedError)
+  expect(() => (plant[property] = null)).toThrow(expectedError)
+  expect(() => (plant[property] = undefined)).toThrow(expectedError)
+  expect(() => (plant[property] = 123)).toThrow(expectedError)
+}
 
-  if (!errorThrown) {
-    throw new Error(`Expected error to be thrown for ${datePropertyName}`)
-  }
+/**
+ * Helper function to assert that setting a future date throws the expected error.
+ * @param {Plant} plant - The Plant instance to test.
+ * @param {string} property - The name of the date property being tested.
+ */
+function expectFutureDateError(plant, property) {
+  expect(() => (plant[property] = tomorrow)).toThrow("cannot be in the future")
 }
 
 describe("Plant started on date", () => {
+  // Test sending startedOn to constructor
+  test("should set the startedOn property correctly when provided to constructor", () => {
+    const plant = new Plant({
+      name: "Bob",
+      stage: "seedling",
+      startedOn: "2023-01-01",
+    })
+    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
+  })
+
+  // Test setting startedOn with setter
+  test("should set the startedOn property correctly", () => {
+    const plant = new Plant({ name: "Bob", stage: "veg" })
+    plant.startedOn = "2023-01-01"
+    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
+  })
+
+  // Test setting startedOn to invalid date in constructor
+  test("should throw an error when startedOn sent to constructor is invalid", () => {
+    expect(() => new Plant({ name: "Bob", startedOn: "invalid-date" })).toThrow(
+      "Invalid started on date"
+    )
+    expect(() => new Plant({ name: "Bob", startedOn: null })).toThrow(
+      "Invalid started on date"
+    )
+    expect(() => new Plant({ name: "Bob", startedOn: 123 })).toThrow(
+      "Invalid started on date"
+    )
+  })
+
+  // Test setting startedOn to invalid date with setter
   test("should throw an error when startedOn is set to invalid value", () => {
-    const plant = new Plant({ name: "Bob" })
-    expect(() => (plant.startedOn = "invalid date")).toThrow(
-      "Invalid started on date"
-    )
-    // @ts-expect-error
-    expect(() => (plant.startedOn = undefined)).toThrow(
+    expectInvalidDateError(
+      new Plant({ name: "Bob" }),
+      "startedOn",
       "Invalid started on date"
     )
   })
-  test("should throw an error when startedOn is in the future", () => {
-    const plant = new Plant({ name: "Bob" })
 
-    expect(
-      () =>
-        (plant.startedOn = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0])
-    ).toThrow("Started on date cannot be in the future")
-  })
+  // Test setting startedOn to future date in constructor
   test("should throw an error when startedOn sent to constructor is in the future", () => {
-    const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0]
-
     expect(() => new Plant({ name: "Bob", startedOn: tomorrow })).toThrow(
       "Started on date cannot be in the future"
     )
   })
+
+  // Test initializing startedOn date to today when
   test("should default to today's date when startedOn not provided to constructor", () => {
     const plant = new Plant({ name: "Bob" })
     expect(plant.startedOn).toEqual(
@@ -59,19 +85,9 @@ describe("Plant started on date", () => {
     )
   })
 
-  test("should set the startedOn property correctly when provided to constructor", () => {
-    const plant = new Plant({
-      name: "Bob",
-      stage: "veg",
-      startedOn: "2023-01-01",
-    })
-    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
-  })
-
-  test("should set the startedOn property correctly", () => {
-    const plant = new Plant({ name: "Bob", stage: "veg" })
-    plant.startedOn = "2023-01-01"
-    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
+  test("should throw an error when startedOn is in the future", () => {
+    const plant = new Plant({ name: "Bob" })
+    expectFutureDateError(plant, "startedOn")
   })
 })
 
