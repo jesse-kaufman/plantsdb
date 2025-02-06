@@ -68,5 +68,8 @@ describe("Plant name property", () => {
   test("should trim whitespace from name", () => {
     const plant = new Plant({ name: "  Bob  " })
     expect(plant.name).toBe("Bob")
+
+    plant.name = " Alice\t"
+    expect(plant.name).toBe("Alice")
   })
 })
