@@ -58,6 +58,11 @@ describe("Plant name property", () => {
     expect(() => new Plant({ name: "A" })).toThrow(
       "Name must be at least 2 characters"
     )
+
+    const plant = new Plant({ name: "Bob" })
+    expect(() =>
+      (plant.name = "A").toThrow("Name must be at least 2 characters")
+    )
   })
 
   test("should trim whitespace from name", () => {
