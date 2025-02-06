@@ -5,6 +5,7 @@ describe("Plant - Stage property", () => {
     // @ts-expect-error
     expect(() => new Plant({ name: "Bob", stage: 1 })).toThrow("Invalid stage")
   })
+
   test("should throw an error when setting stage to invalid value", () => {
     const plant = new Plant({ name: "Bob" })
     // @ts-expect-error
@@ -13,14 +14,17 @@ describe("Plant - Stage property", () => {
     expect(() => (plant.stage = "")).toThrow("Invalid stage")
     expect(() => (plant.stage = true)).toThrow("Invalid stage")
   })
+
   test("should default to seedling when stage not provided to constructor", () => {
     const plant = new Plant({ name: "Bob" })
     expect(plant.stage).toEqual("seedling")
   })
+
   test("should set the stage correctly if stage is provided to constructor", () => {
     const plant = new Plant({ name: "Bob", stage: "veg" })
     expect(plant.stage).toBe("veg")
   })
+
   test("should set the stage correctly", () => {
     const plant = new Plant({ name: "Bob", stage: "veg" })
     plant.stage = "flower"
