@@ -19,21 +19,38 @@ describe("Plant name property", () => {
   })
 
   test("should throw TypeError when provided name is not string", () => {
+    // Test sending non-string value to constructor
     // @ts-expect-error
-    expect(() => new Plant({ name: undefined })).toThrow(
-      TypeError("Name is required")
+    expect(() => new Plant({ name: true })).toThrowError(
+      new TypeError("Name must be a string")
     )
     // @ts-expect-error
-    expect(() => new Plant({ name: true })).toThrow(
-      TypeError("Name must be a string")
+    expect(() => new Plant({ name: 123 })).toThrowError(
+      new TypeError("Name must be a string")
     )
     // @ts-expect-error
-    expect(() => new Plant({ name: 123 })).toThrow(
-      TypeError("Name must be a string")
+    expect(() => new Plant({ name: null })).toThrowError(
+      new TypeError("Name must be a string")
     )
+
+    // Test setting name to non-string value
+    const plant = new Plant({ name: "Bob" })
+    expect(() => (plant.name = true)).toThrowError(
+      new TypeError("Name must be a string")
+    )
+    expect(() => (plant.name = 123)).toThrowError(
+      new TypeError("Name must be a string")
+    )
+    expect(() => (plant.name = null)).toThrowError(
+      new TypeError("Name must be a string")
+    )
+  })
+
+  test("should throw an error when trying to set name to undefined", () => {
+    const plant = new Plant({ name: "Bob" })
     // @ts-expect-error
-    expect(() => new Plant({ name: null })).toThrow(
-      TypeError("Name must be a string")
+    expect(() => (plant.name = undefined)).toThrowError(
+      new TypeError("Name must be a string")
     )
   })
 
