@@ -43,9 +43,7 @@ describe("Plant name property", () => {
 
   test("should throw an error when setting name to undefined", () => {
     const plant = new Plant({ name: "Bob" })
-    expect(() => (plant.name = undefined)).toThrow(
-      new TypeError("Name is required")
-    )
+    expect(() => (plant.name = undefined)).toThrow("Name is required")
   })
 
   test("should throw an error when provided name is too short", () => {
