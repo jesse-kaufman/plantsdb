@@ -50,7 +50,7 @@ describe("Plant name property", () => {
     const plant = new Plant({ name: "Bob" })
     // @ts-expect-error
     expect(() => (plant.name = undefined)).toThrowError(
-      new TypeError("Name must be a string")
+      new TypeError("Name is required")
     )
   })
 
