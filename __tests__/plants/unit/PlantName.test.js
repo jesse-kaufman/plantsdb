@@ -56,8 +56,8 @@ describe("Plant name property", () => {
 
     // Test setting short name in setter
     const plant = new Plant({ name: "Bob" })
-    expect(() =>
-      (plant.name = "A").toThrow("Name must be at least 2 characters")
+    expect(() => (plant.name = "A")).toThrow(
+      "Name must be at least 2 characters"
     )
   })
 
