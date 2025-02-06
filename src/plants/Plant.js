@@ -88,7 +88,7 @@ export default class Plant {
    * TODO: Set archivedOn to today's date.
    */
   archive() {
-    this.#status = "archived"
+    if (this.#status !== "inactive") this.#status = "archived"
   }
 
   /**
