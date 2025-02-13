@@ -51,6 +51,11 @@ export default class Plant {
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
       : null
+
+    // Default to today if status is archived and archivedOn is null
+    if (newPlant.status === "archived" && this.#archivedOn === null) {
+      this.#archivedOn = new Date(new Date().toISOString().split("T")[0])
+    }
   }
 
   /**
