@@ -1,3 +1,7 @@
+/**
+ * @file Main application file.
+ */
+
 import Plant from "./plants/Plant.js"
 
 const plant = new Plant({ name: "MyPlant" })

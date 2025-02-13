@@ -9,9 +9,11 @@ import { calculatePotentialHarvest } from "../../../src/plants/services/dateServ
 import { addWeeksToDate } from "../../../src/utils/dateUtils"
 
 // Mock the addWeeksToDate function
-jest.mock("../../../src/utils/dateUtils", () => {return {
-  addWeeksToDate: jest.fn(),
-}})
+jest.mock("../../../src/utils/dateUtils", () => {
+  return {
+    addWeeksToDate: jest.fn(),
+  }
+})
 
 describe("calculatePotentialHarvest", () => {
   const mockDates = {

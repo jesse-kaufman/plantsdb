@@ -21,11 +21,17 @@ describe("Plant", () => {
 
     test("should throw TypeError when passing non-object to constructor", () => {
       // @ts-expect-error
-      expect(() => new Plant("Bob")).toThrow(new TypeError("Invalid plant object"))
+      expect(() => new Plant("Bob")).toThrow(
+        new TypeError("Invalid plant object")
+      )
       // @ts-expect-error
-      expect(() => new Plant(123)).toThrow(new TypeError("Invalid plant object"))
+      expect(() => new Plant(123)).toThrow(
+        new TypeError("Invalid plant object")
+      )
       // @ts-expect-error
-      expect(() => new Plant(null)).toThrow(new TypeError("Invalid plant object"))
+      expect(() => new Plant(null)).toThrow(
+        new TypeError("Invalid plant object")
+      )
       // @ts-expect-error
       expect(() => new Plant(undefined)).toThrow(
         new TypeError("Invalid plant object")

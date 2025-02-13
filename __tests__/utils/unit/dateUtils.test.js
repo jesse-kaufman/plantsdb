@@ -1,3 +1,9 @@
+/**
+ * @file Tests for date utilities.
+ */
+
+/* eslint-disable no-magic-numbers */
+
 import { addWeeksToDate } from "../../../src/utils/dateUtils"
 
 describe("addWeeksToDate", () => {
