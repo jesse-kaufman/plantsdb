@@ -32,7 +32,7 @@ function expectFutureDateError(plant, property) {
   expect(() => (plant[property] = tomorrow)).toThrow("cannot be in the future")
 }
 
-describe("Plant started on date", () => {
+describe("Plant startedOn date", () => {
   // Test sending startedOn to constructor
   test("should set the startedOn property correctly when provided to constructor", () => {
     const plant = new Plant({
@@ -53,13 +53,13 @@ describe("Plant started on date", () => {
   // Test setting startedOn to invalid date in constructor
   test("should throw an error when startedOn sent to constructor is invalid", () => {
     expect(() => new Plant({ name: "Bob", startedOn: "invalid-date" })).toThrow(
-      "Invalid started on date"
+      "Invalid startedOn date"
     )
     expect(() => new Plant({ name: "Bob", startedOn: null })).toThrow(
-      "Invalid started on date"
+      "Invalid startedOn date"
     )
     expect(() => new Plant({ name: "Bob", startedOn: 123 })).toThrow(
-      "Invalid started on date"
+      "Invalid startedOn date"
     )
   })
 
@@ -69,14 +69,14 @@ describe("Plant started on date", () => {
     expectInvalidDateError(
       new Plant({ name: "Bob" }),
       "startedOn",
-      "Invalid started on date"
+      "Invalid startedOn date"
     )
   })
 
   // Test setting startedOn to future date in constructor
   test("should throw an error when startedOn sent to constructor is in the future", () => {
     expect(() => new Plant({ name: "Bob", startedOn: tomorrow })).toThrow(
-      "Started on date cannot be in the future"
+      "startedOn date cannot be in the future"
     )
   })
 
@@ -95,21 +95,21 @@ describe("Plant started on date", () => {
   })
 })
 
-describe("Plant archived on date", () => {
+describe("Plant archivedOn date", () => {
   test("should throw an error when archivedOn sent to constructor is invalid", () => {
     // @ts-expect-error
     expect(() => new Plant({ name: "Bob", archivedOn: false })).toThrow(
-      "Invalid archived on date"
+      "Invalid archivedOn date"
     )
   })
   test("should throw an error when archivedOn is set to invalid value", () => {
     const plant = new Plant({ name: "Bob" })
     expect(() => (plant.archivedOn = "invalid date")).toThrow(
-      "Invalid archived on date"
+      "Invalid archivedOn date"
     )
     // @ts-expect-error
     expect(() => (plant.archivedOn = undefined)).toThrow(
-      "Invalid archived on date"
+      "Invalid archivedOn date"
     )
   })
 
@@ -131,7 +131,7 @@ describe("Plant archived on date", () => {
    *         (plant.archivedOn = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
    *           .toISOString()
    *           .split("T")[0])
-   *     ).toThrow("Archived on date cannot be in the future")
+   *     ).toThrow("archivedOn date cannot be in the future")
    *   })
    */
 
@@ -144,7 +144,7 @@ describe("Plant archived on date", () => {
 
   /*
    *     expect(() => new Plant({ name: "Bob", archivedOn: tomorrow })).toThrow(
-   *       "Archived on date cannot be in the future"
+   *       "archivedOn date cannot be in the future"
    *     )
    *   })
    */

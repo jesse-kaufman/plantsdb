@@ -2,7 +2,6 @@
  * @file Plant validation methods.
  */
 
-import { validateDate } from "../../utils/dateUtils"
 import Plant from "../Plant"
 
 /**
@@ -52,26 +51,28 @@ export const validateStage = (stage, required = true) => {
 }
 
 /**
- * Validates the provided startedOn date.
- * @param {string} [startedOn] - Started on date to validate.
- * @param {boolean} required - True if started on date is required.
+ * Validates date property.
+ * @param {string} property - Name of date property being validated.
+ * @param {string} [dateString] - String being validated as date.
+ * @param {boolean} [required] - True if started on date is required.
  * @throws {Error} If date is invalid.
  */
-export const validateStartedOn = (startedOn, required = true) => {
-  // Allow undefined startedOn if required is false
-  if (!required && startedOn === undefined) return
-
-  if (typeof startedOn !== "string") {
-    throw new Error("Invalid started on date")
+export const validateDate = (property, dateString, required = true) => {
+  // Allow undefined date if required is false
+  if (!required && dateString === undefined) return
+  if (typeof dateString !== "string") {
+    throw new Error(`Invalid ${property} date`)
   }
 
-  if (!validateDate(startedOn)) throw new Error("Invalid started on date")
+  const parsedDate = new Date(dateString)
 
-  const startedOnDate = new Date(startedOn)
+  // Expect invalid date if time is not a number
+  if (isNaN(parsedDate.getTime())) throw new Error(`Invalid ${property} date`)
+
   const today = new Date(new Date().toISOString().split("T")[0])
 
-  if (startedOnDate > today) {
-    throw new Error("Started on date cannot be in the future")
+  if (parsedDate > today) {
+    throw new Error(`${property} date cannot be in the future`)
   }
 }
 
@@ -92,5 +93,5 @@ export const validatePlant = (plant) => {
   validateName(plant.name)
   validateStatus(plant.status)
   validateStage(plant.stage, false)
-  validateStartedOn(plant.startedOn, false)
+  validateDate("startedOn", plant.startedOn, false)
 }

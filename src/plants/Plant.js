@@ -5,7 +5,7 @@ import {
   validateName,
   validatePlant,
   validateStage,
-  validateStartedOn,
+  validateDate,
 } from "./services/validation"
 
 /**
@@ -137,7 +137,7 @@ export default class Plant {
    * @throws {Error} If the new date is invalid.
    */
   set startedOn(newStartedOn) {
-    validateStartedOn(newStartedOn)
+    validateDate("startedOn", newStartedOn)
     this.#startedOn = new Date(newStartedOn)
   }
 }

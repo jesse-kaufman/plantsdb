@@ -23,7 +23,9 @@ export const addWeeksToDate = (date, weeks) => {
  * @param {string} date - Date to be validated.
  * @returns {boolean} True if date is valid, false otherwise.
  */
-export const validateDate = (date) => {
-  const parsedDate = new Date(date)
-  return !isNaN(parsedDate.getTime())
-}
+/*
+ * export const validateDate = (date) => {
+ *   const parsedDate = new Date(date)
+ *   return !isNaN(parsedDate.getTime())
+ * }
+ */
