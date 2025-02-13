@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 /**
  * @file Tests for Plant dates.
  */
@@ -7,164 +6,116 @@
 
 import Plant from "../../../src/plants/Plant"
 
-const futureDate = new Date()
-futureDate.setDate(futureDate.getDate() + 1) // Set to tomorrow
-const tomorrow = futureDate.toISOString().split("T")[0]
+const dateProperties = [
+  {
+    propertyName: "startedOn",
+    status: "active",
+    stage: "seedling",
+  },
+  {
+    propertyName: "archivedOn",
+    status: "archived",
+  },
+]
 
-/**
- * Helper function to assert that setting an invalid date throws the expected error.
- * @param {Plant} plant - The Plant instance to test.
- * @param {string} property - The name of the date property being tested.
- * @param {any} expectedError - The expected error to be thrown.
- */
-function expectInvalidDateError(plant, property, expectedError) {
-  expect(() => (plant[property] = "invalid-date")).toThrow(expectedError)
-  expect(() => (plant[property] = null)).toThrow(expectedError)
-  expect(() => (plant[property] = undefined)).toThrow(expectedError)
-  expect(() => (plant[property] = 123)).toThrow(expectedError)
-}
+const testDate = "2023-01-01"
 
-/**
- * Helper function to assert that setting a future date throws the expected error.
- * @param {Plant} plant - The Plant instance to test.
- * @param {string} property - The name of the date property being tested.
- */
-function expectFutureDateError(plant, property) {
-  expect(() => (plant[property] = tomorrow)).toThrow("cannot be in the future")
-}
+describe("Plant - Date properties", () => {
+  // Run tests on each date property
+  dateProperties.forEach((prop) => {
+    const { propertyName, status, stage } = prop
+    let testPlant = {}
 
-describe("Plant startedOn date", () => {
-  // Test sending startedOn to constructor
-  it("should set the startedOn property correctly when provided to constructor", () => {
-    const plant = new Plant({
-      name: "Bob",
-      stage: "seedling",
-      startedOn: "2023-01-01",
+    describe(`${propertyName} date`, () => {
+      beforeEach(() => {
+        testPlant = { name: "Bob", status, stage }
+      })
+
+      // Test successfully sending date to constructor
+      it(`should set the ${propertyName} property correctly when provided to constructor`, () => {
+        // Set the property being tested to the test date
+        testPlant[propertyName] = testDate
+
+        // Create plant and check
+        const plant = new Plant(testPlant)
+        expect(plant[propertyName]).toEqual(new Date(testDate))
+      })
+
+      // Test successfully setting date with setter
+      it(`should set the ${propertyName} property correctly`, () => {
+        // Create new plant object with stage/status and let dates init to defaults
+        const plant = new Plant(testPlant)
+
+        // Set the date property and check
+        plant[propertyName] = testDate
+        expect(plant[propertyName]).toEqual(new Date(testDate))
+      })
+
+      // Test setting date to invalid type in constructor
+      it(`should throw an error when ${propertyName} sent to constructor is invalid`, () => {
+        // Create TypeError to expect below
+        const typeError = new TypeError(`Invalid ${propertyName} date`)
+
+        // Test with null date
+        testPlant[propertyName] = null
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+        // Test with number
+        testPlant[propertyName] = 123
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+        // Test with object
+        testPlant[propertyName] = {}
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+        // Test with array
+        testPlant[propertyName] = []
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+      })
+
+      // Test setting date property to invalid type with setter
+      it(`should throw an error when ${propertyName} is set to invalid value`, () => {
+        // Create new plant object with stage/status and let dates init to defaults
+        const plant = new Plant(testPlant)
+
+        // Create TypeError to expect below
+        const typeError = new TypeError(`Invalid ${propertyName} date`)
+
+        // Set date to non-string types
+        expect(() => (plant[propertyName] = "invalid-date")).toThrow(typeError)
+        expect(() => (plant[propertyName] = null)).toThrow(typeError)
+        expect(() => (plant[propertyName] = undefined)).toThrow(typeError)
+        expect(() => (plant[propertyName] = 123)).toThrow(typeError)
+      })
     })
-    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
   })
 
-  // Test setting startedOn with setter
-  it("should set the startedOn property correctly", () => {
-    const plant = new Plant({ name: "Bob", stage: "veg" })
-    plant.startedOn = "2023-01-01"
-    expect(plant.startedOn).toEqual(new Date("2023-01-01"))
-  })
+  // Edge cases for startedOn date
+  describe("startedOn date", () => {
+    // Test initializing startedOn date to today when not provided to constructor
+    it("should default to today when creating seedling without startedOn date", () => {
+      const plant = new Plant({
+        name: "Bob",
+        status: "active",
+        stage: "seedling",
+      })
 
-  // Test setting startedOn to invalid date in constructor
-  it("should throw an error when startedOn sent to constructor is invalid", () => {
-    expect(() => new Plant({ name: "Bob", startedOn: "invalid-date" })).toThrow(
-      "Invalid startedOn date"
-    )
-    expect(() => new Plant({ name: "Bob", startedOn: null })).toThrow(
-      "Invalid startedOn date"
-    )
-    expect(() => new Plant({ name: "Bob", startedOn: 123 })).toThrow(
-      "Invalid startedOn date"
-    )
-  })
-
-  // Test setting startedOn to invalid date with setter
-  // eslint-disable-next-line jest/expect-expect
-  it("should throw an error when startedOn is set to invalid value", () => {
-    expectInvalidDateError(
-      new Plant({ name: "Bob" }),
-      "startedOn",
-      "Invalid startedOn date"
-    )
-  })
-
-  // Test setting startedOn to future date in constructor
-  test("should throw an error when startedOn sent to constructor is in the future", () => {
-    expect(() => new Plant({ name: "Bob", startedOn: tomorrow })).toThrow(
-      "startedOn date cannot be in the future"
-    )
-  })
-
-  // Test initializing startedOn date to today when not provided to constructor
-  it("should default to today's date when startedOn not provided to constructor", () => {
-    const plant = new Plant({ name: "Bob" })
-    expect(plant.startedOn).toEqual(
-      new Date(new Date().toISOString().split("T")[0])
-    )
-  })
-
-  // Test when startedOn is in the future
-  // eslint-disable-next-line jest/expect-expect
-  it("should throw an error when startedOn is in the future", () => {
-    const plant = new Plant({ name: "Bob" })
-    expectFutureDateError(plant, "startedOn")
-  })
-})
-
-describe("Plant archivedOn date", () => {
-  // Test sending invalid date to constructor
-  it("should throw an error when archivedOn sent to constructor is invalid", () => {
-    // @ts-expect-error
-    expect(() => new Plant({ name: "Bob", archivedOn: false })).toThrow(
-      "Invalid archivedOn date"
-    )
-  })
-
-  // Test setting archivedOn to invalid value
-  it("should throw an error when archivedOn is set to invalid value", () => {
-    const plant = new Plant({ name: "Bob" })
-    expect(() => (plant.archivedOn = "invalid date")).toThrow(
-      "Invalid archivedOn date"
-    )
-
-    // @ts-expect-error
-    expect(() => (plant.archivedOn = undefined)).toThrow(
-      "Invalid archivedOn date"
-    )
-  })
-
-  // Test initialization value of archivideOn is null
-  it("should initialize archivedOn properly when not provided to constructor", () => {
-    // Test init value when status is active
-    const activePlant = new Plant({ name: "Bob", status: "active" })
-    expect(activePlant.archivedOn).toBeNull()
-
-    // Test init value when status is archived
-    const archivedPlant = new Plant({ name: "Bob", status: "archived" })
-    expect(archivedPlant.archivedOn).toEqual(
-      new Date(new Date().toISOString().split("T")[0])
-    )
-  })
-
-  // Test setting archivedOn to a future date
-  it("should throw an error when archivedOn is in the future", () => {
-    const plant = new Plant({ name: "Bob" })
-    expect(
-      () =>
-        (plant.archivedOn = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0])
-    ).toThrow("archivedOn date cannot be in the future")
-  })
-
-  // Test sending future archivedOn date to constructor
-  it("should throw an error when archivedOn sent to constructor is in the future", () => {
-    expect(() => new Plant({ name: "Bob", archivedOn: tomorrow })).toThrow(
-      "archivedOn date cannot be in the future"
-    )
-  })
-
-  // Test that archivedOn is set correctly when sent to constructors and plant is archived
-  it("should set the archivedOn property correctly when provided to constructor", () => {
-    const date = "2023-01-01"
-    const plant = new Plant({
-      name: "Bob",
-      status: "archived",
-      archivedOn: date,
+      expect(plant.startedOn).toEqual(
+        new Date(new Date().toISOString().split("T")[0])
+      )
     })
-    expect(plant.archivedOn).toEqual(new Date(date))
   })
 
-  it("should set the archivedOn property correctly", () => {
-    const date = "2023-01-01"
-    const plant = new Plant({ name: "Bob", status: "archived" })
-    plant.archivedOn = date
-    expect(plant.archivedOn).toEqual(new Date(date))
+  // Edge cases for archivedOn date
+  describe("archivedOn date", () => {
+    // Test initialization value of archivideOn is null
+    it("should initialize archivedOn date properly", () => {
+      // Test init value when status is active
+      const activePlant = new Plant({ name: "Bob", status: "active" })
+      expect(activePlant.archivedOn).toBeNull()
+
+      // Test init value when status is archived
+      const archivedPlant = new Plant({ name: "Bob", status: "archived" })
+      expect(archivedPlant.archivedOn).toEqual(
+        new Date(new Date().toISOString().split("T")[0])
+      )
+    })
   })
 })

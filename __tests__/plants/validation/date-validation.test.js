@@ -1,20 +1,84 @@
+/* eslint-disable max-lines-per-function */
 /**
  * @file Tests for date validation.
  */
+
+import Plant from "../../../src/plants/Plant"
+
+const dateProperties = [
+  {
+    propertyName: "startedOn",
+    status: "active",
+    stage: "seedling",
+  },
+  {
+    propertyName: "archivedOn",
+    status: "archived",
+  },
+]
+
 describe("Plant - Date validation", () => {
-  test("Placeholder", () => {
-    expect(true).toBe(true)
+  dateProperties.forEach((prop) => {
+    const { propertyName, status, stage } = prop
+    let testPlant = {}
+    let futureDate = null
+    let tomorrow = null
+
+    // Test each date property
+    describe(`${propertyName} date`, () => {
+      beforeEach(() => {
+        futureDate = new Date()
+        futureDate.setDate(futureDate.getDate() + 1) // Set to tomorrow
+        tomorrow = futureDate.toISOString().split("T")[0]
+        testPlant = { name: "Bob", status, stage }
+      })
+
+      // Test initializing plant with invalid string for date property
+      it(`should throw an error when ${propertyName} sent to constructor is invalid date string`, () => {
+        // Test setting date property to literal "invalid-date" string
+        testPlant[propertyName] = "invalid-date"
+        expect(() => new Plant(testPlant)).toThrow(
+          `Invalid ${propertyName} date`
+        )
+        // Test setting date to empty string
+        testPlant[propertyName] = ""
+        expect(() => new Plant(testPlant)).toThrow(
+          `Invalid ${propertyName} date`
+        )
+      })
+
+      // Test initializing plant with date property in the future
+      test(`should throw an error when ${propertyName} sent to constructor is in the future`, () => {
+        testPlant[propertyName] = tomorrow
+        expect(() => new Plant(testPlant)).toThrow(
+          `${propertyName} date cannot be in the future`
+        )
+      })
+
+      // Test setting date property to invalid string
+      it(`should throw an error when ${propertyName} is set to invalid date string`, () => {
+        const plant = new Plant(testPlant)
+
+        // Test setting date property to literal "invalid-date" string
+        expect(() => (plant[propertyName] = "invalid-date")).toThrow(
+          `Invalid ${propertyName} date`
+        )
+        // Test setting date to empty string
+        expect(() => (plant[propertyName] = "invalid-date")).toThrow(
+          `Invalid ${propertyName} date`
+        )
+      })
+
+      // Test setting date property to future date
+      it(`should throw an error when ${propertyName} is set to date in the future`, () => {
+        const plant = new Plant(testPlant)
+
+        // Test setting date property to literal "invalid-date" string
+        expect(() => (plant[propertyName] = tomorrow)).toThrow(
+          `${propertyName} date cannot be in the future`
+        )
+      })
+    })
   })
 })
 
-/*
- * Test("should throw an error if archivedOn is set and status isn't `archived`", () => {
- *   expect(() => {
- *     const plant = new Plant({
- *       name: "Bob",
- *       status: "active",
- *       archivedOn: "2023-01-01",
- *     })
- *   }).toThrow(Error)
- * })
- */
