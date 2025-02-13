@@ -75,25 +75,3 @@ export const validateDate = (property, dateString, required = true) => {
     throw new Error(`${property} date cannot be in the future`)
   }
 }
-
-/**
- * Validates the given plant object.
- * @param {object} plant - Plant data to initialize the instance.
- * @param {string} plant.name - Name of the plant to use.
- * @param {string} [plant.status] - Status of the plant (optional only when creating instance).
- * @param {string} [plant.stage] - Stage of the plant (optional only when creating instance).
- * @param {string} [plant.startedOn] - Start date of plant.
- * @param {string} [plant.archivedOn] - Archived date of plant.
- * @throws {Error} If plant object is invalid or any properties fail validation.
- */
-export const validatePlant = (plant) => {
-  if (typeof plant !== "object" || plant === null) {
-    throw new TypeError("Invalid plant object")
-  }
-
-  validateName(plant.name)
-  validateStatus(plant.status)
-  validateStage(plant.stage, false)
-  validateDate("startedOn", plant.startedOn, false)
-  validateDate("archivedOn", plant.archivedOn, false)
-}

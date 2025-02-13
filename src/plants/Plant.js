@@ -3,8 +3,8 @@
  */
 import {
   validateName,
-  validatePlant,
   validateStage,
+  validateStatus,
   validateDate,
 } from "./services/validation/plantValidation"
 
@@ -41,7 +41,7 @@ export default class Plant {
    * @throws {Error} If the provided plant object fails validation.
    */
   constructor(newPlant) {
-    validatePlant(newPlant)
+    this.validate(newPlant)
     this.#name = newPlant.name.trim()
     this.#stage = newPlant.stage || "seedling"
     this.#status = newPlant.status || "active"
@@ -170,5 +170,27 @@ export default class Plant {
   set archivedOn(newArchivedOn) {
     validateDate("archivedOn", newArchivedOn)
     this.#archivedOn = new Date(newArchivedOn)
+  }
+
+  /**
+   * Validates the given plant object.
+   * @param {object} plant - Plant data to initialize the instance.
+   * @param {string} plant.name - Name of the plant to use.
+   * @param {string} [plant.status] - Status of the plant (optional only when creating instance).
+   * @param {string} [plant.stage] - Stage of the plant (optional only when creating instance).
+   * @param {string} [plant.startedOn] - Start date of plant.
+   * @param {string} [plant.archivedOn] - Archived date of plant.
+   * @throws {Error} If plant object is invalid or any properties fail validation.
+   */
+  validate(plant) {
+    if (typeof plant !== "object" || plant === null) {
+      throw new TypeError("Invalid plant object")
+    }
+
+    validateName(plant.name)
+    validateStatus(plant.status)
+    validateStage(plant.stage, false)
+    validateDate("startedOn", plant.startedOn, false)
+    validateDate("archivedOn", plant.archivedOn, false)
   }
 }
