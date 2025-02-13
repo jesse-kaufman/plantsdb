@@ -7,7 +7,7 @@
 
 import Plant from "../../../src/plants/Plant"
 
-describe("Plant", () => {
+describe("Plant class", () => {
   describe("constructor", () => {
     it("should initialize properties with default values", () => {
       const plant = new Plant({ name: "Bob" })
