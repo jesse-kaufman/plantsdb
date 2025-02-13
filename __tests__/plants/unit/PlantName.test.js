@@ -2,6 +2,8 @@
  * @file Plant name tests.
  */
 
+/* eslint-disable max-lines-per-function */
+
 import Plant from "../../../src/plants/Plant"
 
 describe("Plant name property", () => {

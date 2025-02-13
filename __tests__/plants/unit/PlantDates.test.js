@@ -2,6 +2,8 @@
  * @file Tests for Plant dates.
  */
 
+/* eslint-disable max-lines-per-function */
+
 import Plant from "../../../src/plants/Plant"
 
 const futureDate = new Date()
@@ -12,7 +14,7 @@ const tomorrow = futureDate.toISOString().split("T")[0]
  * Helper function to assert that setting an invalid date throws the expected error.
  * @param {Plant} plant - The Plant instance to test.
  * @param {string} property - The name of the date property being tested.
- * @param {any} expectedError - The expected error.
+ * @param {any} expectedError - The expected error to be thrown.
  */
 function expectInvalidDateError(plant, property, expectedError) {
   expect(() => (plant[property] = "invalid-date")).toThrow(expectedError)
@@ -62,6 +64,7 @@ describe("Plant started on date", () => {
   })
 
   // Test setting startedOn to invalid date with setter
+  // eslint-disable-next-line jest/expect-expect
   test("should throw an error when startedOn is set to invalid value", () => {
     expectInvalidDateError(
       new Plant({ name: "Bob" }),
@@ -85,6 +88,7 @@ describe("Plant started on date", () => {
     )
   })
 
+  // eslint-disable-next-line jest/expect-expect
   test("should throw an error when startedOn is in the future", () => {
     const plant = new Plant({ name: "Bob" })
     expectFutureDateError(plant, "startedOn")
