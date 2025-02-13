@@ -1,3 +1,6 @@
+/**
+ * @file Plant stage tests.
+ */
 import Plant from "../../../src/plants/Plant"
 
 describe("Plant - Stage property", () => {

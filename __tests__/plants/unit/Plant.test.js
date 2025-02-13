@@ -1,6 +1,10 @@
 /**
- * Tests for Plant class
+ * @file Tests for Plant class.
  */
+
+/* eslint-disable no-magic-numbers */
+/* eslint-disable max-lines-per-function */
+
 import Plant from "../../../src/plants/Plant"
 
 describe("Plant", () => {
@@ -17,14 +21,14 @@ describe("Plant", () => {
 
     test("should throw TypeError when passing non-object to constructor", () => {
       // @ts-expect-error
-      expect(() => new Plant("Bob")).toThrow(TypeError("Invalid plant object"))
+      expect(() => new Plant("Bob")).toThrow(new TypeError("Invalid plant object"))
       // @ts-expect-error
-      expect(() => new Plant(123)).toThrow(TypeError("Invalid plant object"))
+      expect(() => new Plant(123)).toThrow(new TypeError("Invalid plant object"))
       // @ts-expect-error
-      expect(() => new Plant(null)).toThrow(TypeError("Invalid plant object"))
+      expect(() => new Plant(null)).toThrow(new TypeError("Invalid plant object"))
       // @ts-expect-error
       expect(() => new Plant(undefined)).toThrow(
-        TypeError("Invalid plant object")
+        new TypeError("Invalid plant object")
       )
     })
 
@@ -43,7 +47,7 @@ describe("Plant", () => {
 
   // Test transitioning between different plant statuses
   describe("status transitions", () => {
-    let plant
+    let plant = {}
 
     // Reset plant before each test
     beforeEach(() => {

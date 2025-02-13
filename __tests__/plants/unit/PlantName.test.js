@@ -1,3 +1,7 @@
+/**
+ * @file Plant name tests.
+ */
+
 import Plant from "../../../src/plants/Plant"
 
 describe("Plant name property", () => {
