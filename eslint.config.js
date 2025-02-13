@@ -71,7 +71,7 @@ const config = [
       "guard-for-in": "error",
       "init-declarations": ["error", "always"],
       "max-depth": "error",
-      "max-nested-callbacks": ["error", 4],
+      "max-nested-callbacks": ["error", 5],
       "max-lines": [
         "error",
         {
