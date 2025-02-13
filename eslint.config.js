@@ -5,6 +5,8 @@ import jest from "eslint-plugin-jest"
 import jsdoc from "eslint-plugin-jsdoc"
 import importPlugin from "eslint-plugin-import"
 import globals from "globals"
+import eslintPluginPrettier from "eslint-plugin-prettier"
+import eslintConfigPrettier from "eslint-config-prettier"
 
 const config = [
   { ignores: ["**/node_modules/*", "**/public/js/*"] },
@@ -17,6 +19,7 @@ const config = [
     plugins: {
       jsdoc,
       jest,
+      prettier: eslintPluginPrettier,
     },
   },
   jsdoc.configs["flat/recommended"],
@@ -28,6 +31,9 @@ const config = [
       sourceType: "module",
     },
     rules: {
+      ...eslintConfigPrettier.rules, // Disable conflicting ESLint rules
+      "prettier/prettier": "error", // Run Prettier as an ESLint rule
+
       ...jest.configs.recommended.rules,
       "array-callback-return": "error",
       "arrow-body-style": [
