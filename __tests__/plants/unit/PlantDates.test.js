@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 /**
  * @file Tests for Plant dates.
  */
