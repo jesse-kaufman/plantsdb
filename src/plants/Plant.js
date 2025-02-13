@@ -168,7 +168,6 @@ export default class Plant {
    * @throws {Error} If the new date is invalid.
    */
   set archivedOn(newArchivedOn) {
-    console.log(newArchivedOn)
     validateDate("archivedOn", newArchivedOn)
     this.#archivedOn = new Date(newArchivedOn)
   }
