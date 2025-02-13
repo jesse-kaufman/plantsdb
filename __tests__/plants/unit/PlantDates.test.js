@@ -153,8 +153,8 @@ describe("Plant archivedOn date", () => {
   })
 
   it("should set the archivedOn property correctly", () => {
-    const plant = new Plant({ name: "Bob", status: "archived" })
     const date = "2023-01-01"
+    const plant = new Plant({ name: "Bob", status: "archived" })
     plant.archivedOn = date
     expect(plant.archivedOn).toEqual(new Date(date))
   })
