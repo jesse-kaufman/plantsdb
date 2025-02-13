@@ -156,7 +156,6 @@ describe("Plant archivedOn date", () => {
     const plant = new Plant({ name: "Bob", status: "archived" })
     const date = "2023-01-01"
     plant.archivedOn = date
-    console.log("here", plant.archivedOn)
     expect(plant.archivedOn).toEqual(new Date(date))
   })
 })
