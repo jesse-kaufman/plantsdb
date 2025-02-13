@@ -89,6 +89,7 @@ describe("Plant startedOn date", () => {
     )
   })
 
+  // Test when startedOn is in the future
   // eslint-disable-next-line jest/expect-expect
   it("should throw an error when startedOn is in the future", () => {
     const plant = new Plant({ name: "Bob" })
@@ -97,6 +98,7 @@ describe("Plant startedOn date", () => {
 })
 
 describe("Plant archivedOn date", () => {
+  // Test sending invalid date to constructor
   it("should throw an error when archivedOn sent to constructor is invalid", () => {
     // @ts-expect-error
     expect(() => new Plant({ name: "Bob", archivedOn: false })).toThrow(
@@ -104,11 +106,13 @@ describe("Plant archivedOn date", () => {
     )
   })
 
+  // Test setting archivedOn to invalid value
   it("should throw an error when archivedOn is set to invalid value", () => {
     const plant = new Plant({ name: "Bob" })
     expect(() => (plant.archivedOn = "invalid date")).toThrow(
       "Invalid archivedOn date"
     )
+
     // @ts-expect-error
     expect(() => (plant.archivedOn = undefined)).toThrow(
       "Invalid archivedOn date"
@@ -130,12 +134,14 @@ describe("Plant archivedOn date", () => {
     ).toThrow("archivedOn date cannot be in the future")
   })
 
+  // Test sending future archivedOn date to constructor
   it("should throw an error when archivedOn sent to constructor is in the future", () => {
     expect(() => new Plant({ name: "Bob", archivedOn: tomorrow })).toThrow(
       "archivedOn date cannot be in the future"
     )
   })
 
+  // Test that archivedOn is set correctly when sent to constructors and plant is archived
   it("should set the archivedOn property correctly when provided to constructor", () => {
     const date = "2023-01-01"
     const plant = new Plant({
