@@ -45,9 +45,11 @@ export default class Plant {
     this.#name = newPlant.name.trim()
     this.#stage = newPlant.stage || "seedling"
     this.#status = newPlant.status || "active"
+    // Default startedOn to today if missing in newPlant
     this.#startedOn = newPlant.startedOn
       ? new Date(newPlant.startedOn)
       : new Date(new Date().toISOString().split("T")[0])
+    // Default archivedOn to null if missing in newPlant
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
       : null
