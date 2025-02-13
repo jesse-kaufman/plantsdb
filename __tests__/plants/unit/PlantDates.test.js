@@ -119,11 +119,20 @@ describe("Plant archivedOn date", () => {
     )
   })
 
-  it("should default to null when archivedOn is not provided to constructor", () => {
-    const plant = new Plant({ name: "Bob" })
-    expect(plant.archivedOn).toBeNull()
+  // Test initialization value of archivideOn is null
+  it("should initialize archivedOn properly when not provided to constructor", () => {
+    // Test init value when status is active
+    const activePlant = new Plant({ name: "Bob", status: "active" })
+    expect(activePlant.archivedOn).toBeNull()
+
+    // Test init value when status is archived
+    const archivedPlant = new Plant({ name: "Bob", status: "archived" })
+    expect(archivedPlant.archivedOn).toEqual(
+      new Date(new Date().toISOString().split("T")[0])
+    )
   })
 
+  // Test setting archivedOn to a future date
   it("should throw an error when archivedOn is in the future", () => {
     const plant = new Plant({ name: "Bob" })
     expect(
