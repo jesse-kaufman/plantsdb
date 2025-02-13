@@ -6,7 +6,7 @@ import {
   validatePlant,
   validateStage,
   validateDate,
-} from "./services/validation"
+} from "./services/validation/plantValidation"
 
 /**
  * Represents a plant with its properties and validation logic.

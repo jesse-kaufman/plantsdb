@@ -2,7 +2,7 @@
  * @file Plant validation methods.
  */
 
-import Plant from "../Plant"
+import Plant from "../../Plant"
 
 /**
  * Validates the provided name.
