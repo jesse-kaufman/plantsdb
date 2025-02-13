@@ -115,69 +115,42 @@ describe("Plant archivedOn date", () => {
     )
   })
 
-  /*
-   *   Test("should default to null when archivedOn is not provided to constructor", () => {
-   *     const plant = new Plant({ name: "Bob" })
-   *     expect(plant.archivedOn).toBeNull()
-   *   })
-   */
+  it("should default to null when archivedOn is not provided to constructor", () => {
+    const plant = new Plant({ name: "Bob" })
+    expect(plant.archivedOn).toBeNull()
+  })
 
-  /*
-   *   test("should throw an error when archivedOn is in the future", () => {
-   *     const plant = new Plant({ name: "Bob" })
-   */
+  it("should throw an error when archivedOn is in the future", () => {
+    const plant = new Plant({ name: "Bob" })
+    expect(
+      () =>
+        (plant.archivedOn = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0])
+    ).toThrow("archivedOn date cannot be in the future")
+  })
 
-  /*
-   *     expect(
-   *       () =>
-   *         (plant.archivedOn = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-   *           .toISOString()
-   *           .split("T")[0])
-   *     ).toThrow("archivedOn date cannot be in the future")
-   *   })
-   */
+  it("should throw an error when archivedOn sent to constructor is in the future", () => {
+    expect(() => new Plant({ name: "Bob", archivedOn: tomorrow })).toThrow(
+      "archivedOn date cannot be in the future"
+    )
+  })
 
-  /*
-   *   test("should throw an error when archivedOn sent to constructor is in the future", () => {
-   *     const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-   *       .toISOString()
-   *       .split("T")[0]
-   */
+  it("should set the archivedOn property correctly when provided to constructor", () => {
+    const date = "2023-01-01"
+    const plant = new Plant({
+      name: "Bob",
+      status: "archived",
+      archivedOn: date,
+    })
+    expect(plant.archivedOn).toEqual(new Date(date))
+  })
 
-  /*
-   *     expect(() => new Plant({ name: "Bob", archivedOn: tomorrow })).toThrow(
-   *       "archivedOn date cannot be in the future"
-   *     )
-   *   })
-   */
-
-  /*
-   *   test("should throw an error if archivedOn is set and status isn't `archived`", () => {
-   *     const plant = new Plant({
-   *       name: "Bob",
-   *       status: "active",
-   *       archivedOn: "2023-01-01",
-   *     })
-   *     expect(plant.startedOn).toEqual(new Date("2023-01-01"))
-   *   })
-   */
-
-  /*
-   *   test("should set the archivedOn property correctly when provided to constructor", () => {
-   *     const plant = new Plant({
-   *       name: "Bob",
-   *       status: "archived",
-   *       archivedOn: "2023-01-01",
-   *     })
-   *     expect(plant.startedOn).toEqual(new Date("2023-01-01"))
-   *   })
-   */
-
-  /*
-   *   test("should set the startedOn property correctly", () => {
-   *     const plant = new Plant({ name: "Bob", stage: "veg" })
-   *     plant.startedOn = "2023-01-01"
-   *     expect(plant.startedOn).toEqual(new Date("2023-01-01"))
-   *   })
-   */
+  it("should set the archivedOn property correctly", () => {
+    const plant = new Plant({ name: "Bob", status: "archived" })
+    const date = "2023-01-01"
+    plant.archivedOn = date
+    console.log("here", plant.archivedOn)
+    expect(plant.archivedOn).toEqual(new Date(date))
+  })
 })
