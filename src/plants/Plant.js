@@ -27,6 +27,8 @@ export default class Plant {
   #stage
   /** Date plant was started. */
   #startedOn
+  /** Date plant was archived. */
+  #archivedOn
 
   /**
    * Creates an instance of a Plant.
@@ -35,6 +37,7 @@ export default class Plant {
    * @param {string} [newPlant.status] - Optional status (defaults to active).
    * @param {string} [newPlant.stage] - Optional stage of the plant (defaults to seedling).
    * @param {string} [newPlant.startedOn] - Optional start date (defaults to today).
+   * @param {string} [newPlant.archivedOn] - Optional archived on date (defaults to null).
    * @throws {Error} If the provided plant object fails validation.
    */
   constructor(newPlant) {
@@ -45,6 +48,9 @@ export default class Plant {
     this.#startedOn = newPlant.startedOn
       ? new Date(newPlant.startedOn)
       : new Date(new Date().toISOString().split("T")[0])
+    this.#archivedOn = newPlant.archivedOn
+      ? new Date(newPlant.archivedOn)
+      : null
   }
 
   /**
@@ -139,5 +145,24 @@ export default class Plant {
   set startedOn(newStartedOn) {
     validateDate("startedOn", newStartedOn)
     this.#startedOn = new Date(newStartedOn)
+  }
+
+  /**
+   * Gets the archived date of the plant.
+   * @returns {?Date} Archived date of the plant.
+   */
+  get archivedOn() {
+    return this.#archivedOn
+  }
+
+  /**
+   * Sets the archived on date of the plant.
+   * @param {string} newArchivedOn - New archived on date.
+   * @throws {Error} If the new date is invalid.
+   */
+  set archivedOn(newArchivedOn) {
+    console.log(newArchivedOn)
+    validateDate("archivedOn", newArchivedOn)
+    this.#archivedOn = new Date(newArchivedOn)
   }
 }

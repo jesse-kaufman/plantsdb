@@ -83,6 +83,7 @@ export const validateDate = (property, dateString, required = true) => {
  * @param {string} [plant.status] - Status of the plant (optional only when creating instance).
  * @param {string} [plant.stage] - Stage of the plant (optional only when creating instance).
  * @param {string} [plant.startedOn] - Start date of plant.
+ * @param {string} [plant.archivedOn] - Archived date of plant.
  * @throws {Error} If plant object is invalid or any properties fail validation.
  */
 export const validatePlant = (plant) => {
@@ -94,4 +95,5 @@ export const validatePlant = (plant) => {
   validateStatus(plant.status)
   validateStage(plant.stage, false)
   validateDate("startedOn", plant.startedOn, false)
+  validateDate("archivedOn", plant.archivedOn, false)
 }
