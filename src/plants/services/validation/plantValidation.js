@@ -2,8 +2,6 @@
  * @file Plant validation methods.
  */
 
-import { validStages } from "../../config/constants"
-
 /**
  * Validates the provided name.
  * @param {string|undefined} name - Name to validate.
@@ -16,25 +14,6 @@ export const validateName = (name) => {
   // eslint-disable-next-line no-magic-numbers
   if (name.trim().length <= 2) {
     throw new Error("Name must be at least 2 characters")
-  }
-}
-
-/**
- * Validates the provided stage.
- * @param {string|undefined} stage - Stage to validate.
- * @param {boolean} required - Whether to allow undefined for the stage.
- * @throws {Error} If the stage is not a valid stage.
- */
-export const validateStage = (stage, required = true) => {
-  // Stage is not required and is undefined
-  if (!required && stage === undefined) return
-
-  // Stage is required but undefined
-  if (required && stage === undefined) throw new Error("Stage is required")
-
-  // Stage is set and not a valid stage
-  if (stage !== undefined && !validStages.includes(stage)) {
-    throw new Error("Invalid stage")
   }
 }
 
