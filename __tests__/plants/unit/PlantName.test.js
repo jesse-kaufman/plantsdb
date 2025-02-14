@@ -13,13 +13,19 @@ describe("Plant name property", () => {
     expect(plant.name).toBe("Alice")
   })
 
-  test("should throw an error when name is empty string", () => {
+  test("should throw an error when name is empty string or whitespace", () => {
     // Test the constructor with an empty string
     expect(() => new Plant({ name: "" })).toThrow("Name is required")
 
     // Test setting the name property to an empty string after initialization
     const plant = new Plant({ name: "Bob" })
     expect(() => (plant.name = "")).toThrow("Name is required")
+
+    // Test the constructor with an empty string
+    expect(() => new Plant({ name: "   " })).toThrow("Name is required")
+
+    // Test setting the name property to an empty string after initialization
+    expect(() => (plant.name = "   ")).toThrow("Name is required")
   })
 
   test("should throw TypeError when provided name is not string", () => {
