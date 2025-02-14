@@ -42,15 +42,7 @@ export default class Plant {
    */
   constructor(newPlant) {
     // Validate incoming data
-    if (typeof newPlant !== "object" || newPlant === null) {
-      throw new TypeError("Invalid plant object")
-    }
-
-    validateName(newPlant.name)
-    validateStatus(newPlant.status, false)
-    validateStage(newPlant.stage, false)
-    validateDate("startedOn", newPlant.startedOn, false)
-    validateDate("archivedOn", newPlant.archivedOn, false)
+    this.#validateConstructorData(newPlant)
 
     this.#name = newPlant.name.trim()
     this.#stage = newPlant.stage || "seedling"
@@ -181,6 +173,18 @@ export default class Plant {
   set archivedOn(newArchivedOn) {
     validateDate("archivedOn", newArchivedOn)
     this.#archivedOn = new Date(newArchivedOn)
+  }
+
+  #validateConstructorData(newPlant) {
+    if (typeof newPlant !== "object" || newPlant === null) {
+      throw new TypeError("Invalid plant object")
+    }
+
+    validateName(newPlant.name)
+    validateStatus(newPlant.status)
+    validateStage(newPlant.stage, false)
+    validateDate("startedOn", newPlant.startedOn, false)
+    validateDate("archivedOn", newPlant.archivedOn, false)
   }
 
   /**
