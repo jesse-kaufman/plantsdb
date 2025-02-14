@@ -38,7 +38,7 @@ describe("Plant class", () => {
       )
     })
 
-    test("should throw an error when name is missing", () => {
+    test("should throw an error when name is missing in constructor", () => {
       // @ts-expect-error
       expect(() => new Plant({})).toThrow("Name is required")
     })
