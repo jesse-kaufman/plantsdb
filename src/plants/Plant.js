@@ -2,10 +2,10 @@
  * @file Plant class.
  */
 import {
+  validateConstructorData,
   validateName,
   validateDate,
 } from "./services/validation/plantValidation"
-import { validateStatus } from "./services/validation/plantStatusValidation"
 import { validateStage } from "./services/validation/plantStageValidation"
 
 /**
@@ -42,7 +42,7 @@ export default class Plant {
    */
   constructor(newPlant) {
     // Validate incoming data
-    this.#validateConstructorData(newPlant)
+    validateConstructorData(newPlant)
 
     this.#name = newPlant.name.trim()
     this.#stage = newPlant.stage || "seedling"
@@ -175,23 +175,11 @@ export default class Plant {
     this.#archivedOn = new Date(newArchivedOn)
   }
 
-  #validateConstructorData(newPlant) {
-    if (typeof newPlant !== "object" || newPlant === null) {
-      throw new TypeError("Invalid plant object")
-    }
-
-    validateName(newPlant.name)
-    validateStatus(newPlant.status)
-    validateStage(newPlant.stage, false)
-    validateDate("startedOn", newPlant.startedOn, false)
-    validateDate("archivedOn", newPlant.archivedOn, false)
-  }
-
   /**
    * Validates the plant instance.
    * @throws {Error} If plant object is invalid or any properties fail validation.
    */
   validate() {
-    // validateStageDates()
+    //validateStageDates()
   }
 }
