@@ -2,8 +2,8 @@
  * @file Plant validation methods.
  */
 
-import { validateStatus } from "./plantStatusValidation"
-import { validateStage } from "./plantStageValidation"
+import { validateStatus } from "./statusValidation"
+import { validateStage } from "./stageValidation"
 import { validateDate } from "./dateValidation"
 
 /**

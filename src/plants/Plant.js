@@ -5,7 +5,7 @@ import {
   validateConstructorData,
   validateName,
 } from "./services/validation/plantValidation"
-import { validateStage } from "./services/validation/plantStageValidation"
+import { validateStage } from "./services/validation/stageValidation"
 import { validateDate } from "./services/validation/dateValidation"
 
 /**
