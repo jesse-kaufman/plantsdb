@@ -43,7 +43,7 @@ describe("Plant class", () => {
       expect(() => new Plant({})).toThrow("Name is required")
     })
 
-    test("should throw TypeError when passing invalid object to constructor", () => {
+    test("should throw TypeError when passing non-string status to constructor", () => {
       // @ts-expect-error
       expect(() => new Plant({ name: "Bob", status: 1 })).toThrow(
         Error("Invalid status")
