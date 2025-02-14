@@ -1,5 +1,7 @@
 # PlantsDB
 
+***Currently in the process of a ground-up rewrite using test-driven approach and swapping Mongoose for the standard MongoDB library—see `tdd-rewrite` branch.***
+
 An in-progress project using NodeJS and MongoDB for tracking plants.
 
 Currently, the backend API is in develpoment. Eventually there will be a frontend written in React, as well.
