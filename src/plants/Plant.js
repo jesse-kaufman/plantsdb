@@ -3,10 +3,10 @@
  */
 import {
   validateName,
-  validateStage,
-  validateStatus,
   validateDate,
 } from "./services/validation/plantValidation"
+import { validateStatus } from "./services/validation/plantStatusValidation"
+import { validateStage } from "./services/validation/plantStageValidation"
 
 /**
  * Represents a plant with its properties and validation logic.
@@ -41,7 +41,17 @@ export default class Plant {
    * @throws {Error} If the provided plant object fails validation.
    */
   constructor(newPlant) {
-    this.validate(newPlant)
+    // Validate incoming data
+    if (typeof newPlant !== "object" || newPlant === null) {
+      throw new TypeError("Invalid plant object")
+    }
+
+    validateName(newPlant.name)
+    validateStatus(newPlant.status, false)
+    validateStage(newPlant.stage, false)
+    validateDate("startedOn", newPlant.startedOn, false)
+    validateDate("archivedOn", newPlant.archivedOn, false)
+
     this.#name = newPlant.name.trim()
     this.#stage = newPlant.stage || "seedling"
     this.#status = newPlant.status || "active"
@@ -58,6 +68,7 @@ export default class Plant {
     if (newPlant.status === "archived" && this.#archivedOn === null) {
       this.#archivedOn = new Date(new Date().toISOString().split("T")[0])
     }
+    this.validate()
   }
 
   /**
@@ -65,7 +76,7 @@ export default class Plant {
    * @returns {string} Name of the plant from db.
    */
   get name() {
-    return this.#name.trim()
+    return this.#name
   }
 
   /**
@@ -75,7 +86,7 @@ export default class Plant {
    */
   set name(newName) {
     validateName(newName)
-    this.#name = newName
+    this.#name = newName.trim()
   }
 
   /**
@@ -173,24 +184,10 @@ export default class Plant {
   }
 
   /**
-   * Validates the given plant object.
-   * @param {object} plant - Plant data to initialize the instance.
-   * @param {string} plant.name - Name of the plant to use.
-   * @param {string} [plant.status] - Status of the plant (optional only when creating instance).
-   * @param {string} [plant.stage] - Stage of the plant (optional only when creating instance).
-   * @param {string} [plant.startedOn] - Start date of plant.
-   * @param {string} [plant.archivedOn] - Archived date of plant.
+   * Validates the plant instance.
    * @throws {Error} If plant object is invalid or any properties fail validation.
    */
-  validate(plant) {
-    if (typeof plant !== "object" || plant === null) {
-      throw new TypeError("Invalid plant object")
-    }
-
-    validateName(plant.name)
-    validateStatus(plant.status)
-    validateStage(plant.stage, false)
-    validateDate("startedOn", plant.startedOn, false)
-    validateDate("archivedOn", plant.archivedOn, false)
+  validate() {
+    // validateStageDates()
   }
 }

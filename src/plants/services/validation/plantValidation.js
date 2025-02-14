@@ -2,7 +2,7 @@
  * @file Plant validation methods.
  */
 
-import Plant from "../../Plant"
+import { validStages } from "../../config/constants"
 
 /**
  * Validates the provided name.
@@ -20,18 +20,6 @@ export const validateName = (name) => {
 }
 
 /**
- * Validates the provided status.
- * @param {string|undefined} status - Stage to validate.
- * @throws {Error} If the stage is not a valid stage.
- */
-export const validateStatus = (status) => {
-  // Stage is set and not a valid stage
-  if (status !== undefined && !Plant.validStatuses.includes(status)) {
-    throw new Error("Invalid status")
-  }
-}
-
-/**
  * Validates the provided stage.
  * @param {string|undefined} stage - Stage to validate.
  * @param {boolean} required - Whether to allow undefined for the stage.
@@ -45,7 +33,7 @@ export const validateStage = (stage, required = true) => {
   if (required && stage === undefined) throw new Error("Stage is required")
 
   // Stage is set and not a valid stage
-  if (stage !== undefined && !Plant.validStages.includes(stage)) {
+  if (stage !== undefined && !validStages.includes(stage)) {
     throw new Error("Invalid stage")
   }
 }
