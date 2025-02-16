@@ -9,9 +9,9 @@ const seedlingWeeks = 1
  * Calculates the potential harvest date from stage and dates.
  * @param {string} stage - Stage of plant.
  * @param {object} dates - Dates from plant.
- * @param {Date} dates.startedOn - Date plant started.
- * @param {Date} dates.vegStartedOn - Date plant started veg stage.
- * @param {Date} dates.flowerStartedOn - Date plant started flower stage.
+ * @param {Date} [dates.startedOn] - Date plant started.
+ * @param {Date} [dates.vegStartedOn] - Date plant started veg stage.
+ * @param {Date} [dates.flowerStartedOn] - Date plant started flower stage.
  * @param {object} config - Configuration options.
  * @param {number} config.seedlingWeeks - Number of estimated weeks in seedling stages.
  * @param {number} config.vegWeeks - Number of estimated weeks in veg stages.
