@@ -49,7 +49,9 @@ export default class Plant {
     // Validate incoming data
     validateConstructorData(newPlant)
 
+    // Now initialize the plant properties
     this.#name = newPlant.name.trim()
+    this.#status = newPlant.status || "active"
     this.#stage = newPlant.stage || "seedling"
     this.#initDates(newPlant)
 
