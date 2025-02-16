@@ -9,6 +9,7 @@
  * @returns {Date} New date after adding weeks.
  */
 export const addWeeksToDate = (date, weeks) => {
+  if (!(date instanceof Date)) throw new TypeError("Invalid date")
   if (isNaN(date.valueOf())) throw new Error("Invalid date")
 
   const newDate = new Date(date) // Create a copy of the original date
