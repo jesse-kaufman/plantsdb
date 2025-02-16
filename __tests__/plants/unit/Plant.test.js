@@ -19,9 +19,7 @@ describe("Plant class", () => {
       expect(plant.name).toBe("Bob")
       expect(plant.status).toBe("active")
       expect(plant.stage).toBe("seedling")
-      expect(plant.startedOn).toEqual(
-        new Date(new Date().toISOString().split("T")[0])
-      )
+      expect(plant.startedOn).toEqual(new Date("2023-01-01"))
     })
 
     test("should throw TypeError when passing non-object to constructor", () => {
