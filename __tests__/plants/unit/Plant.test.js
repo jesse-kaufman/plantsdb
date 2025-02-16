@@ -10,7 +10,12 @@ import Plant from "../../../src/plants/Plant"
 describe("Plant class", () => {
   describe("constructor", () => {
     it("should initialize properties with default values", () => {
-      const plant = new Plant({ name: "Bob" })
+      const plant = new Plant({
+        name: "Bob",
+        status: "active",
+        stage: "seedling",
+        startedOn: "2023-01-01",
+      })
       expect(plant.name).toBe("Bob")
       expect(plant.status).toBe("active")
       expect(plant.stage).toBe("seedling")
@@ -38,9 +43,18 @@ describe("Plant class", () => {
       )
     })
 
-    test("should throw an error when name is missing in constructor", () => {
-      // @ts-expect-error
-      expect(() => new Plant({})).toThrow("Name is required")
+    it("should throw an error when any required property is missing in constructor", () => {
+      const requiredProps = ["name", "status", "stage", "startedOn"]
+      requiredProps.forEach((prop) => {
+        const newPlant = {
+          name: "Bob",
+          status: "archived",
+          stage: "seedling",
+          startedOn: "2023-01-01",
+        }
+        // @ts-expect-error
+        expect(() => new Plant(newPlant)).toThrow(`${prop} is required`)
+      })
     })
 
     test("should throw TypeError when passing non-string status to constructor", () => {
@@ -64,7 +78,12 @@ describe("Plant class", () => {
 
     // Reset plant before each test
     beforeEach(() => {
-      plant = new Plant({ name: "Bob" })
+      plant = new Plant({
+        name: "Bob",
+        status: "active",
+        startedOn: new Date().toISOString().split("T")[0],
+        stage: "seedling",
+      })
     })
 
     // Test deleting a plant
