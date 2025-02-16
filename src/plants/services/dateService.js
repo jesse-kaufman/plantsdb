@@ -28,7 +28,7 @@ export const calculatePotentialHarvest = (stage, dates, config) => {
         throw new TypeError("Invalid startedOn date")
       }
       return addWeeksToDate(dates.startedOn, weeksToAdd)
-    case "vegetative":
+    case "veg":
       weeksToAdd = config.vegWeeks + config.flowerWeeks
       return addWeeksToDate(dates.vegStartedOn, weeksToAdd)
     case "flower":
