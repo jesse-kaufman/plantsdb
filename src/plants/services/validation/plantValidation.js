@@ -9,12 +9,17 @@ import { validateDate } from "./dateValidation"
 /**
  * Validates the provided name.
  * @param {string|undefined} name - Name to validate.
- * @throws {Error} If the name is not a string, is empty, or contains only whitespace.
+ * @throws {TypeError} If name is not a string.
+ * @throws {Error} I fname is empty, or contains only whitespace.
  */
 export const validateName = (name) => {
+  // Require a name
   if (name === undefined) throw new Error("Name is required")
+  // Require name to be string
   if (typeof name !== "string") throw new TypeError("Name must be a string")
+  // Require name to be non-empty and not only whitespace
   if (name.trim() === "") throw new Error("Name is required")
+  // Require name to be at least 2 characters
   // eslint-disable-next-line no-magic-numbers
   if (name.trim().length <= 2) {
     throw new Error("Name must be at least 2 characters")
@@ -30,6 +35,7 @@ export const validateName = (name) => {
  * @param {string} [newPlant.startedOn] - Optional start date (defaults to today).
  * @param {string} [newPlant.potentialHarvest] - Optional potential harvest date (defaults to null).
  * @param {string} [newPlant.archivedOn] - Optional archived on date (defaults to null).
+ * @throws {TypeError} If newPlant null or non-object.
  * @throws {Error} If the provided plant object fails validation.
  */
 export const validateConstructorData = (newPlant) => {
