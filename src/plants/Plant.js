@@ -4,6 +4,7 @@
 import {
   validateConstructorData,
   validateName,
+  validatePlant,
 } from "./services/validation/plantValidation"
 import { validateStage } from "./services/validation/stageValidation"
 import { validateDate } from "./services/validation/dateValidation"
@@ -194,6 +195,6 @@ export default class Plant {
    * @throws {Error} If plant object is invalid or any properties fail validation.
    */
   validate() {
-    //validateStageDates()
+    validatePlant(this)
   }
 }

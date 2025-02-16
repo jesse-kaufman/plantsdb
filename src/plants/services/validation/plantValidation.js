@@ -42,3 +42,13 @@ export const validateConstructorData = (newPlant) => {
   validateDate("startedOn", newPlant.startedOn, false)
   validateDate("archivedOn", newPlant.archivedOn, false)
 }
+
+/**
+ * Validates plant object.
+ * @param {object} plant - Object to validate.
+ * @throws {Error} If plant fails validation.
+ */
+export const validatePlant = (plant) => {
+  const { startedOn, potentialHarvest } = plant
+  validateStageDates(plant.stage, { startedOn, potentialHarvest })
+}
