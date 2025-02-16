@@ -3,7 +3,7 @@
  */
 
 import { validateStatus } from "./statusValidation"
-import { validateStage } from "./stageValidation"
+import { validateStage, validateStageDates } from "./stageValidation"
 import { validateDate } from "./dateValidation"
 
 /**
