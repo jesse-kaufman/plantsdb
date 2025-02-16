@@ -47,8 +47,8 @@ describe("calculatePotentialHarvest", () => {
     expect(addWeeksToDate).toHaveBeenCalledWith(mockDates.startedOn, weeksToAdd)
   })
 
-  test("should calculate potential harvest date for vegetative stage", () => {
-    const stage = "vegetative"
+  test("should calculate potential harvest date for veg stage", () => {
+    const stage = "veg"
     const weeksToAdd = mockConfig.vegWeeks + mockConfig.flowerWeeks
     const expectedHarvestDate = new Date(2023, 9, 1) // Expecting October 2, 2023
 
