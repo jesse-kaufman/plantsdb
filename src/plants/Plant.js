@@ -8,6 +8,7 @@ import {
 } from "./services/validation/plantValidation"
 import { validateStage } from "./services/validation/stageValidation"
 import { validateDate } from "./services/validation/dateValidation"
+import { calculatePotentialHarvest } from "./services/dateService"
 import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants"
 
 /**
@@ -29,6 +30,8 @@ export default class Plant {
   #stage
   /** Date plant was started. */
   #startedOn
+  /** Date of potential harvest. */
+  #potentialHarvest
   /** Date plant was archived. */
   #archivedOn
 
