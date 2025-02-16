@@ -8,6 +8,7 @@ import {
 } from "./services/validation/plantValidation"
 import { validateStage } from "./services/validation/stageValidation"
 import { validateDate } from "./services/validation/dateValidation"
+import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants"
 
 /**
  * Represents a plant with its properties and validation logic.
