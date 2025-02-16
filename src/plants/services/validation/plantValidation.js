@@ -28,6 +28,7 @@ export const validateName = (name) => {
  * @param {string} [newPlant.status] - Optional status (defaults to active).
  * @param {string} [newPlant.stage] - Optional stage of the plant (defaults to seedling).
  * @param {string} [newPlant.startedOn] - Optional start date (defaults to today).
+ * @param {string} [newPlant.potentialHarvest] - Optional potential harvest date (defaults to null).
  * @param {string} [newPlant.archivedOn] - Optional archived on date (defaults to null).
  * @throws {Error} If the provided plant object fails validation.
  */
@@ -40,6 +41,7 @@ export const validateConstructorData = (newPlant) => {
   validateStatus(newPlant.status)
   validateStage(newPlant.stage, false)
   validateDate("startedOn", newPlant.startedOn, false)
+  validateDate("potentialHarvest", newPlant.potentialHarvest, false)
   validateDate("archivedOn", newPlant.archivedOn, false)
 }
 
