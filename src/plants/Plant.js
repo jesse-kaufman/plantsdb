@@ -153,6 +153,14 @@ export default class Plant {
   }
 
   /**
+   * Gets the potential harvest date of the plant.
+   * @returns {?Date} Potential harvest date of the plant.
+   */
+  get potentialHarvest() {
+    return this.#potentialHarvest
+  }
+
+  /**
    * Gets the archived date of the plant.
    * @returns {?Date} Archived date of the plant.
    */
