@@ -57,6 +57,5 @@ export const validateConstructorData = (newPlant) => {
  * @throws {Error} If plant fails validation.
  */
 export const validatePlant = (plant) => {
-  const { startedOn, potentialHarvest } = plant
-  validateStageDates(plant.stage, { startedOn, potentialHarvest })
+  validateStageDates(plant.stage, plant)
 }
