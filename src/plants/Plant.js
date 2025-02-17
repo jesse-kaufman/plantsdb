@@ -199,7 +199,7 @@ export default class Plant {
   }
 
   #initDates(newPlant) {
-    // Default startedOn to today if missing in newPlant
+    // Convert startedOn to date if set
     this.#startedOn = newPlant.startedOn
       ? new Date(newPlant.startedOn)
       : new Date(new Date().toISOString().split("T")[0])
