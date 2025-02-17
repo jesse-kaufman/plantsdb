@@ -30,6 +30,8 @@ export default class Plant {
   #stage
   /** Date plant was started. */
   #startedOn
+  /** Date veg stage was started. */
+  #vegStartedOn
   /** Date of potential harvest. */
   #potentialHarvest
   /** Date plant was archived. */
@@ -153,6 +155,24 @@ export default class Plant {
   }
 
   /**
+   * Gets the veg start date of the plant.
+   * @returns {Date} Veg stage start date.
+   */
+  get vegStartedOn() {
+    return this.#vegStartedOn
+  }
+
+  /**
+   * Sets the veg start date of the plant.
+   * @param {string} newVegStartedOn - New veg started on date.
+   * @throws {Error} If the new date is invalid.
+   */
+  set vegStartedOn(newVegStartedOn) {
+    validateDate("vegStartedOn", newVegStartedOn)
+    this.#vegStartedOn = new Date(newVegStartedOn)
+  }
+
+  /**
    * Gets the potential harvest date of the plant.
    * @returns {?Date} Potential harvest date of the plant.
    */
@@ -184,14 +204,19 @@ export default class Plant {
       ? new Date(newPlant.startedOn)
       : new Date(new Date().toISOString().split("T")[0])
 
+    // Convert vegStartedOn to date if set
+    this.#vegStartedOn = newPlant.vegStartedOn
+      ? new Date(newPlant.vegStartedOn)
+      : null
+
     // Default archivedOn to null if missing in newPlant
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
       : null
 
     const config = { seedlingWeeks, vegWeeks, flowerWeeks }
-    const { startedOn } = this
-    const dates = { startedOn }
+    const { startedOn, vegStartedOn } = this
+    const dates = { startedOn, vegStartedOn }
 
     // Calculate potentialHarvest if missing in newPlant
     this.#potentialHarvest =
