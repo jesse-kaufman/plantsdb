@@ -22,7 +22,7 @@ describe("Plant class", () => {
       expect(plant.startedOn).toEqual(new Date("2023-01-01"))
     })
 
-    test("should throw TypeError when passing non-object to constructor", () => {
+    it("should throw TypeError when passing non-object to constructor", () => {
       // @ts-expect-error
       expect(() => new Plant("Bob")).toThrow(
         new TypeError("Invalid plant object")
@@ -55,14 +55,14 @@ describe("Plant class", () => {
       })
     })
 
-    test("should throw TypeError when passing non-string status to constructor", () => {
+    it("should throw TypeError when passing non-string status to constructor", () => {
       // @ts-expect-error
       expect(() => new Plant({ name: "Bob", status: 1 })).toThrow(
         Error("Status must be a string")
       )
     })
 
-    test("should throw TypeError when passing invalid status to constructor", () => {
+    it("should throw TypeError when passing invalid status to constructor", () => {
       // @ts-expect-error
       expect(
         () => new Plant({ name: "Bob", status: "invalid status" })
