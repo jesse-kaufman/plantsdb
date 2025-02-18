@@ -15,9 +15,10 @@ describe("Plant - Stage property", () => {
           startedOn: "2023-01-01",
         })
     ).toThrow("Unknown plant stage: ")
-    expect(() => new Plant({ name: "Bob", stage: true })).toThrow(
-      "Invalid stage"
-    )
+
+    expect(
+      () => new Plant({ name: "Bob", status: "active", stage: true })
+    ).toThrow("Invalid stage")
   })
 
   test("should throw an error when setting stage to invalid value", () => {
@@ -27,7 +28,7 @@ describe("Plant - Stage property", () => {
       stage: "seedling",
       startedOn: "2023-01-01",
     })
-    expect(() => (plant.stage = undefined)).toThrow("Stage is required")
+    expect(() => (plant.stage = undefined)).toThrow("stage is required")
     expect(() => (plant.stage = "")).toThrow("Unknown plant stage: ")
     expect(() => (plant.stage = "left")).toThrow("Unknown plant stage: left")
     expect(() => (plant.stage = true)).toThrow("Invalid stage")

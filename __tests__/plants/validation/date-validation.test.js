@@ -10,10 +10,13 @@ const dateProperties = [
     propertyName: "startedOn",
     status: "active",
     stage: "seedling",
+    startedOn: "2023-01-01",
   },
   {
     propertyName: "archivedOn",
     status: "archived",
+    stage: "seedling",
+    archivedOn: "2023-01-01",
   },
 ]
 

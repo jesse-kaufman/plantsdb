@@ -50,6 +50,7 @@ describe("Plant class", () => {
           stage: "seedling",
           startedOn: "2023-01-01",
         }
+        delete newPlant[prop]
         // @ts-expect-error
         expect(() => new Plant(newPlant)).toThrow(`${prop} is required`)
       })

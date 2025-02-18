@@ -6,15 +6,25 @@
 
 import Plant from "../../../src/plants/Plant"
 
+const validPlant = {
+  name: "Bob",
+  status: "active",
+  stage: "seedling",
+  startedOn: "2023-01-01",
+}
+
 const dateProperties = [
   {
     propertyName: "startedOn",
     status: "active",
     stage: "seedling",
+    startedOn: "2023-01-01",
   },
   {
     propertyName: "archivedOn",
     status: "archived",
+    stage: "seedling",
+    archivedOn: "2023-01-01",
   },
 ]
 
@@ -87,32 +97,16 @@ describe("Plant - Date properties", () => {
     })
   })
 
-  // Edge cases for startedOn date
-  describe("startedOn date", () => {
-    // Test initializing startedOn date to today when not provided to constructor
-    it("should default to today when creating seedling without startedOn date", () => {
-      const plant = new Plant({
-        name: "Bob",
-        status: "active",
-        stage: "seedling",
-      })
-
-      expect(plant.startedOn).toEqual(
-        new Date(new Date().toISOString().split("T")[0])
-      )
-    })
-  })
-
   // Edge cases for archivedOn date
   describe("archivedOn date", () => {
     // Test initialization value of archivideOn is null
     it("should initialize archivedOn date properly", () => {
       // Test init value when status is active
-      const activePlant = new Plant({ name: "Bob", status: "active" })
+      const activePlant = new Plant({ ...validPlant, status: "inactive" })
       expect(activePlant.archivedOn).toBeNull()
 
       // Test init value when status is archived
-      const archivedPlant = new Plant({ name: "Bob", status: "archived" })
+      const archivedPlant = new Plant({ ...validPlant, status: "archived" })
       expect(archivedPlant.archivedOn).toEqual(
         new Date(new Date().toISOString().split("T")[0])
       )
