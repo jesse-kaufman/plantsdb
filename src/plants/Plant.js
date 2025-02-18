@@ -41,11 +41,12 @@ export default class Plant {
    * Creates an instance of a Plant.
    * @param {object} newPlant - Plant data to initialize the instance.
    * @param {string} newPlant.name - Name of the plant being created.
-   * @param {string} [newPlant.status] - Optional status (defaults to active).
-   * @param {string} [newPlant.stage] - Optional stage of the plant (defaults to seedling).
-   * @param {string} [newPlant.startedOn] - Optional start date (defaults to today).
-   * @param {string} [newPlant.archivedOn] - Optional archived on date (defaults to null).
-   * @throws {Error} If the provided plant object fails validation.
+   * @param {string} newPlant.status - Status of the plant being created.
+   * @param {string} newPlant.stage - Stage of the plant being created.
+   * @param {string} newPlant.startedOn - Date plant started.
+   * @param {string} newPlant.vegStartedOn - Date veg stage started.
+   * @param {string} newPlant.potentialHarvest - Date of potential harvest (or null if harvested).
+   * @param {string} newPlant.archivedOn - Date plant was archived (or null if not archived).
    */
   constructor(newPlant) {
     // Validate incoming data
@@ -222,11 +223,6 @@ export default class Plant {
     this.#potentialHarvest =
       newPlant.potentialHarvest ||
       calculatePotentialHarvest(this.#stage, dates, config)
-
-    // Default to today if status is archived and archivedOn is null
-    if (newPlant.status === "archived" && this.#archivedOn === null) {
-      this.#archivedOn = new Date(new Date().toISOString().split("T")[0])
-    }
   }
 
   /**
