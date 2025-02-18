@@ -12,12 +12,12 @@ import { validStages } from "../../config/constants"
 export const validateStage = (stage) => {
   // Require stage
   if (stage === undefined) {
-    throw new Error("Stage is required.")
+    throw new Error("stage is required")
   }
 
   // Validate type of stage variable
   if (typeof stage !== "string") {
-    throw new Error("Invalid stage provided.")
+    throw new Error("Invalid stage provided")
   }
 
   // Validate stage exists
