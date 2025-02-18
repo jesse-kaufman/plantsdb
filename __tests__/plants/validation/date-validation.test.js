@@ -5,6 +5,13 @@
 
 import Plant from "../../../src/plants/Plant"
 
+const validPlant = {
+  name: "Bob",
+  status: "active",
+  stage: "seedling",
+  startedOn: "2023-01-01",
+}
+
 const dateProperties = [
   {
     propertyName: "startedOn",
@@ -33,7 +40,7 @@ describe("Plant - Date validation", () => {
         futureDate = new Date()
         futureDate.setDate(futureDate.getDate() + 1) // Set to tomorrow
         tomorrow = futureDate.toISOString().split("T")[0]
-        testPlant = { name: "Bob", status, stage }
+        testPlant = { ...validPlant, status, stage }
       })
 
       // Test initializing plant with invalid string for date property

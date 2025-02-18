@@ -19,11 +19,13 @@ const dateProperties = [
     status: "active",
     stage: "seedling",
     startedOn: "2023-01-01",
+    archivedOn: null,
   },
   {
     propertyName: "archivedOn",
     status: "archived",
     stage: "seedling",
+    startedOn: "2023-01-01",
     archivedOn: "2023-01-01",
   },
 ]
@@ -33,12 +35,12 @@ const testDate = "2023-01-01"
 describe("Plant - Date properties", () => {
   // Run tests on each date property
   dateProperties.forEach((prop) => {
-    const { propertyName, status, stage } = prop
+    const { propertyName, status, stage, startedOn, archivedOn } = prop
     let testPlant = {}
 
     describe(`${propertyName} date`, () => {
       beforeEach(() => {
-        testPlant = { name: "Bob", status, stage }
+        testPlant = { ...validPlant, status, stage, startedOn, archivedOn }
       })
 
       // Test successfully sending date to constructor
@@ -66,9 +68,6 @@ describe("Plant - Date properties", () => {
         // Create TypeError to expect below
         const typeError = new TypeError(`Invalid ${propertyName} date`)
 
-        // Test with null date
-        testPlant[propertyName] = null
-        expect(() => new Plant(testPlant)).toThrow(typeError)
         // Test with number
         testPlant[propertyName] = 123
         expect(() => new Plant(testPlant)).toThrow(typeError)
@@ -87,19 +86,33 @@ describe("Plant - Date properties", () => {
 
         // Create TypeError to expect below
         const typeError = new TypeError(`Invalid ${propertyName} date`)
+        const requiredError = new Error(`${propertyName} is required`)
 
         // Set date to non-string types
         expect(() => (plant[propertyName] = "invalid-date")).toThrow(typeError)
-        expect(() => (plant[propertyName] = null)).toThrow(typeError)
-        expect(() => (plant[propertyName] = undefined)).toThrow(typeError)
+        expect(() => (plant[propertyName] = undefined)).toThrow(requiredError)
         expect(() => (plant[propertyName] = 123)).toThrow(typeError)
       })
     })
   })
 
+  describe("startedOn date", () => {
+    // Test initialization value of archivedOn is null
+    it("should not allow startedOn to be null", () => {
+      // Test sending null startedOn date to constructor
+      expect(() => new Plant({ ...validPlant, startedOn: null })).toThrow(
+        "startedOn is required"
+      )
+
+      // Try setting startedOn to null
+      const plant = new Plant(validPlant)
+      expect(() => (plant.startedOn = null)).toThrow("startedOn is required")
+    })
+  })
+
   // Edge cases for archivedOn date
   describe("archivedOn date", () => {
-    // Test initialization value of archivideOn is null
+    // Test initialization value of archivedOn is null
     it("should initialize archivedOn date properly", () => {
       // Test init value when status is active
       const activePlant = new Plant({ ...validPlant, status: "inactive" })

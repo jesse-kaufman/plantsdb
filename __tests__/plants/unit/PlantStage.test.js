@@ -34,15 +34,6 @@ describe("Plant - Stage property", () => {
     expect(() => (plant.stage = true)).toThrow("Invalid stage")
   })
 
-  test("should default to seedling when stage not provided to constructor", () => {
-    const plant = new Plant({
-      name: "Bob",
-      status: "active",
-      stage: "seedling",
-    })
-    expect(plant.stage).toEqual("seedling")
-  })
-
   test("should set the stage correctly when provided to constructor", () => {
     const plant = new Plant({
       name: "Bob",
