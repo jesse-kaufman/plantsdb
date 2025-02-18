@@ -8,13 +8,9 @@ import { validStages } from "../../config/constants"
 /**
  * Validates stage.
  * @param {string} [stage] - Stage to be validated.
- * @param {boolean} required - True if stage is required, otherwise false.
  */
-export const validateStage = (stage, required = true) => {
-  // Allow undefined stage if required is false
-  if (required === false && stage === undefined) return
-
-  // Require stage in all other situations
+export const validateStage = (stage) => {
+  // Require stage
   if (stage === undefined) {
     throw new Error("Stage is required.")
   }
