@@ -11,25 +11,30 @@ const validPlant = {
   status: "active",
   stage: "seedling",
   startedOn: "2023-01-01",
+  vegStartedOn: null,
+  archivedOn: null,
 }
 
 const dateProperties = [
   {
     propertyName: "startedOn",
-    status: "active",
-    stage: "seedling",
-    startedOn: "2023-01-01",
+    ...validPlant,
+    archivedOn: null,
+  },
+  {
+    propertyName: "vegStartedOn",
+    ...validPlant,
+    stage: "veg",
+    vegStartedOn: "2023-01-08",
     archivedOn: null,
   },
   {
     propertyName: "archivedOn",
+    ...validPlant,
     status: "archived",
-    stage: "seedling",
-    startedOn: "2023-01-01",
     archivedOn: "2023-01-01",
   },
 ]
-
 const testDate = "2023-01-01"
 
 describe("Plant - Date properties", () => {
