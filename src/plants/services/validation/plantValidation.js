@@ -35,7 +35,7 @@ export const validateName = (name) => {
  * @param {string} newPlant.startedOn - Start date.
  * @param {string} newPlant.vegStartedOn - Veg start date.
  * @param {string} newPlant.potentialHarvest - Potential harvest date.
- * @param {string} [newPlant.archivedOn] - Archived on date.
+ * @param {string} newPlant.archivedOn - Archived on date or null if not archived.
  * @throws {TypeError} If newPlant null or non-object.
  * @throws {Error} If the provided plant object fails validation.
  */
