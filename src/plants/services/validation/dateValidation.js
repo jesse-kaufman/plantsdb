@@ -14,14 +14,17 @@ export const validateDate = (property, dateString, required = true) => {
   // Allow undefined date if required is false
   if (!required && dateString === undefined) return
 
+  // Do not allow undefined date
   if (dateString === undefined) {
     throw new Error(`${property} is required`)
   }
 
+  // If property being checked is started on, do not allow null date
   if (dateString === null && property === "startedOn") {
     throw new Error(`${property} is required`)
   }
 
+  // Require dateString to be null or a string
   if (dateString !== null && typeof dateString !== "string") {
     throw new Error(`Invalid ${property} date`)
   }
