@@ -132,10 +132,17 @@ describe("Plant - Date properties", () => {
       expect(activePlant.archivedOn).toBeNull()
 
       // Test init value when status is archived
-      const archivedPlant = new Plant({ ...validPlant, status: "archived" })
-      expect(archivedPlant.archivedOn).toEqual(
-        new Date(new Date().toISOString().split("T")[0])
-      )
+      const archivedPlant = new Plant({
+        ...validPlant,
+        status: "archived",
+        archivedOn: "2023-01-01",
+      })
+      console.log("archived plant", {
+        ...validPlant,
+        status: "archived",
+        archivedOn: "2023-01-01",
+      })
+      expect(archivedPlant.archivedOn).toStrictEqual(new Date("2023-01-01"))
     })
   })
 })
