@@ -6,12 +6,17 @@ import { validStatuses } from "../../config/constants"
 
 /**
  * Validates the provided status.
- * @param {string|undefined} status - Stage to validate.
+ * @param {string} status - Stage to validate.
  * @throws {Error} If the stage is not a valid stage.
  */
 export const validateStatus = (status) => {
-  // Allow status to be undefined, to allow defaults and because there is no setter
-  if (status === undefined) return
+  // Require status to be set
+  if (
+    status === undefined ||
+    (typeof status === "string" && status?.trim() === "")
+  ) {
+    throw new Error("status is required")
+  }
 
   // Validate type of status variable
   if (typeof status !== "string") {
