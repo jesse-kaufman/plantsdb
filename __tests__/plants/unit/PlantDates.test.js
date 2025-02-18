@@ -40,12 +40,20 @@ const testDate = "2023-01-01"
 describe("Plant - Date properties", () => {
   // Run tests on each date property
   dateProperties.forEach((prop) => {
-    const { propertyName, status, stage, startedOn, archivedOn } = prop
+    const { propertyName, status, stage, startedOn, vegStartedOn, archivedOn } =
+      prop
     let testPlant = {}
 
     describe(`${propertyName} date`, () => {
       beforeEach(() => {
-        testPlant = { ...validPlant, status, stage, startedOn, archivedOn }
+        testPlant = {
+          ...validPlant,
+          status,
+          stage,
+          startedOn,
+          vegStartedOn,
+          archivedOn,
+        }
       })
 
       // Test successfully sending date to constructor
