@@ -9,10 +9,20 @@
  * @param {boolean} [required] - True if started on date is required.
  * @throws {Error} If date is invalid.
  */
+// eslint-disable-next-line complexity
 export const validateDate = (property, dateString, required = true) => {
   // Allow undefined date if required is false
   if (!required && dateString === undefined) return
-  if (typeof dateString !== "string") {
+
+  if (dateString === undefined) {
+    throw new Error(`${property} is required`)
+  }
+
+  if (dateString === null && property === "startedOn") {
+    throw new Error(`${property} is required`)
+  }
+
+  if (dateString !== null && typeof dateString !== "string") {
     throw new Error(`Invalid ${property} date`)
   }
 
