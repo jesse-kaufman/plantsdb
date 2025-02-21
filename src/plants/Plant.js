@@ -32,6 +32,8 @@ export default class Plant {
   #startedOn
   /** Date veg stage was started. */
   #vegStartedOn
+  /** Date flower stage was started. */
+  #flowerStartedOn
   /** Date of potential harvest. */
   #potentialHarvest
   /** Date plant was archived. */
@@ -45,6 +47,7 @@ export default class Plant {
    * @param {string} newPlant.stage - Stage of the plant being created.
    * @param {string} newPlant.startedOn - Date plant started.
    * @param {string} newPlant.vegStartedOn - Date veg stage started.
+   * @param {string} newPlant.flowerStartedOn - Date flower stage started.
    * @param {string} newPlant.potentialHarvest - Date of potential harvest (or null if harvested).
    * @param {string} newPlant.archivedOn - Date plant was archived (or null if not archived).
    */
@@ -174,6 +177,24 @@ export default class Plant {
   }
 
   /**
+   * Gets the flower start date of the plant.
+   * @returns {Date} - New flower stage start date.
+   */
+  get flowerStartedOn() {
+    return this.#flowerStartedOn
+  }
+
+  /**
+   * Sets the flower start date of the plant.
+   * @param {string} newFlowerStartedOn - New flower started on date.
+   * @throws {Error} If the new date is invalid.
+   */
+  set flowerStartedOn(newFlowerStartedOn) {
+    validateDate("flowerStartedOn", newFlowerStartedOn)
+    this.#flowerStartedOn = new Date(newFlowerStartedOn)
+  }
+
+  /**
    * Gets the potential harvest date of the plant.
    * @returns {?Date} Potential harvest date of the plant.
    */
@@ -210,14 +231,19 @@ export default class Plant {
       ? new Date(newPlant.vegStartedOn)
       : null
 
+    // Convert flowerStartedOn to date if set
+    this.#flowerStartedOn = newPlant.flowerStartedOn
+      ? new Date(newPlant.flowerStartedOn)
+      : null
+
     // Default archivedOn to null if missing in newPlant
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
       : null
 
     const config = { seedlingWeeks, vegWeeks, flowerWeeks }
-    const { startedOn, vegStartedOn } = this
-    const dates = { startedOn, vegStartedOn }
+    const { startedOn, vegStartedOn, flowerStartedOn } = this
+    const dates = { startedOn, vegStartedOn, flowerStartedOn }
 
     // Calculate potentialHarvest if missing in newPlant
     this.#potentialHarvest =

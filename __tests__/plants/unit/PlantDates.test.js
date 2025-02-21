@@ -12,6 +12,7 @@ const validPlant = {
   stage: "seedling",
   startedOn: "2023-01-01",
   vegStartedOn: null,
+  flowerStartedOn: null,
   archivedOn: null,
 }
 
