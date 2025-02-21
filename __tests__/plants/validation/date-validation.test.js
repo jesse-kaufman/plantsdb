@@ -5,12 +5,13 @@
 
 import Plant from "../../../src/plants/Plant"
 
-import { validSeedlingPlant, dateProperties } from "../testConstants"
+import { validSeedlingPlant, stageDateProperties } from "../testConstants"
 
 const validPlant = { ...validSeedlingPlant }
 
 describe("Plant - Date validation", () => {
-  dateProperties.forEach((prop) => {
+  // Walk through stage date properties and test each
+  stageDateProperties.forEach((prop) => {
     const { propertyName, ...plantObj } = prop
     let testPlant = {}
     let futureDate = null

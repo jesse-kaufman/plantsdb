@@ -5,7 +5,7 @@
 /* eslint-disable max-lines-per-function */
 
 import Plant from "../../../src/plants/Plant"
-import { validSeedlingPlant, dateProperties } from "../testConstants"
+import { validSeedlingPlant, stageDateProperties } from "../testConstants"
 
 const validPlant = { ...validSeedlingPlant }
 
@@ -13,7 +13,7 @@ const testDate = "2023-01-01"
 
 describe("Plant - Date properties", () => {
   // Run tests on each date property
-  dateProperties.forEach((prop) => {
+  stageDateProperties.forEach((prop) => {
     const { propertyName, ...plantObj } = prop
     let testPlant = {}
 

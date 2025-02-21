@@ -52,7 +52,7 @@ export const validDeletedPlant = {
 }
 
 /** Valid plant object for each stage/status and the related date property to test against. */
-export const dateProperties = [
+export const stageDateProperties = [
   { propertyName: "startedOn", ...validSeedlingPlant },
   { propertyName: "vegStartedOn", ...validVegPlant },
   { propertyName: "flowerStartedOn", ...validFlowerPlant },
