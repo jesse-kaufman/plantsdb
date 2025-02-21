@@ -4,7 +4,7 @@
 
 /**
  * Adds given number of weeks to date and returns date object.
- * @param {Date} date - Date to be added to.
+ * @param {Date|undefined} date - Date to be added to.
  * @param {number} weeks - Number of weeks to add.
  * @returns {Date} New date after adding weeks.
  */
