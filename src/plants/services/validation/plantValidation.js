@@ -28,17 +28,7 @@ export const validateName = (name) => {
 
 /**
  * Validates object being sent to constructor.
- * @param {object} newPlant - Plant data to initialize the instance.
- * @param {string} newPlant.name - Name of the plant being created.
- * @param {string} newPlant.status - Status of plant being created.
- * @param {string} newPlant.stage - Stage of the plant being created.
- * @param {string} newPlant.startedOn - Start date.
- * @param {string} newPlant.vegStartedOn - Veg start date.
- * @param {string} newPlant.flowerStartedOn - Flower start date.
- * @param {string} newPlant.harvestedOn - Date plant was harvested.
- * @param {string} newPlant.potentialHarvest - Potential harvest date.
- * @param {string} newPlant.cureStartedOn - Date plant started cure stage.
- * @param {string} newPlant.archivedOn - Archived on date or null if not archived.
+ * @param {import('../../Plant').PlantConstructorOptions} newPlant - Plant data to initialize the instance.
  * @throws {TypeError} If newPlant null or non-object.
  * @throws {Error} If the provided plant object fails validation.
  */

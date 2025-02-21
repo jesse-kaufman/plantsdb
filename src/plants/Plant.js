@@ -62,18 +62,7 @@ export default class Plant {
 
   /**
    * Creates an instance of a Plant.
-   * @param {object} newPlant - Plant data to initialize the instance.
-   * @param {string} newPlant.name - Name of the plant being created.
-   * @param {string} newPlant.status - Status of the plant being created.
-   * @param {string} newPlant.stage - Stage of the plant being created.
-   * @param {string} newPlant.startedOn - Date plant started.
-   * @param {string} newPlant.vegStartedOn - Date veg stage started.
-   * @param {string} newPlant.flowerStartedOn - Date flower stage started.
-   * @param {string} newPlant.potentialHarvest - Date of potential harvest (or null if harvested).
-   * @param {string} newPlant.harvestedOn - Date on which plant was harvested.
-   * @param {string} newPlant.cureStartedOn - Date on which plant started cure stage.
-   * @param {string} newPlant.archivedOn - Date plant was archived (or null if not archived).
-   * @param {string} newPlant.deletedOn - Date plant was deleted (or null if not deleted).
+   * @param {PlantConstructorOptions} newPlant - Plant data to initialize the instance.
    */
   constructor(newPlant) {
     // Validate incoming data
