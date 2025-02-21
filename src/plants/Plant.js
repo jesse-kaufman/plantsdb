@@ -120,7 +120,10 @@ export default class Plant {
    * TODO: Set archivedOn to today's date.
    */
   archive() {
-    if (this.#status !== "inactive") this.#status = "archived"
+    if (this.#status !== "inactive") {
+      this.#status = "archived"
+      this.#archivedOn = new Date(new Date().toISOString().split("T")[0])
+    }
   }
 
   /**
@@ -128,7 +131,10 @@ export default class Plant {
    * TODO: Unset archivedOn.
    */
   unarchive() {
-    if (this.#status === "archived") this.#status = "active"
+    if (this.#status === "archived") {
+      this.#status = "active"
+      this.#archivedOn = null
+    }
   }
 
   /**
