@@ -34,10 +34,10 @@ export default class Plant {
   #vegStartedOn
   /** Date flower stage was started. */
   #flowerStartedOn
-  /** Date plant was harvested. */
-  #harvestedOn
   /** Date of potential harvest. */
   #potentialHarvest
+  /** Date plant was harvested. */
+  #harvestedOn
   /** Date plant was archived. */
   #archivedOn
 
