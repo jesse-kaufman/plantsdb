@@ -263,16 +263,6 @@ export default class Plant {
     return this.#archivedOn
   }
 
-  /**
-   * Sets the archived on date of the plant.
-   * @param {string} newArchivedOn - New archived on date.
-   * @throws {Error} If the new date is invalid.
-   */
-  set archivedOn(newArchivedOn) {
-    validateDate("archivedOn", newArchivedOn)
-    this.#archivedOn = new Date(newArchivedOn)
-  }
-
   #initDates(newPlant) {
     // Convert startedOn to date
     this.#startedOn = new Date(newPlant.startedOn)
