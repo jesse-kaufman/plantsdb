@@ -79,6 +79,10 @@ describe("Plant - Date properties", () => {
     })
   })
 
+  /*
+   * Edge cases
+   */
+
   describe("startedOn date", () => {
     // Test initialization value of archivedOn is null
     it("should not allow startedOn to be null", () => {
