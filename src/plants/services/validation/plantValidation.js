@@ -35,6 +35,7 @@ export const validateName = (name) => {
  * @param {string} newPlant.startedOn - Start date.
  * @param {string} newPlant.vegStartedOn - Veg start date.
  * @param {string} newPlant.flowerStartedOn - Flower start date.
+ * @param {string} newPlant.harvestedOn - Date plant was harvested.
  * @param {string} newPlant.potentialHarvest - Potential harvest date.
  * @param {string} newPlant.archivedOn - Archived on date or null if not archived.
  * @throws {TypeError} If newPlant null or non-object.
@@ -51,6 +52,7 @@ export const validateConstructorData = (newPlant) => {
   validateDate("startedOn", newPlant.startedOn)
   validateDate("vegStartedOn", newPlant.vegStartedOn, false)
   validateDate("flowerStartedOn", newPlant.flowerStartedOn, false)
+  validateDate("harvestedOn", newPlant.harvestedOn, false)
   validateDate("potentialHarvest", newPlant.potentialHarvest, false)
   validateDate("archivedOn", newPlant.archivedOn, false)
 }
