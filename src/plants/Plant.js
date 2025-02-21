@@ -263,10 +263,8 @@ export default class Plant {
   }
 
   #initDates(newPlant) {
-    // Convert startedOn to date if set
-    this.#startedOn = newPlant.startedOn
-      ? new Date(newPlant.startedOn)
-      : new Date(new Date().toISOString().split("T")[0])
+    // Convert startedOn to date
+    this.#startedOn = new Date(newPlant.startedOn)
 
     // Convert vegStartedOn to date if set
     this.#vegStartedOn = newPlant.vegStartedOn
