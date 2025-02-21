@@ -181,7 +181,7 @@ export default class Plant {
 
   /**
    * Gets the flower start date of the plant.
-   * @returns {Date} - New flower stage start date.
+   * @returns {Date} Flower stage start date.
    */
   get flowerStartedOn() {
     return this.#flowerStartedOn
@@ -198,8 +198,8 @@ export default class Plant {
   }
 
   /**
-   * Gets the flower start date of the plant.
-   * @returns {Date} - New flower stage start date.
+   * Gets the harvest date of the plant.
+   * @returns {Date} Harvest date of plant.
    */
   get harvestedOn() {
     return this.#harvestedOn
