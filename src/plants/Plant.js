@@ -105,6 +105,7 @@ export default class Plant {
    */
   delete() {
     this.#status = "inactive"
+    this.#deletedOn = new Date()
   }
 
   /**
@@ -112,7 +113,10 @@ export default class Plant {
    * TODO: Unset deletedOn.
    */
   undelete() {
-    if (this.#status === "inactive") this.#status = "active"
+    if (this.#status === "inactive") {
+      this.#status = "active"
+      this.#deletedOn = null
+    }
   }
 
   /**
