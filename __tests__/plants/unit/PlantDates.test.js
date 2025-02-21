@@ -29,6 +29,14 @@ const dateProperties = [
     archivedOn: null,
   },
   {
+    propertyName: "flowerStartedOn",
+    ...validPlant,
+    stage: "flower",
+    vegStartedOn: "2023-01-08",
+    flowerStartedOn: "2023-02-08",
+    archivedOn: null,
+  },
+  {
     propertyName: "archivedOn",
     ...validPlant,
     status: "archived",
@@ -40,19 +48,16 @@ const testDate = "2023-01-01"
 describe("Plant - Date properties", () => {
   // Run tests on each date property
   dateProperties.forEach((prop) => {
-    const { propertyName, status, stage, startedOn, vegStartedOn, archivedOn } =
-      prop
+    const { propertyName } = prop
     let testPlant = {}
+
+    delete prop.propertyName
 
     describe(`${propertyName} date`, () => {
       beforeEach(() => {
         testPlant = {
           ...validPlant,
-          status,
-          stage,
-          startedOn,
-          vegStartedOn,
-          archivedOn,
+          ...prop,
         }
       })
 
