@@ -123,7 +123,7 @@ export default class Plant {
   archive() {
     if (this.#status !== "inactive") {
       this.#status = "archived"
-      this.#archivedOn = new Date(new Date().toISOString().split("T")[0])
+      this.#archivedOn = new Date()
     }
   }
 
