@@ -47,7 +47,7 @@ export const validateStatusDates = (status, dates) => {
 
   switch (status) {
     case "active":
-      nullFields.add("archivedOn").add("deletedOn").add("startedOn")
+      nullFields.add("archivedOn").add("deletedOn")
       break
     case "inactive":
       requiredFields.add("deletedOn")
