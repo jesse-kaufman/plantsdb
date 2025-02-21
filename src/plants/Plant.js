@@ -38,6 +38,8 @@ export default class Plant {
   #potentialHarvest
   /** Date plant was harvested. */
   #harvestedOn
+  /** Date plant started cure stage. */
+  #cureStartedOn
   /** Date plant was archived. */
   #archivedOn
 
@@ -50,8 +52,9 @@ export default class Plant {
    * @param {string} newPlant.startedOn - Date plant started.
    * @param {string} newPlant.vegStartedOn - Date veg stage started.
    * @param {string} newPlant.flowerStartedOn - Date flower stage started.
-   * @param {string} newPlant.harvestedOn - Date on which plant was harvested.
    * @param {string} newPlant.potentialHarvest - Date of potential harvest (or null if harvested).
+   * @param {string} newPlant.harvestedOn - Date on which plant was harvested.
+   * @param {string} newPlant.cureStartedOn - Date on which plant started cure stage.
    * @param {string} newPlant.archivedOn - Date plant was archived (or null if not archived).
    */
   constructor(newPlant) {
@@ -60,8 +63,8 @@ export default class Plant {
 
     // Now initialize the plant properties
     this.#name = newPlant.name.trim()
-    this.#status = newPlant.status || "active"
-    this.#stage = newPlant.stage || "seedling"
+    this.#status = newPlant.status
+    this.#stage = newPlant.stage
     this.#initDates(newPlant)
 
     this.validate()
@@ -224,6 +227,24 @@ export default class Plant {
   }
 
   /**
+   * Gets the flower start date of the plant.
+   * @returns {Date} New flower stage start date.
+   */
+  get cureStartedOn() {
+    return this.#cureStartedOn
+  }
+
+  /**
+   * Sets the flower start date of the plant.
+   * @param {string} newCureStartedOn - New harvest date.
+   * @throws {Error} If the new date is invalid.
+   */
+  set cureStartedOn(newCureStartedOn) {
+    validateDate("cureStartedOn", newCureStartedOn)
+    this.#cureStartedOn = new Date(newCureStartedOn)
+  }
+
+  /**
    * Gets the archived date of the plant.
    * @returns {?Date} Archived date of the plant.
    */
@@ -262,6 +283,11 @@ export default class Plant {
       ? new Date(newPlant.harvestedOn)
       : null
 
+    // Convert harvestedOn to date if set
+    this.#cureStartedOn = newPlant.cureStartedOn
+      ? new Date(newPlant.cureStartedOn)
+      : null
+
     // Default archivedOn to null if missing in newPlant
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
@@ -269,7 +295,12 @@ export default class Plant {
 
     const config = { seedlingWeeks, vegWeeks, flowerWeeks }
     const { startedOn, vegStartedOn, flowerStartedOn, harvestedOn } = this
-    const dates = { startedOn, vegStartedOn, flowerStartedOn, harvestedOn }
+    const dates = {
+      startedOn,
+      vegStartedOn,
+      flowerStartedOn,
+      harvestedOn,
+    }
 
     // Calculate potentialHarvest if missing in newPlant
     this.#potentialHarvest =
