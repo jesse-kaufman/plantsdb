@@ -39,8 +39,6 @@ export const validateStage = (stage) => {
  * @throws {Error} If validation fails.
  */
 export const validateStageDates = (stage, dates) => {
-  validateStage(stage)
-
   const requiredFields = new Set()
   const nullFields = new Set()
 
