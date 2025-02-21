@@ -12,6 +12,21 @@ import { calculatePotentialHarvest } from "./services/dateService"
 import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants"
 
 /**
+ * @typedef {object} PlantConstructorOptions
+ * @property {string} name - Name of the plant being created.
+ * @property {string} status - Status of the plant being created.
+ * @property {string} stage - Stage of the plant being created.
+ * @property {string} startedOn - Date plant started.
+ * @property {string} vegStartedOn - Date veg stage started.
+ * @property {string} flowerStartedOn - Date flower stage started.
+ * @property {string} potentialHarvest - Date of potential harvest (or null if harvested).
+ * @property {string} harvestedOn - Date on which plant was harvested.
+ * @property {string} cureStartedOn - Date on which plant started cure stage.
+ * @property {string} archivedOn - Date plant was archived (or null if not archived).
+ * @property {string} deletedOn - Date plant was deleted (or null if not deleted).
+ */
+
+/**
  * Represents a plant with its properties and validation logic.
  *
  * The `Plant` class manages the plant's name and ensures it is valid.
