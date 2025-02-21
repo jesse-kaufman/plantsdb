@@ -142,11 +142,6 @@ describe("Plant - Date properties", () => {
         status: "archived",
         archivedOn: "2023-01-01",
       })
-      console.log("archived plant", {
-        ...validPlant,
-        status: "archived",
-        archivedOn: "2023-01-01",
-      })
       expect(archivedPlant.archivedOn).toStrictEqual(new Date("2023-01-01"))
     })
   })
