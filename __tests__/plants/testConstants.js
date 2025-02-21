@@ -58,5 +58,4 @@ export const dateProperties = [
   { propertyName: "flowerStartedOn", ...validFlowerPlant },
   { propertyName: "harvestedOn", ...validHarvestedPlant },
   { propertyName: "cureStartedOn", ...validCurePlant },
-  { propertyName: "archivedOn", ...validArchivedPlant },
 ]
