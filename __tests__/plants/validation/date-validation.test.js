@@ -41,7 +41,7 @@ describe("Plant - Date validation", () => {
       })
 
       // Test initializing plant with date property in the future
-      test(`should throw an error when ${propertyName} sent to constructor is in the future`, () => {
+      it(`should throw an error when ${propertyName} sent to constructor is in the future`, () => {
         testPlant[propertyName] = tomorrow
         expect(() => new Plant(testPlant)).toThrow(
           `${propertyName} date cannot be in the future`
