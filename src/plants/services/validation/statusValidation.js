@@ -42,10 +42,6 @@ export const validateStatus = (status) => {
  * @throws {Error} If validation fails.
  */
 export const validateStatusDates = (status, dates) => {
-  if (!status || typeof status !== "string") {
-    throw new Error("Invalid status provided.")
-  }
-
   const requiredFields = new Set()
   const nullFields = new Set()
 
