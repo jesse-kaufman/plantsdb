@@ -15,24 +15,31 @@ const validPlant = {
 const dateProperties = [
   {
     propertyName: "startedOn",
-    status: "active",
-    stage: "seedling",
-    startedOn: "2023-01-01",
+    ...validPlant,
+  },
+  {
+    propertyName: "flowerStartedOn",
+    ...validPlant,
+    stage: "flower",
+    vegStartedOn: "2023-01-08",
+    flowerStartedOn: "2023-05-08",
   },
   {
     propertyName: "archivedOn",
+    ...validPlant,
     status: "archived",
-    stage: "seedling",
     archivedOn: "2023-01-01",
   },
 ]
 
 describe("Plant - Date validation", () => {
   dateProperties.forEach((prop) => {
-    const { propertyName, status, stage } = prop
+    const { propertyName } = prop
     let testPlant = {}
     let futureDate = null
     let tomorrow = null
+
+    delete prop.propertyName
 
     // Test each date property
     describe(`${propertyName} date`, () => {
@@ -40,7 +47,7 @@ describe("Plant - Date validation", () => {
         futureDate = new Date()
         futureDate.setDate(futureDate.getDate() + 1) // Set to tomorrow
         tomorrow = futureDate.toISOString().split("T")[0]
-        testPlant = { ...validPlant, status, stage }
+        testPlant = { ...validPlant, ...prop }
       })
 
       // Test initializing plant with invalid string for date property
