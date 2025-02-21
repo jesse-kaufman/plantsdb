@@ -47,6 +47,7 @@ export const validateConstructorData = (newPlant) => {
   validateDate("potentialHarvest", newPlant.potentialHarvest, false)
   validateDate("cureStartedOn", newPlant.cureStartedOn, false)
   validateDate("archivedOn", newPlant.archivedOn, false)
+  validateDate("deletedOn", newPlant.deletedOn, false)
 }
 
 /**
