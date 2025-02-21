@@ -102,7 +102,7 @@ describe("Plant - Date properties", () => {
     // Test initialization value of archivedOn is null
     it("should initialize archivedOn date properly", () => {
       // Test init value when status is active
-      const activePlant = new Plant({ ...validPlant, status: "inactive" })
+      const activePlant = new Plant({ ...validPlant, status: "active" })
       expect(activePlant.archivedOn).toBeNull()
 
       // Test init value when status is archived
