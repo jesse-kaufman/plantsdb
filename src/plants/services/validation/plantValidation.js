@@ -31,7 +31,7 @@ export const validateName = (name) => {
  * @param {object} newPlant - Plant data to initialize the instance.
  * @param {string} newPlant.name - Name of the plant being created.
  * @param {string} newPlant.status - Status of plant being created.
- * @param {string} newPlant.stage - Stage of the plant.
+ * @param {string} newPlant.stage - Stage of the plant being created.
  * @param {string} newPlant.startedOn - Start date.
  * @param {string} newPlant.vegStartedOn - Veg start date.
  * @param {string} newPlant.flowerStartedOn - Flower start date.
