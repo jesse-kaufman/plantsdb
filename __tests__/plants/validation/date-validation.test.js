@@ -51,7 +51,6 @@ describe("Plant - Date validation", () => {
       // Test setting date property to invalid string
       it(`should throw an error when ${propertyName} is set to invalid date string`, () => {
         const plant = new Plant(testPlant)
-
         // Test setting date property to literal "invalid-date" string
         expect(() => (plant[propertyName] = "invalid-date")).toThrow(
           `Invalid ${propertyName} date`
@@ -65,7 +64,6 @@ describe("Plant - Date validation", () => {
       // Test setting date property to future date
       it(`should throw an error when ${propertyName} is set to date in the future`, () => {
         const plant = new Plant(testPlant)
-
         // Test setting date property to literal "invalid-date" string
         expect(() => (plant[propertyName] = tomorrow)).toThrow(
           `${propertyName} date cannot be in the future`
