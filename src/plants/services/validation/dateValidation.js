@@ -31,7 +31,6 @@ export const validateDate = (property, dateString, required = true) => {
 
   const parsedDate = new Date(dateString)
 
-  // Expect invalid date if time is not a number
   if (isNaN(parsedDate.getTime())) throw new Error(`Invalid ${property} date`)
 
   const today = new Date(new Date().toISOString().split("T")[0])
