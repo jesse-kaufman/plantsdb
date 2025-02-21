@@ -2,7 +2,7 @@
  * @file Plant validation methods.
  */
 
-import { validateStatus } from "./statusValidation"
+import { validateStatus, validateStatusDates } from "./statusValidation"
 import { validateStage, validateStageDates } from "./stageValidation"
 import { validateDate } from "./dateValidation"
 
@@ -56,5 +56,6 @@ export const validateConstructorData = (newPlant) => {
  * @throws {Error} If plant fails validation.
  */
 export const validatePlant = (plant) => {
+  validateStatusDates(plant.status, plant)
   validateStageDates(plant.stage, plant)
 }
