@@ -42,6 +42,8 @@ export default class Plant {
   #cureStartedOn
   /** Date plant was archived. */
   #archivedOn
+  /** Date plant was deleted. */
+  #deletedOn
 
   /**
    * Creates an instance of a Plant.
@@ -56,6 +58,7 @@ export default class Plant {
    * @param {string} newPlant.harvestedOn - Date on which plant was harvested.
    * @param {string} newPlant.cureStartedOn - Date on which plant started cure stage.
    * @param {string} newPlant.archivedOn - Date plant was archived (or null if not archived).
+   * @param {string} newPlant.deletedOn - Date plant was deleted (or null if not deleted).
    */
   constructor(newPlant) {
     // Validate incoming data
@@ -245,6 +248,14 @@ export default class Plant {
   }
 
   /**
+   * Gets the deleted date of the plant.
+   * @returns {?Date} Date  plant was deleted.
+   */
+  get deletedOn() {
+    return this.#deletedOn
+  }
+
+  /**
    * Gets the archived date of the plant.
    * @returns {?Date} Archived date of the plant.
    */
@@ -290,6 +301,9 @@ export default class Plant {
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
       : null
+
+    // Convert deletedOn to date if set
+    this.#deletedOn = newPlant.deletedOn ? new Date(newPlant.deletedOn) : null
 
     const config = { seedlingWeeks, vegWeeks, flowerWeeks }
     const { startedOn, vegStartedOn, flowerStartedOn, harvestedOn } = this
