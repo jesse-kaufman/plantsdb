@@ -8,7 +8,10 @@ export const validSeedlingPlant = {
   startedOn: "2023-01-01",
   vegStartedOn: null,
   flowerStartedOn: null,
+  harvestedOn: null,
+  cureStartedOn: null,
   archivedOn: null,
+  deletedOn: null,
 }
 /** Valid plant in the veg stage. */
 export const validVegPlant = {
@@ -53,5 +56,6 @@ export const dateProperties = [
   { propertyName: "startedOn", ...validSeedlingPlant },
   { propertyName: "vegStartedOn", ...validVegPlant },
   { propertyName: "flowerStartedOn", ...validFlowerPlant },
+  { propertyName: "harvestedOn", ...validHarvestedPlant },
   { propertyName: "archivedOn", ...validArchivedPlant },
 ]
