@@ -5,21 +5,10 @@
 /* eslint-disable max-lines-per-function */
 
 import Plant from "../../../src/plants/Plant"
-import {
-  validSeedlingPlant,
-  validVegPlant,
-  validFlowerPlant,
-  validArchivedPlant,
-} from "../testConstants"
+import { validSeedlingPlant, dateProperties } from "../testConstants"
 
-const validPlant = validSeedlingPlant
+const validPlant = { ...validSeedlingPlant }
 
-const dateProperties = [
-  { propertyName: "startedOn", ...validSeedlingPlant },
-  { propertyName: "vegStartedOn", ...validVegPlant },
-  { propertyName: "flowerStartedOn", ...validFlowerPlant },
-  { propertyName: "archivedOn", ...validArchivedPlant },
-]
 const testDate = "2023-01-01"
 
 describe("Plant - Date properties", () => {

@@ -5,21 +5,9 @@
 
 import Plant from "../../../src/plants/Plant"
 
-import {
-  validSeedlingPlant,
-  validVegPlant,
-  validFlowerPlant,
-  validArchivedPlant,
-} from "../testConstants"
+import { validSeedlingPlant, dateProperties } from "../testConstants"
 
-const validPlant = validSeedlingPlant
-
-const dateProperties = [
-  { propertyName: "startedOn", ...validSeedlingPlant },
-  { propertyName: "vegStartedOn", ...validVegPlant },
-  { propertyName: "flowerStartedOn", ...validFlowerPlant },
-  { propertyName: "archivedOn", ...validArchivedPlant },
-]
+const validPlant = { ...validSeedlingPlant }
 
 describe("Plant - Date validation", () => {
   dateProperties.forEach((prop) => {
