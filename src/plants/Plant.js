@@ -263,7 +263,7 @@ export default class Plant {
 
   /**
    * Gets the archived date of the plant.
-   * @returns {?Date} Archived date of the plant.
+   * @returns {?Date} Date plant was archived.
    */
   get archivedOn() {
     return this.#archivedOn
@@ -293,7 +293,7 @@ export default class Plant {
       ? new Date(newPlant.cureStartedOn)
       : null
 
-    // Default archivedOn to null if missing in newPlant
+    // Convert archivedOn to date if set
     this.#archivedOn = newPlant.archivedOn
       ? new Date(newPlant.archivedOn)
       : null
