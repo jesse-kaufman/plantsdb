@@ -14,16 +14,15 @@ const testDate = "2023-01-01"
 describe("Plant - Date properties", () => {
   // Run tests on each date property
   dateProperties.forEach((prop) => {
-    const { propertyName } = prop
+    const { propertyName, ...plantObj } = prop
     let testPlant = {}
 
-    delete prop.propertyName
-
     describe(`${propertyName} date`, () => {
+      // Reset test plant before each test
       beforeEach(() => {
         testPlant = {
           ...validPlant,
-          ...prop,
+          ...plantObj,
         }
       })
 

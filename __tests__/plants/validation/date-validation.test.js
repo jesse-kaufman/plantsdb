@@ -11,12 +11,10 @@ const validPlant = { ...validSeedlingPlant }
 
 describe("Plant - Date validation", () => {
   dateProperties.forEach((prop) => {
-    const { propertyName } = prop
+    const { propertyName, ...plantObj } = prop
     let testPlant = {}
     let futureDate = null
     let tomorrow = null
-
-    delete prop.propertyName
 
     // Test each date property
     describe(`${propertyName} date`, () => {
@@ -24,7 +22,7 @@ describe("Plant - Date validation", () => {
         futureDate = new Date()
         futureDate.setDate(futureDate.getDate() + 1) // Set to tomorrow
         tomorrow = futureDate.toISOString().split("T")[0]
-        testPlant = { ...validPlant, ...prop }
+        testPlant = { ...validPlant, ...plantObj }
       })
 
       // Test initializing plant with invalid string for date property
