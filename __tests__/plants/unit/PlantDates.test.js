@@ -5,44 +5,20 @@
 /* eslint-disable max-lines-per-function */
 
 import Plant from "../../../src/plants/Plant"
+import {
+  validSeedlingPlant,
+  validVegPlant,
+  validFlowerPlant,
+  validArchivedPlant,
+} from "../testConstants"
 
-const validPlant = {
-  name: "Bob",
-  status: "active",
-  stage: "seedling",
-  startedOn: "2023-01-01",
-  vegStartedOn: null,
-  flowerStartedOn: null,
-  archivedOn: null,
-}
+const validPlant = validSeedlingPlant
 
 const dateProperties = [
-  {
-    propertyName: "startedOn",
-    ...validPlant,
-    archivedOn: null,
-  },
-  {
-    propertyName: "vegStartedOn",
-    ...validPlant,
-    stage: "veg",
-    vegStartedOn: "2023-01-08",
-    archivedOn: null,
-  },
-  {
-    propertyName: "flowerStartedOn",
-    ...validPlant,
-    stage: "flower",
-    vegStartedOn: "2023-01-08",
-    flowerStartedOn: "2023-02-08",
-    archivedOn: null,
-  },
-  {
-    propertyName: "archivedOn",
-    ...validPlant,
-    status: "archived",
-    archivedOn: "2023-01-01",
-  },
+  { propertyName: "startedOn", ...validSeedlingPlant },
+  { propertyName: "vegStartedOn", ...validVegPlant },
+  { propertyName: "flowerStartedOn", ...validFlowerPlant },
+  { propertyName: "archivedOn", ...validArchivedPlant },
 ]
 const testDate = "2023-01-01"
 

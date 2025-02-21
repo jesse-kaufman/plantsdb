@@ -5,31 +5,20 @@
 
 import Plant from "../../../src/plants/Plant"
 
-const validPlant = {
-  name: "Bob",
-  status: "active",
-  stage: "seedling",
-  startedOn: "2023-01-01",
-}
+import {
+  validSeedlingPlant,
+  validVegPlant,
+  validFlowerPlant,
+  validArchivedPlant,
+} from "../testConstants"
+
+const validPlant = validSeedlingPlant
 
 const dateProperties = [
-  {
-    propertyName: "startedOn",
-    ...validPlant,
-  },
-  {
-    propertyName: "flowerStartedOn",
-    ...validPlant,
-    stage: "flower",
-    vegStartedOn: "2023-01-08",
-    flowerStartedOn: "2023-05-08",
-  },
-  {
-    propertyName: "archivedOn",
-    ...validPlant,
-    status: "archived",
-    archivedOn: "2023-01-01",
-  },
+  { propertyName: "startedOn", ...validSeedlingPlant },
+  { propertyName: "vegStartedOn", ...validVegPlant },
+  { propertyName: "flowerStartedOn", ...validFlowerPlant },
+  { propertyName: "archivedOn", ...validArchivedPlant },
 ]
 
 describe("Plant - Date validation", () => {
