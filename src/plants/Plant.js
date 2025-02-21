@@ -101,7 +101,6 @@ export default class Plant {
 
   /**
    * Sets the status of plant to inactive.
-   * TODO: Set deletedOn to today's date.
    */
   delete() {
     this.#status = "inactive"
@@ -110,7 +109,6 @@ export default class Plant {
 
   /**
    * Sets the status of plant to active.
-   * TODO: Unset deletedOn.
    */
   undelete() {
     if (this.#status === "inactive") {
@@ -121,7 +119,6 @@ export default class Plant {
 
   /**
    * Sets the status of plant to inactive.
-   * TODO: Set archivedOn to today's date.
    */
   archive() {
     if (this.#status !== "inactive") {
@@ -132,7 +129,6 @@ export default class Plant {
 
   /**
    * Sets the status of plant to inactive.
-   * TODO: Unset archivedOn.
    */
   unarchive() {
     if (this.#status === "archived") {
