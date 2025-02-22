@@ -54,16 +54,16 @@ export const validateStageDates = (stage, dates) => {
     case "veg":
       requiredFields
         .add("startedOn")
-        .add("potentialHarvest")
         .add("vegStartedOn")
+        .add("potentialHarvest")
       nullFields.add("flowerStartedOn").add("harvestedOn").add("cureStartedOn")
       break
     case "flower":
       requiredFields
         .add("startedOn")
-        .add("potentialHarvest")
         .add("vegStartedOn")
         .add("flowerStartedOn")
+        .add("potentialHarvest")
       nullFields.add("harvestedOn").add("cureStartedOn")
       break
     case "harvested":
