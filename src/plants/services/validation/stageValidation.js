@@ -83,8 +83,6 @@ export const validateStageDates = (stage, dates) => {
         .add("cureStartedOn")
       nullFields.add("potentialHarvest")
       break
-    default:
-      throw new Error(`Unknown plant stage: ${stage}`)
   }
 
   // Validate required fields
