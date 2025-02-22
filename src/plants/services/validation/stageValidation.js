@@ -88,14 +88,14 @@ export const validateStageDates = (stage, dates) => {
   // Validate required fields
   requiredFields.forEach((field) => {
     if (!dates[field]) {
-      throw new Error(`${field} is required for stage ${stage}.`)
+      throw new Error(`${field} is required for ${stage} stage`)
     }
   })
 
   // Validate null fields
   nullFields.forEach((field) => {
     if (dates[field] !== null && dates[field] !== undefined) {
-      throw new Error(`${field} must be null for stage ${stage}.`)
+      throw new Error(`${field} must be null for ${stage} stage`)
     }
   })
 }
