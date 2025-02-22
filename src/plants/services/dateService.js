@@ -2,7 +2,7 @@
  * @file Date utilities.
  */
 
-import { addWeeksToDate } from "../../utils/dateUtils"
+import { addWeeksToDate } from "../../utils/dateUtils.js"
 const seedlingWeeks = 1
 
 /**

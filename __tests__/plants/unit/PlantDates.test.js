@@ -4,7 +4,7 @@
 
 /* eslint-disable max-lines-per-function */
 
-import Plant from "../../../src/plants/Plant"
+import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant,
   statusDateProperties,

@@ -2,9 +2,9 @@
  * @file Plant validation methods.
  */
 
-import { validateStatus, validateStatusDates } from "./statusValidation"
-import { validateStage, validateStageDates } from "./stageValidation"
-import { validateDate } from "./dateValidation"
+import { validateStatus, validateStatusDates } from "./statusValidation.js"
+import { validateStage, validateStageDates } from "./stageValidation.js"
+import { validateDate } from "./dateValidation.js"
 
 /**
  * Validates the provided name.

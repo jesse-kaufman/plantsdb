@@ -5,9 +5,8 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-lines-per-function */
 
-import Plant from "../../../src/plants/Plant"
-
-import { validSeedlingPlant } from "../testConstants"
+import Plant from "../../../src/plants/Plant.js"
+import { validSeedlingPlant } from "../testConstants.js"
 
 const validPlant = { ...validSeedlingPlant }
 

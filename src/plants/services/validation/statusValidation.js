@@ -2,7 +2,7 @@
  * @file Validations to ensure plant state is correct based on status.
  */
 
-import { validStatuses } from "../../config/constants"
+import { validStatuses } from "../../config/constants.js"
 
 /**
  * Validates the provided status.

@@ -5,8 +5,8 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-lines-per-function */
 
-import { calculatePotentialHarvest } from "../../../src/plants/services/dateService"
-import { addWeeksToDate } from "../../../src/utils/dateUtils"
+import { calculatePotentialHarvest } from "../../../src/plants/services/dateService.js"
+import { addWeeksToDate } from "../../../src/utils/dateUtils.js"
 
 // Mock the addWeeksToDate function
 jest.mock("../../../src/utils/dateUtils", () => {

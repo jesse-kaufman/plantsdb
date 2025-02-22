@@ -2,9 +2,8 @@
  * @file Tests for Plant dates.
  */
 
-import Plant from "../../../src/plants/Plant"
-
-import { validArchivedPlant, validDeletedPlant } from "../testConstants"
+import Plant from "../../../src/plants/Plant.js"
+import { validArchivedPlant, validDeletedPlant } from "../testConstants.js"
 
 // Test archivedOn and deletedOn when status is archived
 describe("Archived status / date property congruency", () => {

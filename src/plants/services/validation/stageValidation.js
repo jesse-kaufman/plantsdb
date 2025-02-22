@@ -3,7 +3,7 @@
  * @file Validations to ensure plant state is correct based on stage.
  */
 
-import { validStages } from "../../config/constants"
+import { validStages } from "../../config/constants.js"
 
 /**
  * Validates stage.

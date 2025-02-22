@@ -2,15 +2,14 @@
  * @file Tests for Plant dates.
  */
 
-import Plant from "../../../src/plants/Plant"
-
+import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant,
   validVegPlant,
   validFlowerPlant,
   validHarvestedPlant,
   validCurePlant,
-} from "../testConstants"
+} from "../testConstants.js"
 
 // Test dates for seedling stage
 describe("Seedling stage / date property congruency", () => {

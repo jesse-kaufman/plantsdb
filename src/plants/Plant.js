@@ -5,11 +5,11 @@ import {
   validateConstructorData,
   validateName,
   validatePlant,
-} from "./services/validation/plantValidation"
-import { validateStage } from "./services/validation/stageValidation"
-import { validateDate } from "./services/validation/dateValidation"
-import { calculatePotentialHarvest } from "./services/dateService"
-import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants"
+} from "./services/validation/plantValidation.js"
+import { validateStage } from "./services/validation/stageValidation.js"
+import { validateDate } from "./services/validation/dateValidation.js"
+import { calculatePotentialHarvest } from "./services/dateService.js"
+import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants.js"
 
 /**
  * @typedef {object} PlantConstructorOptions

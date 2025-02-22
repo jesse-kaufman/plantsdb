@@ -4,8 +4,8 @@
 
 /* eslint-disable max-lines-per-function */
 
-import Plant from "../../../src/plants/Plant"
-import { validSeedlingPlant as validPlant } from "../testConstants"
+import Plant from "../../../src/plants/Plant.js"
+import { validSeedlingPlant as validPlant } from "../testConstants.js"
 
 describe("Plant name property", () => {
   test("should set the name correctly", () => {
