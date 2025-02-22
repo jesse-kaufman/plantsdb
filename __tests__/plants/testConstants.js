@@ -51,7 +51,7 @@ export const validDeletedPlant = {
   deletedOn: "2023-01-01",
 }
 
-/** Valid plant object for each stage/status and the related date property to test against. */
+/** Valid plant object for each stage and the related date property to test against. */
 export const stageDateProperties = [
   { propertyName: "startedOn", ...validSeedlingPlant },
   { propertyName: "vegStartedOn", ...validVegPlant },
