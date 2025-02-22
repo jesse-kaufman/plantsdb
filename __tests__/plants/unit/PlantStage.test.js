@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 /**
  * @file Plant stage tests.
  */
