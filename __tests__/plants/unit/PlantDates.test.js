@@ -21,6 +21,7 @@ describe("Plant - Status date properties", () => {
     const { propertyName, ...plantObj } = prop
     let testPlant = {}
 
+    // Group tests for each property together
     describe(`${propertyName} date`, () => {
       // Reset test plant before each test
       beforeEach(() => {
