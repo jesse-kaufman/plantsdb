@@ -57,8 +57,6 @@ export const validateStatusDates = (status, dates) => {
       requiredFields.add("archivedOn")
       nullFields.add("deletedOn")
       break
-    default:
-      throw new Error(`Unknown plant status: ${status}`)
   }
 
   // Validate required fields
