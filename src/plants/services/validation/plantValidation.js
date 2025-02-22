@@ -42,12 +42,12 @@ export const validateConstructorData = (newPlant) => {
   validateStage(newPlant.stage)
   validateDate("startedOn", newPlant.startedOn)
   validateDate("vegStartedOn", newPlant.vegStartedOn)
-  validateDate("flowerStartedOn", newPlant.flowerStartedOn, false)
-  validateDate("harvestedOn", newPlant.harvestedOn, false)
+  validateDate("flowerStartedOn", newPlant.flowerStartedOn)
+  validateDate("harvestedOn", newPlant.harvestedOn)
   validateDate("potentialHarvest", newPlant.potentialHarvest, false)
-  validateDate("cureStartedOn", newPlant.cureStartedOn, false)
-  validateDate("archivedOn", newPlant.archivedOn, false)
-  validateDate("deletedOn", newPlant.deletedOn, false)
+  validateDate("cureStartedOn", newPlant.cureStartedOn)
+  validateDate("archivedOn", newPlant.archivedOn)
+  validateDate("deletedOn", newPlant.deletedOn)
 }
 
 /**
