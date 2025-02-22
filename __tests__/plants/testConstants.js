@@ -59,3 +59,9 @@ export const stageDateProperties = [
   { propertyName: "harvestedOn", ...validHarvestedPlant },
   { propertyName: "cureStartedOn", ...validCurePlant },
 ]
+
+/** Valid plant object for each status and the related date property to test against. */
+export const statusDateProperties = [
+  { propertyName: "archivedOn", ...validArchivedPlant },
+  { propertyName: "deletedOn", ...validDeletedPlant },
+]
