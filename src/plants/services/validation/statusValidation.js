@@ -62,14 +62,14 @@ export const validateStatusDates = (status, dates) => {
   // Validate required fields
   requiredFields.forEach((field) => {
     if (!dates[field]) {
-      throw new Error(`${field} is required for status ${status}.`)
+      throw new Error(`${field} is required for status ${status}`)
     }
   })
 
   // Validate null fields
   nullFields.forEach((field) => {
     if (dates[field] !== null && dates[field] !== undefined) {
-      throw new Error(`${field} must be null for status ${status}.`)
+      throw new Error(`${field} must be null for status ${status}`)
     }
   })
 }
