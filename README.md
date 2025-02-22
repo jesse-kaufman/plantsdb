@@ -1,6 +1,6 @@
 # PlantsDB
 
-***Currently in the process of a ground-up rewrite using test-driven approach and swapping Mongoose for the standard MongoDB library—see `tdd-rewrite` branch.***
+***Currently in the process of a ground-up rewrite using test-driven approach and swapping Mongoose for the standard MongoDB library—see [`tdd-rewrite`](https://github.com/jesse-kaufman/plantsdb/tree/tdd-refactor) branch.***
 
 An in-progress project using NodeJS and MongoDB for tracking plants.
 
