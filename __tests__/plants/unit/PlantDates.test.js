@@ -5,13 +5,61 @@
 /* eslint-disable max-lines-per-function */
 
 import Plant from "../../../src/plants/Plant"
-import { validSeedlingPlant, stageDateProperties } from "../testConstants"
+import {
+  validSeedlingPlant,
+  statusDateProperties,
+  stageDateProperties,
+} from "../testConstants"
 
 const validPlant = { ...validSeedlingPlant }
 
 const testDate = "2023-01-01"
 
-describe("Plant - Date properties", () => {
+describe("Plant - Status date properties", () => {
+  // Run tests on each date property
+  statusDateProperties.forEach((prop) => {
+    const { propertyName, ...plantObj } = prop
+    let testPlant = {}
+
+    describe(`${propertyName} date`, () => {
+      // Reset test plant before each test
+      beforeEach(() => {
+        testPlant = {
+          ...validPlant,
+          ...plantObj,
+        }
+      })
+
+      // Test successfully sending date to constructor
+      it(`should set the ${propertyName} property correctly when provided to constructor`, () => {
+        // Set the property being tested to the test date
+        testPlant[propertyName] = testDate
+
+        // Create plant and check
+        const plant = new Plant(testPlant)
+        expect(plant[propertyName]).toEqual(new Date(testDate))
+      })
+
+      // Test setting date to invalid type in constructor
+      it(`should throw an error when ${propertyName} sent to constructor is invalid`, () => {
+        // Create TypeError to expect below
+        const typeError = new TypeError(`Invalid ${propertyName} date`)
+
+        // Test with number
+        testPlant[propertyName] = 123
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+        // Test with object
+        testPlant[propertyName] = {}
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+        // Test with array
+        testPlant[propertyName] = []
+        expect(() => new Plant(testPlant)).toThrow(typeError)
+      })
+    })
+  })
+})
+
+describe("Plant - Stage date properties", () => {
   // Run tests on each date property
   stageDateProperties.forEach((prop) => {
     const { propertyName, ...plantObj } = prop
