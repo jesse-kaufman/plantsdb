@@ -9,7 +9,7 @@ import {
 } from "../testConstants"
 
 describe("Plant - Stage property", () => {
-  test("should throw an error when stage sent to constructor is invalid", () => {
+  it("should throw an error when stage sent to constructor is invalid", () => {
     expect(
       () =>
         new Plant({
@@ -23,7 +23,7 @@ describe("Plant - Stage property", () => {
     ).toThrow("Invalid stage")
   })
 
-  test("should throw an error when setting stage to invalid value", () => {
+  it("should throw an error when setting stage to invalid value", () => {
     const plant = new Plant(validPlant)
     expect(() => (plant.stage = undefined)).toThrow("stage is required")
     expect(() => (plant.stage = "")).toThrow("Unknown plant stage: ")
@@ -31,12 +31,12 @@ describe("Plant - Stage property", () => {
     expect(() => (plant.stage = true)).toThrow("Invalid stage")
   })
 
-  test("should set the stage correctly when provided to constructor", () => {
+  it("should set the stage correctly when provided to constructor", () => {
     const plant = new Plant(validVegPlant)
     expect(plant.stage).toBe("veg")
   })
 
-  test("should set the stage correctly", () => {
+  it("should set the stage correctly", () => {
     const plant = new Plant(validVegPlant)
     plant.stage = "flower"
     expect(plant.stage).toBe("flower")
