@@ -47,7 +47,7 @@ export const validArchivedPlant = {
 /** Valid plant with deleted status. */
 export const validDeletedPlant = {
   ...validSeedlingPlant,
-  stage: "inactive",
+  status: "inactive",
   deletedOn: "2023-01-01",
 }
 
