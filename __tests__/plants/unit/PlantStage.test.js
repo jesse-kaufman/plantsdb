@@ -4,15 +4,18 @@
  */
 import Plant from "../../../src/plants/Plant"
 
+import {
+  validSeedlingPlant as validPlant,
+  validVegPlant,
+} from "../testConstants"
+
 describe("Plant - Stage property", () => {
   test("should throw an error when stage sent to constructor is invalid", () => {
     expect(
       () =>
         new Plant({
-          name: "Bob",
-          status: "active",
+          ...validPlant,
           stage: "",
-          startedOn: "2023-01-01",
         })
     ).toThrow("Unknown plant stage: ")
 
@@ -22,12 +25,7 @@ describe("Plant - Stage property", () => {
   })
 
   test("should throw an error when setting stage to invalid value", () => {
-    const plant = new Plant({
-      name: "Bob",
-      status: "active",
-      stage: "seedling",
-      startedOn: "2023-01-01",
-    })
+    const plant = new Plant(validPlant)
     expect(() => (plant.stage = undefined)).toThrow("stage is required")
     expect(() => (plant.stage = "")).toThrow("Unknown plant stage: ")
     expect(() => (plant.stage = "left")).toThrow("Unknown plant stage: left")
@@ -35,24 +33,12 @@ describe("Plant - Stage property", () => {
   })
 
   test("should set the stage correctly when provided to constructor", () => {
-    const plant = new Plant({
-      name: "Bob",
-      status: "active",
-      startedOn: "2023-01-01",
-      vegStartedOn: "2023-01-08",
-      stage: "veg",
-    })
+    const plant = new Plant(validVegPlant)
     expect(plant.stage).toBe("veg")
   })
 
   test("should set the stage correctly", () => {
-    const plant = new Plant({
-      name: "Bob",
-      status: "active",
-      startedOn: "2023-01-01",
-      vegStartedOn: "2023-01-08",
-      stage: "veg",
-    })
+    const plant = new Plant(validVegPlant)
     plant.stage = "flower"
     expect(plant.stage).toBe("flower")
   })

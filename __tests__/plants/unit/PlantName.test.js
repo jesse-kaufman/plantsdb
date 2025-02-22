@@ -5,13 +5,7 @@
 /* eslint-disable max-lines-per-function */
 
 import Plant from "../../../src/plants/Plant"
-
-const validPlant = {
-  name: "Bob",
-  status: "active",
-  stage: "seedling",
-  startedOn: "2023-01-01",
-}
+import { validSeedlingPlant as validPlant } from "../testConstants"
 
 describe("Plant name property", () => {
   test("should set the name correctly", () => {
