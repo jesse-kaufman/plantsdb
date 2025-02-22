@@ -315,9 +315,11 @@ export default class Plant {
     }
 
     // Calculate potentialHarvest if missing in newPlant
-    this.#potentialHarvest = newPlant.potentialHarvest
-      ? new Date(newPlant.potentialHarvest)
-      : calculatePotentialHarvest(this.#stage, dates, config)
+    this.#potentialHarvest = calculatePotentialHarvest(
+      this.#stage,
+      dates,
+      config
+    )
   }
 
   /**
