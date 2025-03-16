@@ -4,7 +4,7 @@
 export const validSeedlingPlant = {
   name: "Bob",
   status: "active",
-  source: "seedling",
+  source: "seed",
   stage: "seedling",
   startedOn: "2023-01-01",
   vegStartedOn: null,
