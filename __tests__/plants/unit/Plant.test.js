@@ -13,7 +13,7 @@ const validPlant = { ...validSeedlingPlant }
 
 describe("Plant class", () => {
   describe("constructor", () => {
-    it("should initialize properties with default values", () => {
+    it("should initialize properties with values sent to constructor", () => {
       const plant = new Plant(validPlant)
       expect(plant.name).toBe("Bob")
       expect(plant.source).toBe("seed")
