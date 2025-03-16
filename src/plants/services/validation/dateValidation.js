@@ -5,7 +5,7 @@
 /**
  * Validates date property.
  * @param {string} property - Name of date property being validated.
- * @param {string} [dateString] - String being validated as date.
+ * @param {?string} dateString - String being validated as date.
  * @param {boolean} [required] - True if started on date is required.
  * @throws {Error} If date is invalid.
  */
@@ -24,9 +24,12 @@ export const validateDate = (property, dateString, required = true) => {
     throw new Error(`${property} is required`)
   }
 
+  // Allow other dates to be null
+  if (dateString === null) return
+
   // Require dateString to be null or a string
   if (dateString !== null && typeof dateString !== "string") {
-    throw new Error(`Invalid ${property} date`)
+    throw new TypeError(`Invalid ${property} date`)
   }
 
   const parsedDate = new Date(dateString)
