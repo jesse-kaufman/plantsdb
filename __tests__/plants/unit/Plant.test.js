@@ -73,14 +73,14 @@ describe("Plant class", () => {
       it("should throw TypeError when passing non-string source to constructor", () => {
         // @ts-expect-error
         expect(() => new Plant({ ...validPlant, source: 1 })).toThrow(
-          new TypeError("Source must be a string")
+          new TypeError("source must be a string")
         )
       })
 
       it("should throw TypeError when passing invalid source to constructor", () => {
         // @ts-expect-error
         expect(() => new Plant({ ...validPlant, source: "Mars" })).toThrow(
-          "Unknown status: invalid status"
+          "Unknown source: Mars"
         )
       })
     })
