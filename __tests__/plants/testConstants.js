@@ -13,6 +13,7 @@ export const validSeedlingPlant = {
   cureStartedOn: null,
   archivedOn: null,
   deletedOn: null,
+  notes: "",
 }
 /** Valid plant in the veg stage. */
 export const validVegPlant = {
