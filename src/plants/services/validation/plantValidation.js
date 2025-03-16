@@ -11,7 +11,7 @@ import { validateDate } from "./dateValidation.js"
  * Validates the provided name.
  * @param {string|undefined} name - Name to validate.
  * @throws {TypeError} If name is not a string.
- * @throws {Error} I fname is empty, or contains only whitespace.
+ * @throws {Error} If name is empty, or contains only whitespace.
  */
 export const validateName = (name) => {
   // Require a name
