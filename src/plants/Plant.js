@@ -6,6 +6,7 @@ import {
   validateName,
   validatePlant,
   validateSource,
+  validateNotes,
 } from "./services/validation/plantValidation.js"
 import { validateStage } from "./services/validation/stageValidation.js"
 import { validateDate } from "./services/validation/dateValidation.js"
@@ -34,6 +35,7 @@ import { printPlant } from "./services/printService.js"
  * @property {?string} cureStartedOn - Date on which plant started cure stage.
  * @property {?string} archivedOn - Date plant was archived (or null if not archived).
  * @property {?string} deletedOn - Date plant was deleted (or null if not deleted).
+ * @property {string} notes - Plant notes.
  */
 
 /**
@@ -72,6 +74,8 @@ export default class Plant {
   #archivedOn
   /** Date plant was deleted. */
   #deletedOn
+  /** Notes for plant. */
+  #notes
 
   /**
    * Creates an instance of a Plant.
@@ -89,6 +93,7 @@ export default class Plant {
     this.#initDates(newPlant)
 
     this.validate()
+    this.#notes = newPlant.notes.trim()
   }
 
   /**
@@ -313,6 +318,24 @@ export default class Plant {
    */
   get archivedOn() {
     return this.#archivedOn
+  }
+
+  /**
+   * Gets the flower start date of the plant.
+   * @returns {string} New flower stage start date.
+   */
+  get notes() {
+    return this.#notes
+  }
+
+  /**
+   * Sets the notes property of the plant.
+   * @param {string} newNotes - New notes for plant.
+   * @throws {Error} If the new notes are invalid.
+   */
+  set notes(newNotes) {
+    validateNotes(newNotes)
+    this.#notes = newNotes.trim()
   }
 
   #initDates(newPlant) {

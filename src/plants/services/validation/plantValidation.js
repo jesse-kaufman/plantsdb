@@ -45,6 +45,21 @@ export const validateSource = (source) => {
 }
 
 /**
+ * Validates the provided notes.
+ * @param {string|undefined} notes - Notes to validate.
+ * @throws {TypeError} If notes is not a string.
+ * @throws {Error} If notes is longer than 256 characters.
+ */
+export const validateNotes = (notes) => {
+  // Require source to be string
+  if (typeof notes !== "string") throw new TypeError("notes must be a string")
+  // String must be fewer than 256 characters
+  if (notes.trim().length > 255) {
+    throw new Error("notes must be 255 characters or fewer")
+  }
+}
+
+/**
  * Validates object being sent to constructor.
  * @param {import('../../Plant').PlantConstructorOptions} newPlant - Plant data to initialize the instance.
  * @throws {TypeError} If newPlant null or non-object.
@@ -67,6 +82,7 @@ export const validateConstructorData = (newPlant) => {
   validateDate("cureStartedOn", newPlant.cureStartedOn)
   validateDate("archivedOn", newPlant.archivedOn)
   validateDate("deletedOn", newPlant.deletedOn)
+  validateNotes(newPlant.notes)
 }
 
 /**
