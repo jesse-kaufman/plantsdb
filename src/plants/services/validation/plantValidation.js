@@ -31,7 +31,7 @@ export const validateName = (name) => {
  * Validates the provided source.
  * @param {string|undefined} source - Name to validate.
  * @throws {TypeError} If source is not a string.
- * @throws {Error} If source is empty, or contains only whitespace.
+ * @throws {Error} If source is unknown.
  */
 export const validateSource = (source) => {
   // Require a source
