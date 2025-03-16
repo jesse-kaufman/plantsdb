@@ -175,7 +175,9 @@ export default class Plant {
    */
   set startedOn(newStartedOn) {
     validateDate("startedOn", newStartedOn)
-    this.#startedOn = new Date(newStartedOn)
+    this.#startedOn = new Date(
+      new Date(newStartedOn).toISOString().split("T")[0]
+    )
   }
 
   /**
@@ -193,7 +195,9 @@ export default class Plant {
    */
   set vegStartedOn(newVegStartedOn) {
     validateDate("vegStartedOn", newVegStartedOn)
-    this.#vegStartedOn = new Date(newVegStartedOn)
+    this.#vegStartedOn = new Date(
+      new Date(newVegStartedOn).toISOString().split("T")[0]
+    )
   }
 
   /**
@@ -211,7 +215,9 @@ export default class Plant {
    */
   set flowerStartedOn(newFlowerStartedOn) {
     validateDate("flowerStartedOn", newFlowerStartedOn)
-    this.#flowerStartedOn = new Date(newFlowerStartedOn)
+    this.#flowerStartedOn = new Date(
+      new Date(newFlowerStartedOn).toISOString().split("T")[0]
+    )
   }
 
   /**
@@ -229,7 +235,9 @@ export default class Plant {
    */
   set harvestedOn(newHarvestedOn) {
     validateDate("harvestedOn", newHarvestedOn)
-    this.#harvestedOn = new Date(newHarvestedOn)
+    this.#harvestedOn = new Date(
+      new Date(newHarvestedOn).toISOString().split("T")[0]
+    )
   }
 
   /**
@@ -255,7 +263,9 @@ export default class Plant {
    */
   set cureStartedOn(newCureStartedOn) {
     validateDate("cureStartedOn", newCureStartedOn)
-    this.#cureStartedOn = new Date(newCureStartedOn)
+    this.#cureStartedOn = new Date(
+      new Date(newCureStartedOn).toISOString().split("T")[0]
+    )
   }
 
   /**
