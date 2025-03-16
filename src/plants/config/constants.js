@@ -2,6 +2,8 @@
  * @file Constants used throughout the Plant class.
  */
 
+/** List of valid plant sources. */
+export const validSources = ["seed", "clone"]
 /** List of valid plant statuses. */
 export const validStatuses = ["active", "inactive", "archived"]
 /** List of valid stages. */

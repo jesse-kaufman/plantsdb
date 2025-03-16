@@ -16,6 +16,7 @@ describe("Plant class", () => {
     it("should initialize properties with default values", () => {
       const plant = new Plant(validPlant)
       expect(plant.name).toBe("Bob")
+      expect(plant.source).toBe("seed")
       expect(plant.status).toBe("active")
       expect(plant.stage).toBe("seedling")
       expect(plant.startedOn).toEqual(new Date("2023-01-01"))
@@ -41,7 +42,7 @@ describe("Plant class", () => {
     })
 
     it("should throw an error when any required property is missing in constructor", () => {
-      const requiredProps = ["name", "status", "stage", "startedOn"]
+      const requiredProps = ["name", "status", "source", "stage", "startedOn"]
       requiredProps.forEach((prop) => {
         const newPlant = { ...validPlant }
         delete newPlant[prop]
@@ -50,18 +51,38 @@ describe("Plant class", () => {
       })
     })
 
-    it("should throw TypeError when passing non-string status to constructor", () => {
-      // @ts-expect-error
-      expect(() => new Plant({ name: "Bob", status: 1 })).toThrow(
-        new TypeError("Status must be a string")
-      )
+    // Tests for status property
+    describe("status property", () => {
+      it("should throw TypeError when passing non-string status to constructor", () => {
+        // @ts-expect-error
+        expect(() => new Plant({ ...validPlant, status: 1 })).toThrow(
+          new TypeError("Status must be a string")
+        )
+      })
+
+      it("should throw TypeError when passing invalid status to constructor", () => {
+        // @ts-expect-error
+        expect(
+          () => new Plant({ ...validPlant, status: "invalid status" })
+        ).toThrow("Unknown status: invalid status")
+      })
     })
 
-    it("should throw TypeError when passing invalid status to constructor", () => {
-      // @ts-expect-error
-      expect(
-        () => new Plant({ name: "Bob", status: "invalid status" })
-      ).toThrow("Unknown status: invalid status")
+    // Tests for source property
+    describe("source property", () => {
+      it("should throw TypeError when passing non-string source to constructor", () => {
+        // @ts-expect-error
+        expect(() => new Plant({ ...validPlant, source: 1 })).toThrow(
+          new TypeError("Source must be a string")
+        )
+      })
+
+      it("should throw TypeError when passing invalid source to constructor", () => {
+        // @ts-expect-error
+        expect(() => new Plant({ ...validPlant, source: "Mars" })).toThrow(
+          "Unknown status: invalid status"
+        )
+      })
     })
   })
 
