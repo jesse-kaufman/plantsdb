@@ -122,7 +122,9 @@ describe("Plant - Stage date properties", () => {
         const requiredError = new Error(`${propertyName} is required`)
 
         // Set date to non-string types
-        expect(() => (plant[propertyName] = "invalid-date")).toThrow(typeError)
+        expect(() => (plant[propertyName] = "invalid-date")).toThrow(
+          `Invalid ${propertyName} date`
+        )
         expect(() => (plant[propertyName] = undefined)).toThrow(requiredError)
         expect(() => (plant[propertyName] = 123)).toThrow(typeError)
       })
