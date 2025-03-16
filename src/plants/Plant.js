@@ -10,6 +10,7 @@ import { validateStage } from "./services/validation/stageValidation.js"
 import { validateDate } from "./services/validation/dateValidation.js"
 import { calculatePotentialHarvest } from "./services/dateService.js"
 import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants.js"
+import { printPlant } from "./services/printService.js"
 
 /**
  * @typedef {object} PlantConstructorOptions
@@ -328,5 +329,18 @@ export default class Plant {
    */
   validate() {
     validatePlant(this)
+  }
+
+  /**
+   * Gets plain JSON representation of class instance.
+   * @returns {object} Plain JSON representation of class instance.
+   */
+  toJSON() {
+    return { ...this }
+  }
+
+  /** Prints plant to console. */
+  print() {
+    printPlant(this)
   }
 }
