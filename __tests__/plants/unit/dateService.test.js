@@ -5,13 +5,14 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-lines-per-function */
 
+import { vi, describe, it, expect, beforeEach } from "vitest"
 import { calculatePotentialHarvest } from "../../../src/plants/services/dateService.js"
 import { addWeeksToDate } from "../../../src/utils/dateUtils.js"
 
 // Mock the addWeeksToDate function
-jest.mock("../../../src/utils/dateUtils", () => {
+vi.mock("../../../src/utils/dateUtils", () => {
   return {
-    addWeeksToDate: jest.fn(),
+    addWeeksToDate: vi.fn(),
   }
 })
 
@@ -30,7 +31,7 @@ describe("calculatePotentialHarvest", () => {
 
   beforeEach(() => {
     // Reset the mock before each test
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   test("should calculate potential harvest date for seedling stage", () => {
