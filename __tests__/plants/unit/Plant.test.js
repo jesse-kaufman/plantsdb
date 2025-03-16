@@ -5,7 +5,7 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-lines-per-function */
 
-import { describe, it, expect, beforeEach } from "vitest"
+import { describe, it, expect, beforeEach, vi } from "vitest"
 import Plant from "../../../src/plants/Plant.js"
 import { validSeedlingPlant } from "../testConstants.js"
 
@@ -148,5 +148,33 @@ describe("Plant class", () => {
       plant.undelete() // Then try to restore it
       expect(plant.status).toBe("archived") // Archived plant remains archived
     })
+  })
+})
+
+describe("printing", () => {
+  it("should print the expected plant information", () => {
+    // Capture console output
+    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {})
+
+    const plant = new Plant(validPlant)
+    plant.print()
+
+    // Expected formatted output (ensure exact match)
+    const expectedOutput = [
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "Plant Information for: Bob",
+      "───────────────────────────────────────────────────",
+      "Stage:  seedling                           Status: active",
+      "Started: Jan 1, 2023",
+      "───────────────────────────────────────────────────",
+    ]
+
+    // Check each call to console.log
+    expectedOutput.forEach((line, index) => {
+      expect(consoleSpy).toHaveBeenNthCalledWith(index + 1, line)
+    })
+
+    // Restore console.log
+    consoleSpy.mockRestore()
   })
 })
