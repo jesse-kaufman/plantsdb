@@ -12,17 +12,17 @@ import Plant from "../Plant.js"
  */
 export const printPlant = (plant) => {
   console.log(chalk.blue("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"))
-  console.info(
+  console.log(
     chalk.blue(`Plant Information for: ${chalk.underline.bold(plant.name)}`)
   )
   console.log(chalk.blue("───────────────────────────────────────────────────"))
 
-  console.log(
-    chalk.white("Stage:"),
-    formatStage(plant.stage),
-    chalk.white("Status:").padStart(40 - plant.stage.length),
-    formatStatus(plant.status)
-  )
+  const stageLabel = chalk.white("Stage:")
+  const fStage = formatStage(plant.stage)
+  const statusLabel = chalk.white("Status:").padStart(40 - plant.stage.length)
+  const fStatus = formatStatus(plant.status)
+
+  console.log(`${stageLabel} ${fStage} ${statusLabel} ${fStatus}`)
 
   // Print started on date
   {
@@ -33,10 +33,8 @@ export const printPlant = (plant) => {
       timeZone: "UTC",
     })
 
-    console.log(
-      chalk.white("Started:"),
-      formatStageDate(date, plant.stage === "seedling")
-    )
+    const fStageDate = formatStageDate(date, plant.stage === "seedling")
+    console.log(`${chalk.white("Started:")} ${fStageDate}`)
   }
 
   // Print veg started on date
