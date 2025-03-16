@@ -5,17 +5,26 @@ import {
   validateConstructorData,
   validateName,
   validatePlant,
+  validateSource,
 } from "./services/validation/plantValidation.js"
 import { validateStage } from "./services/validation/stageValidation.js"
 import { validateDate } from "./services/validation/dateValidation.js"
 import { calculatePotentialHarvest } from "./services/dateService.js"
-import { seedlingWeeks, vegWeeks, flowerWeeks } from "./config/constants.js"
+import {
+  validSources,
+  validStages,
+  validStatuses,
+  seedlingWeeks,
+  vegWeeks,
+  flowerWeeks,
+} from "./config/constants.js"
 import { printPlant } from "./services/printService.js"
 
 /**
  * @typedef {object} PlantConstructorOptions
  * @property {string} name - Name of the plant being created.
  * @property {string} status - Status of the plant being created.
+ * @property {string} source - Source of plant.
  * @property {string} stage - Stage of the plant being created.
  * @property {string} startedOn - Date plant started.
  * @property {?string} vegStartedOn - Date veg stage started.
@@ -35,13 +44,16 @@ import { printPlant } from "./services/printService.js"
  * @class
  */
 export default class Plant {
-  static validStages = ["seedling", "veg", "flower", "harvested", "cure"]
-  static validStatuses = ["active", "inactive", "archived"]
+  static validStages = validStages
+  static validStatuses = validStatuses
+  static validSources = validSources
 
   /** Name of plant. */
   #name
   /** Status of plant. */
   #status
+  /** Source of plant. */
+  #source
   /** Plant stage. */
   #stage
   /** Date plant was started. */
@@ -72,6 +84,7 @@ export default class Plant {
     // Now initialize the plant properties
     this.#name = newPlant.name.trim()
     this.#status = newPlant.status
+    this.#source = newPlant.source
     this.#stage = newPlant.stage
     this.#initDates(newPlant)
 
@@ -140,6 +153,24 @@ export default class Plant {
       this.#status = "active"
       this.#archivedOn = null
     }
+  }
+
+  /**
+   * Gets the source of the plant.
+   * @returns {string} Source of the plant from db.
+   */
+  get source() {
+    return this.#source
+  }
+
+  /**
+   * Sets the source of the plant.
+   * @param {string} newSource - New plant source to save.
+   * @throws {Error} If the new source is invalid.
+   */
+  set source(newSource) {
+    validateSource(newSource)
+    this.#source = newSource.trim()
   }
 
   /**

@@ -2,6 +2,7 @@
  * @file Plant validation methods.
  */
 
+import { validSources } from "../../config/constants.js"
 import { validateStatus, validateStatusDates } from "./statusValidation.js"
 import { validateStage, validateStageDates } from "./stageValidation.js"
 import { validateDate } from "./dateValidation.js"
@@ -27,6 +28,23 @@ export const validateName = (name) => {
 }
 
 /**
+ * Validates the provided source.
+ * @param {string|undefined} source - Name to validate.
+ * @throws {TypeError} If source is not a string.
+ * @throws {Error} If source is empty, or contains only whitespace.
+ */
+export const validateSource = (source) => {
+  // Require a source
+  if (source === undefined) throw new Error("source is required")
+  // Require source to be string
+  if (typeof source !== "string") throw new TypeError("source must be a string")
+  // String must be a valid source
+  if (!validSources.includes(source)) {
+    throw new Error(`Unknown source: ${source}`)
+  }
+}
+
+/**
  * Validates object being sent to constructor.
  * @param {import('../../Plant').PlantConstructorOptions} newPlant - Plant data to initialize the instance.
  * @throws {TypeError} If newPlant null or non-object.
@@ -39,6 +57,7 @@ export const validateConstructorData = (newPlant) => {
 
   validateName(newPlant.name)
   validateStatus(newPlant.status)
+  validateSource(newPlant.source)
   validateStage(newPlant.stage)
   validateDate("startedOn", newPlant.startedOn)
   validateDate("vegStartedOn", newPlant.vegStartedOn)
