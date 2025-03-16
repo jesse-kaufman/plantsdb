@@ -3,6 +3,7 @@
  */
 
 /* eslint-disable no-magic-numbers */
+import { describe, it, expect } from "vitest"
 
 import { addWeeksToDate } from "../../../src/utils/dateUtils"
 

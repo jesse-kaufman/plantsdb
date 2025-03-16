@@ -1,7 +1,7 @@
 /**
  * @file Tests for Plant dates.
  */
-
+import { describe, it, expect } from "vitest"
 import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant,

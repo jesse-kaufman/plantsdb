@@ -5,6 +5,7 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-lines-per-function */
 
+import { describe, it, expect, beforeEach } from "vitest"
 import Plant from "../../../src/plants/Plant.js"
 import { validSeedlingPlant } from "../testConstants.js"
 

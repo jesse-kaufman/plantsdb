@@ -1,6 +1,7 @@
 /**
  * @file Plant stage tests.
  */
+import { describe, it, expect } from "vitest"
 import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant as validPlant,
