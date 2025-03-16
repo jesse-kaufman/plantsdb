@@ -2,7 +2,10 @@
  * @file Main application file.
  */
 
+// import connectDb from "./db/db.js"
 import Plant from "./plants/Plant.js"
+
+// connectDb()
 
 const newPlant = {
   name: "Acapulco Gold",
