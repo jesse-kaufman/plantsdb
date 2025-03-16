@@ -9,13 +9,13 @@ import Plant from "../../../src/plants/Plant.js"
 import { validSeedlingPlant as validPlant } from "../testConstants.js"
 
 describe("Plant name property", () => {
-  test("should set the name correctly", () => {
+  it("should set the name correctly", () => {
     const plant = new Plant(validPlant)
     plant.name = "Alice"
     expect(plant.name).toBe("Alice")
   })
 
-  test("should throw an error when name is empty string or whitespace", () => {
+  it("should throw an error when name is empty string or whitespace", () => {
     // Test the constructor with an empty string
     expect(() => new Plant({ ...validPlant, name: "" })).toThrow(
       "name is required"
@@ -34,7 +34,7 @@ describe("Plant name property", () => {
     expect(() => (plant.name = "   ")).toThrow("name is required")
   })
 
-  test("should throw TypeError when provided name is not string", () => {
+  it("should throw TypeError when provided name is not string", () => {
     // Test sending non-string value to constructor
     expect(() => new Plant({ ...validPlant, name: true })).toThrow(
       new TypeError("Name must be a string")
@@ -59,12 +59,12 @@ describe("Plant name property", () => {
     )
   })
 
-  test("should throw an error when setting name to undefined", () => {
+  it("should throw an error when setting name to undefined", () => {
     const plant = new Plant(validPlant)
     expect(() => (plant.name = undefined)).toThrow("name is required")
   })
 
-  test("should throw an error when provided name is too short", () => {
+  it("should throw an error when provided name is too short", () => {
     // Test sending short name to constructor
     expect(() => new Plant({ ...validPlant, name: "A" })).toThrow(
       "Name must be at least 2 characters"
@@ -77,7 +77,7 @@ describe("Plant name property", () => {
     )
   })
 
-  test("should trim whitespace from name", () => {
+  it("should trim whitespace from name", () => {
     // Test trimming whitespace in constructor
     const plant = new Plant({ ...validPlant, name: "   Bob   " })
     expect(plant.name).toBe("Bob")

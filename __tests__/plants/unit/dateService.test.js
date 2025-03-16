@@ -34,7 +34,7 @@ describe("calculatePotentialHarvest", () => {
     vi.clearAllMocks()
   })
 
-  test("should calculate potential harvest date for seedling stage", () => {
+  it("should calculate potential harvest date for seedling stage", () => {
     const stage = "seedling"
     const weeksToAdd =
       mockConfig.seedlingWeeks + mockConfig.vegWeeks + mockConfig.flowerWeeks
@@ -48,7 +48,7 @@ describe("calculatePotentialHarvest", () => {
     expect(addWeeksToDate).toHaveBeenCalledWith(mockDates.startedOn, weeksToAdd)
   })
 
-  test("should calculate potential harvest date for veg stage", () => {
+  it("should calculate potential harvest date for veg stage", () => {
     const stage = "veg"
     const weeksToAdd = mockConfig.vegWeeks + mockConfig.flowerWeeks
     const expectedHarvestDate = new Date(2023, 9, 1) // Expecting October 2, 2023
@@ -64,7 +64,7 @@ describe("calculatePotentialHarvest", () => {
     )
   })
 
-  test("should calculate potential harvest date for flower stage", () => {
+  it("should calculate potential harvest date for flower stage", () => {
     const stage = "flower"
     const weeksToAdd = mockConfig.flowerWeeks
     const expectedHarvestDate = new Date(2023, 10, 1) // Expecting November 1, 2023
@@ -80,19 +80,19 @@ describe("calculatePotentialHarvest", () => {
     )
   })
 
-  test("should return null for harvested stage", () => {
+  it("should return null for harvested stage", () => {
     const stage = "harvested"
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
     expect(result).toBeNull()
   })
 
-  test("should return null for cure stage", () => {
+  it("should return null for cure stage", () => {
     const stage = "cure"
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
     expect(result).toBeNull()
   })
 
-  test("should return null for unknown stage", () => {
+  it("should return null for unknown stage", () => {
     const stage = "unknown"
     const result = calculatePotentialHarvest(stage, mockDates, mockConfig)
     expect(result).toBeNull()

@@ -75,7 +75,7 @@ describe("Plant class", () => {
     })
 
     // Test deleting a plant
-    test("should set status to 'inactive' when delete() is called on a plant", () => {
+    it("should set status to 'inactive' when delete() is called on a plant", () => {
       // Test deleting an active plant
       plant.delete() // Delete the plant
       expect(plant.status).toBe("inactive") // Ensure status is inactive
@@ -92,7 +92,7 @@ describe("Plant class", () => {
     })
 
     // Test restoring a plant
-    test("should set status to 'active' when undelete() is called on an inactive plant", () => {
+    it("should set status to 'active' when undelete() is called on an inactive plant", () => {
       plant.delete() // First delete the plant
       plant.undelete() // Then restore it
       expect(plant.status).toBe("active") // Ensure status is active
@@ -103,7 +103,7 @@ describe("Plant class", () => {
     })
 
     // Test archiving an active plant
-    test("should set status to 'archived' when archive() is called on an active or archived plant", () => {
+    it("should set status to 'archived' when archive() is called on an active or archived plant", () => {
       plant.archive() // Archive the plant
       expect(plant.status).toBe("archived") // Ensure status becomes archived
 
@@ -113,14 +113,14 @@ describe("Plant class", () => {
     })
 
     // Test archiving a deleted plant
-    test("should leave status as-is when archive() is called on an deleted plant", () => {
+    it("should leave status as-is when archive() is called on an deleted plant", () => {
       plant.delete() // Delete the plant first
       plant.archive() // Then archive it
       expect(plant.status).toBe("inactive") // Status should stay inactive
     })
 
     // Test unarchiving a plant
-    test("should set status to 'active' when unarchive() is called on an archived or active plant", () => {
+    it("should set status to 'active' when unarchive() is called on an archived or active plant", () => {
       plant.archive() // Archive the plant first
       plant.unarchive() // Unarchive the plant
       expect(plant.status).toBe("active") // Ensure status becomes active
@@ -131,14 +131,14 @@ describe("Plant class", () => {
     })
 
     // Test deleting an archived plant
-    test("should set status to 'inactive' when delete() is called on an archived plant", () => {
+    it("should set status to 'inactive' when delete() is called on an archived plant", () => {
       plant.archive() // Archive the plant first
       plant.delete() // Then delete it
       expect(plant.status).toBe("inactive") // Ensure status becomes inactive
     })
 
     // Test restoring a plant that isn't deleted
-    test("should leave status as-is if undelete() is called on an active or archived plant", () => {
+    it("should leave status as-is if undelete() is called on an active or archived plant", () => {
       // Test restoring an active plant
       plant.undelete() // Restore the active plant
       expect(plant.status).toBe("active") // Active plant remains active
