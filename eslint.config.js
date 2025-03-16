@@ -167,7 +167,6 @@ const config = [
         { avoidEscape: true, allowTemplateLiterals: true },
       ],
       "import/order": "warn",
-
       "jsdoc/check-param-names": ["error", { enableFixer: true }],
       "jsdoc/require-description": "error",
       "jsdoc/require-hyphen-before-param-description": "warn",
