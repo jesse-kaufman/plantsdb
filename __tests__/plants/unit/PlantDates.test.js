@@ -14,7 +14,7 @@ import {
 
 const validPlant = { ...validSeedlingPlant }
 
-const testDate = "2023-01-01"
+const testDate = "2024-01-01"
 
 describe("Plant - Status date properties", () => {
   // Run tests on each date property
