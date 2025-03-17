@@ -99,3 +99,43 @@ export const validateStageDates = (stage, dates) => {
     }
   })
 }
+
+/**
+ * Validates the order of stage dates.
+ * @param {object} dates - Dates to validate.
+ */
+export const validateStageDatesOrder = (dates) => {
+  console.debug(dates)
+  const stagePairs = [
+    {
+      prev: "startedOn",
+      next: "vegStartedOn",
+      message: "startedOn must come before vegStartedOn",
+    },
+    {
+      prev: "vegStartedOn",
+      next: "flowerStartedOn",
+      message: "vegStartedOn must come before flowerStartedOn",
+    },
+    {
+      prev: "flowerStartedOn",
+      next: "harvestedOn",
+      message: "flowerStartedOn must come before harvestedOn",
+    },
+    {
+      prev: "harvestedOn",
+      next: "cureStartedOn",
+      message: "harvestedOn must come before cureStartedOn",
+    },
+  ]
+
+  for (const { prev, next, message } of stagePairs) {
+    if (
+      dates[next] !== null &&
+      dates[prev] !== null &&
+      dates[prev] > dates[next]
+    ) {
+      throw new Error(message)
+    }
+  }
+}

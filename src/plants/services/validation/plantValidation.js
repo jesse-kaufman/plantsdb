@@ -4,7 +4,11 @@
 
 import { validSources } from "../../config/constants.js"
 import { validateStatus, validateStatusDates } from "./statusValidation.js"
-import { validateStage, validateStageDates } from "./stageValidation.js"
+import {
+  validateStage,
+  validateStageDates,
+  validateStageDatesOrder,
+} from "./stageValidation.js"
 import { validateDate } from "./dateValidation.js"
 
 /**
@@ -114,4 +118,5 @@ export const validatePlant = (plant) => {
   }
   validateStatusDates(plant.status, dates)
   validateStageDates(plant.stage, dates)
+  validateStageDatesOrder(dates)
 }

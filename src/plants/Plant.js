@@ -8,7 +8,10 @@ import {
   validateSource,
   validateNotes,
 } from "./services/validation/plantValidation.js"
-import { validateStage } from "./services/validation/stageValidation.js"
+import {
+  validateStage,
+  validateStageDatesOrder,
+} from "./services/validation/stageValidation.js"
 import { validateDate } from "./services/validation/dateValidation.js"
 import { calculatePotentialHarvest } from "./services/dateService.js"
 import {
@@ -211,6 +214,7 @@ export default class Plant {
    */
   set startedOn(newStartedOn) {
     validateDate("startedOn", newStartedOn)
+    validateStageDatesOrder({ ...this, startedOn: newStartedOn })
     this.#startedOn = new Date(
       new Date(newStartedOn).toISOString().split("T")[0]
     )
@@ -231,9 +235,13 @@ export default class Plant {
    */
   set vegStartedOn(newVegStartedOn) {
     validateDate("vegStartedOn", newVegStartedOn)
-    this.#vegStartedOn = new Date(
+    const vegStartedOn = new Date(
       new Date(newVegStartedOn).toISOString().split("T")[0]
     )
+    const { startedOn } = this
+
+    validateStageDatesOrder({ startedOn, vegStartedOn })
+    this.#vegStartedOn = vegStartedOn
   }
 
   /**
@@ -251,9 +259,16 @@ export default class Plant {
    */
   set flowerStartedOn(newFlowerStartedOn) {
     validateDate("flowerStartedOn", newFlowerStartedOn)
-    this.#flowerStartedOn = new Date(
+    const flowerStartedOn = new Date(
       new Date(newFlowerStartedOn).toISOString().split("T")[0]
     )
+    const { startedOn, vegStartedOn } = this
+    validateStageDatesOrder({
+      startedOn,
+      vegStartedOn,
+      flowerStartedOn,
+    })
+    this.#flowerStartedOn = flowerStartedOn
   }
 
   /**
