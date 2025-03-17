@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /**
  * @file Tests for Plant dates.
  */
@@ -148,6 +149,57 @@ describe("Cure stage / date property congruency", () => {
     const plant = { ...validCurePlant, cureStartedOn: null }
     expect(() => new Plant(plant)).toThrow(
       "cureStartedOn is required for cure stage"
+    )
+  })
+})
+
+describe("Stage date order", () => {
+  it("should throw an error if vegStartedOn is before startedOn", () => {
+    expect(
+      () =>
+        new Plant({
+          ...validVegPlant,
+          startedOn: "2023-02-01",
+          vegStartedOn: "2023-01-01",
+        })
+    ).toThrow("startedOn must come before vegStartedOn")
+
+    const plant = new Plant({ ...validVegPlant, startedOn: "2023-01-01" })
+    expect(() => {
+      plant.vegStartedOn = "2022-01-01"
+    }).toThrow("startedOn must come before vegStartedOn")
+  })
+
+  it("should throw an error if flowerStartedOn is before vegStartedOn", () => {
+    const plant = {
+      ...validFlowerPlant,
+      vegStartedOn: "2023-02-01",
+      flowerStartedOn: "2023-01-01",
+    }
+    expect(() => new Plant(plant)).toThrow(
+      "vegStartedOn must come before flowerStartedOn"
+    )
+  })
+
+  it("should throw an error if harvestedOn is before flowerStartedOn", () => {
+    const plant = {
+      ...validHarvestedPlant,
+      flowerStartedOn: "2023-02-01",
+      harvestedOn: "2023-01-01",
+    }
+    expect(() => new Plant(plant)).toThrow(
+      "flowerStartedOn must come before harvestedOn"
+    )
+  })
+
+  it("should throw an error if cureStartedOn is before harvestedOn", () => {
+    const plant = {
+      ...validCurePlant,
+      harvestedOn: "2024-02-01",
+      cureStartedOn: "2024-01-01",
+    }
+    expect(() => new Plant(plant)).toThrow(
+      "harvestedOn must come before cureStartedOn"
     )
   })
 })
