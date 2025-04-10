@@ -1,15 +1,15 @@
 /** @file Unit tests for plant repository. */
 /* eslint-disable max-lines-per-function */
 import { describe, it, expect, vi } from "vitest"
+import { validSeedlingPlant, validDeletedPlant } from "../testConstants"
 import PlantModel from "@/plants/models/plantModel" // Import your Mongoose model
 import { plantRepository } from "@/plants/repositories/plantRepository"
+import Plant from "@/plants/PlantClass"
 
 // Mock the PlantModel.find method
 vi.mock("@/plants/models/plantModel")
 
-const activePlant = { id: "1", status: "active", name: "Plant 1" }
-const inactivePlant = { id: "2", status: "inactive", name: "Plant 2" }
-const mockPlants = [activePlant, inactivePlant]
+const mockPlants = [validSeedlingPlant, validDeletedPlant]
 
 describe("plantRepository", () => {
   // Test plantRepository.findBy()
@@ -27,7 +27,7 @@ describe("plantRepository", () => {
 
       const result = await plantRepository.findBy(filter)
 
-      expect(result).toEqual([activePlant])
+      expect(result).toEqual([validSeedlingPlant])
     })
 
     it("should return an empty array when no plants match the filter", async () => {
@@ -43,7 +43,7 @@ describe("plantRepository", () => {
 
       const result = await plantRepository.findBy(filter)
 
-      expect(result).toEqual([inactivePlant])
+      expect(result).toEqual([validDeletedPlant])
       expect(PlantModel.find).toHaveBeenCalledWith(filter)
       expect(PlantModel.find().lean).toHaveBeenCalled()
     })
@@ -65,45 +65,96 @@ describe("plantRepository", () => {
 
   // Test plantRepository.findById()
   describe("findById", () => {
-    it("should return active plant matching ID", async () => {
+    // Test that findById() returns a plant object if a plant is found.
+    it("should return a Plant object when a valid ID is provided", async () => {
       const plantId = "1"
-      PlantModel.findById.mockResolvedValue(
-        mockPlants.find(
-          (plant) => plant.status === "active" && plant.id === plantId
-        )
-      )
+      // Mock findById to return an object with a .lean method
+      const mockQuery = {
+        lean: vi.fn().mockResolvedValue(validSeedlingPlant),
+      }
+      // Mock findById.
+      PlantModel.findById.mockReturnValue(mockQuery)
 
-      const result = await plantRepository.findById(plantId)
-      console.log(result)
-
-      expect(result).toEqual(activePlant)
-    })
-
-    it("should return undefined when no active plants match ID", async () => {
-      const plantId = "2"
-      PlantModel.findById.mockResolvedValue(
-        mockPlants.find(
-          (plant) => plant.status === "active" && plant.id === plantId
-        )
-      )
-
+      // Call the method
       const result = await plantRepository.findById(plantId)
 
-      expect(result).toBeUndefined()
+      // Check if the result is an instance of Plant and has the expected properties
+      expect(result).toBeInstanceOf(Plant)
+      expect(result).toEqual(new Plant(validSeedlingPlant))
     })
 
+    it("should return undefined if no plant is found", async () => {
+      const plantId = "1"
+      // Mock findById to return an object with .lean returning null
+      const mockQuery = {
+        lean: vi.fn().mockResolvedValue(null),
+      }
+
+      PlantModel.findById.mockReturnValue(mockQuery)
+
+      // Call the method
+      const result = await plantRepository.findById(plantId)
+
+      // Check if result is undefined because no plant is found
+      expect(result).toBeUndefined() // This matches the logic where undefined is returned if no plant is found
+    })
+
+    it("should handle database query failure", async () => {
+      const plantId = "1"
+
+      // Mock findById.lean() to throw an error
+      const mockQuery = {
+        lean: vi.fn().mockRejectedValue(new Error("Database query failed")),
+      }
+
+      // Mock the findById() method.
+      PlantModel.findById.mockReturnValue(mockQuery)
+
+      // Call the method and check if it properly handles the error
+      await expect(plantRepository.findById(plantId)).rejects.toThrow(
+        "Database query failed"
+      )
+    })
+  })
+
+  // Test the plantRepository.create() method.
+  describe("create", () => {
+    // Test creating a plant successfully.
+    it("should create a new plant and return the plant object", async () => {
+      // Mock the create() method.
+      PlantModel.create.mockReturnValue(validSeedlingPlant)
+
+      // Call the method
+      const result = await plantRepository.create(validSeedlingPlant)
+
+      expect(result).toEqual(new Plant(validSeedlingPlant))
+      expect(PlantModel.create).toHaveBeenCalledWith(validSeedlingPlant) // Check if create was called with correct data
+    })
+
+    // Test a failed attempt at creating a plant.
     it("should throw an error if the database query fails", async () => {
-      const filter = { status: "active" }
-
+      const plantData = validSeedlingPlant
       // Mock the find() method to throw an error
-      PlantModel.find.mockReturnValue({
-        lean: vi.fn().mockRejectedValue(new Error("Database error")),
-      })
+      PlantModel.create.mockRejectedValue(new Error("Database error"))
 
-      await expect(plantRepository.findBy(filter)).rejects.toThrow(
+      await expect(plantRepository.create(plantData)).rejects.toThrow(
         "Database error"
       )
-      expect(PlantModel.find).toHaveBeenCalledWith(filter)
+      expect(PlantModel.create).toHaveBeenCalledWith(plantData)
+    })
+  })
+
+  describe("update", () => {
+    it("should update a plant and return the updated plant object", async () => {
+      const plantId = "1"
+      const updateData = { ...validSeedlingPlant, name: "Updated Plant Name" }
+      // Mock the findByIdAndUpdate() method.
+      PlantModel.findByIdAndUpdate.mockResolvedValue(updateData)
+
+      // Call the update method
+      const result = await plantRepository.update(plantId, updateData)
+
+      expect(result).toEqual(updateData)
     })
   })
 })
