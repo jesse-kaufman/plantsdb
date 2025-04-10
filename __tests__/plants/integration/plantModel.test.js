@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 /** @file Integration tests for plantModel. */
 import { MongoMemoryServer } from "mongodb-memory-server"
 import mongoose from "mongoose"
