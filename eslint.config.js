@@ -7,9 +7,26 @@ import importPlugin from "eslint-plugin-import"
 import globals from "globals"
 import eslintPluginPrettier from "eslint-plugin-prettier"
 import eslintConfigPrettier from "eslint-config-prettier"
+import vitest from "eslint-plugin-vitest"
 
 const config = [
   { ignores: ["**/node_modules/*", "**/public/js/*"] },
+  {
+    files: ["__tests__/**"],
+    plugins: {
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      "vitest/consistent-test-filename": "error",
+      "vitest/consistent-test-it": "error",
+      "vitest/prefer-comparison-matcher": "error",
+      "vitest/prefer-hooks-in-order": "error",
+      //"vitest/prefer-lowercase-title": "error",
+      "vitest/require-top-level-describe": "error",
+      "vitest/prefer-todo": "error",
+    },
+  },
   {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node, ...globals.jest },
