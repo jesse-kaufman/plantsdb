@@ -1,5 +1,6 @@
 /** @file Plant repository. */
 import PlantModel from "../models/plantModel.js"
+import Plant from "@/plants/PlantClass.js"
 
 /**
  * The plant repository object.

@@ -5,7 +5,7 @@ import {
   validStages,
   validStatuses,
   validSources,
-} from "../config/constants.js"
+} from "@/plants/config/constants.js"
 
 const PlantSchema = new Schema(
   {
