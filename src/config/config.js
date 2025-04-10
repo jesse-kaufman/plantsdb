@@ -15,7 +15,6 @@ export const port = process.env.PORT || ""
 // Check for required environment variables.
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
-    console.log(`Missing required environment variable: ${varName}`)
     throw new Error(`Missing required environment variable: ${varName}`)
   }
 })
