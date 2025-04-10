@@ -58,6 +58,7 @@ export const validateNotes = (notes) => {
   // Require source to be string
   if (typeof notes !== "string") throw new TypeError("notes must be a string")
   // String must be fewer than 256 characters
+  // eslint-disable-next-line no-magic-numbers
   if (notes.trim().length > 255) {
     throw new Error("notes must be 255 characters or fewer")
   }

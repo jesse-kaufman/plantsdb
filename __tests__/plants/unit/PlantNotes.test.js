@@ -56,11 +56,13 @@ describe("Plant notes property", () => {
 
   it("should throw an error when provided notes is too long", () => {
     // Test sending short notes to constructor
+    // eslint-disable-next-line no-magic-numbers
     expect(() => new Plant({ ...validPlant, notes: "a".repeat(256) })).toThrow(
       "notes must be 255 characters or fewer"
     )
 
     const plant = new Plant(validPlant)
+    // eslint-disable-next-line no-magic-numbers
     expect(() => (plant.notes = "a".repeat(256))).toThrow(
       "notes must be 255 characters or fewer"
     )

@@ -19,6 +19,7 @@ export const printPlant = (plant) => {
 
   const stageLabel = chalk.white("Stage:")
   const fStage = formatStage(plant.stage)
+  // eslint-disable-next-line no-magic-numbers
   const statusLabel = chalk.white("Status:").padStart(40 - plant.stage.length)
   const fStatus = formatStatus(plant.status)
 
