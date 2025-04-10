@@ -31,7 +31,12 @@ export const plantRepository = {
    * @returns {Promise<object>} Plant object after insertion.
    */
   async create(data) {
-    return await PlantModel.create(data)
+    try {
+      const newPlant = await PlantModel.create(data) // Create the new plant in the database
+      return new Plant(newPlant) // Directly return the plain object as Plant
+    } catch (error) {
+      throw new Error(`Database error while creating plant: ${error.message}`)
+    }
   },
 
   /**
