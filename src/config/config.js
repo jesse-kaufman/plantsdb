@@ -1,13 +1,28 @@
 /** @file Configuration for app. */
 import dotenv from "dotenv"
 
-// Load environment variables from .env file
+// Load environment variables from .env file.
 dotenv.config()
 
-console.log(process.env.MONGODB_URI)
+console.log("full process.env", process.env)
+
+// List of required env vars.
+const requiredEnvVars = ["MONGODB_URI", "PORT"]
+
+// Check for required environment variables.
+requiredEnvVars.forEach((varName) => {
+  if (!process.env[varName]) {
+    console.log(`Missing required environment variable: ${varName}`)
+    throw new Error(`Missing required environment variable: ${varName}`)
+  }
+})
+
 /** MongoDB URI for db connection. */
-export const mongoDbUri = process.env.MONGODB_URI || ""
+export const mongoDbUri = process.env.MONGODB_URI
+/** Port on which to run API. */
+export const port = process.env.PORT
 
 export default {
   mongoDbUri,
+  port,
 }
