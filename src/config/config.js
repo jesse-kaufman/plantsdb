@@ -16,9 +16,9 @@ requiredEnvVars.forEach((varName) => {
 })
 
 /** MongoDB URI for db connection. */
-export const mongoDbUri = process.env.MONGODB_URI
+export const mongoDbUri = process.env.MONGODB_URI || ""
 /** Port on which to run API. */
-export const port = process.env.PORT
+export const port = process.env.PORT || ""
 
 export default {
   mongoDbUri,
