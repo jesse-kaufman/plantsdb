@@ -4,8 +4,6 @@ import dotenv from "dotenv"
 // Load environment variables from .env file.
 dotenv.config()
 
-console.log("full process.env", process.env)
-
 // List of required env vars.
 const requiredEnvVars = ["MONGODB_URI", "PORT"]
 
