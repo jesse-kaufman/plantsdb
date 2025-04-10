@@ -2,11 +2,11 @@
  * @file Plant stage tests.
  */
 import { describe, it, expect } from "vitest"
-import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant as validPlant,
   validVegPlant,
 } from "../testConstants.js"
+import Plant from "@/plants/PlantClass.js"
 
 describe("Plant - Stage property", () => {
   it("should throw an error when stage sent to constructor is invalid", () => {

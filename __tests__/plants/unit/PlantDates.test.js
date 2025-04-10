@@ -5,12 +5,12 @@
 /* eslint-disable max-lines-per-function */
 
 import { describe, it, expect, beforeEach } from "vitest"
-import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant,
   statusDateProperties,
   stageDateProperties,
 } from "../testConstants"
+import Plant from "@/plants/PlantClass.js"
 
 const validPlant = { ...validSeedlingPlant }
 

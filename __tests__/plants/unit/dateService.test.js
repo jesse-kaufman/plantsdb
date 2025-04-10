@@ -6,11 +6,11 @@
 /* eslint-disable max-lines-per-function */
 
 import { vi, describe, it, expect, beforeEach } from "vitest"
-import { calculatePotentialHarvest } from "../../../src/plants/services/dateService.js"
-import { addWeeksToDate } from "../../../src/utils/dateUtils.js"
+import { calculatePotentialHarvest } from "@/plants/services/dateService"
+import { addWeeksToDate } from "@/utils/dateUtils"
 
 // Mock the addWeeksToDate function
-vi.mock("../../../src/utils/dateUtils", () => ({
+vi.mock("@/utils/dateUtils", () => ({
   addWeeksToDate: vi.fn(),
 }))
 

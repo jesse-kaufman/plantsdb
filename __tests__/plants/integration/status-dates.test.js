@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect } from "vitest"
-import Plant from "../../../src/plants/Plant.js"
 import { validArchivedPlant, validDeletedPlant } from "../testConstants.js"
+import Plant from "@/plants/PlantClass.js"
 
 // Test archivedOn and deletedOn when status is archived
 describe("Archived status / date property congruency", () => {

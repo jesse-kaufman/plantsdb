@@ -6,8 +6,8 @@
 /* eslint-disable max-lines-per-function */
 
 import { describe, it, expect, vi } from "vitest"
-import Plant from "../../../src/plants/Plant.js"
 import { validSeedlingPlant } from "../testConstants.js"
+import Plant from "@/plants/PlantClass.js"
 
 const validPlant = { ...validSeedlingPlant }
 

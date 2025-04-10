@@ -4,8 +4,8 @@
  */
 import { describe, it, expect, beforeEach } from "vitest"
 
-import Plant from "../../../src/plants/Plant.js"
 import { validSeedlingPlant, stageDateProperties } from "../testConstants.js"
+import Plant from "@/plants/PlantClass.js"
 
 const validPlant = { ...validSeedlingPlant }
 

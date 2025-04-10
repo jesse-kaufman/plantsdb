@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect } from "vitest"
-import Plant from "../../../src/plants/Plant.js"
 import { validSeedlingPlant as validPlant } from "../testConstants.js"
+import Plant from "@/plants/PlantClass.js"
 
 describe("Plant source property", () => {
   it("should set the source correctly", () => {

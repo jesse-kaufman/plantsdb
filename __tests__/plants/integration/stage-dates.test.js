@@ -3,7 +3,6 @@
  * @file Tests for Plant dates.
  */
 import { describe, it, expect } from "vitest"
-import Plant from "../../../src/plants/Plant.js"
 import {
   validSeedlingPlant,
   validVegPlant,
@@ -11,6 +10,7 @@ import {
   validHarvestedPlant,
   validCurePlant,
 } from "../testConstants.js"
+import Plant from "@/plants/PlantClass.js"
 
 // Test dates for seedling stage
 describe("Seedling stage / date property congruency", () => {
