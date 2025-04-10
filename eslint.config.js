@@ -1,16 +1,26 @@
+/* eslint-disable max-lines */
 /** @file Config for eslint. */
 /* eslint-disable no-magic-numbers */
 import pluginJs from "@eslint/js"
-import jest from "eslint-plugin-jest"
 import jsdoc from "eslint-plugin-jsdoc"
 import importPlugin from "eslint-plugin-import"
 import globals from "globals"
 import eslintPluginPrettier from "eslint-plugin-prettier"
-import eslintConfigPrettier from "eslint-config-prettier"
 import vitest from "eslint-plugin-vitest"
 
 const config = [
-  { ignores: ["**/node_modules/*", "**/public/js/*"] },
+  {
+    ignores: [
+      "**/node_modules/*",
+      "**/public/js/*",
+      "hugo/themes/*",
+      "hugo/public/*",
+      "build/*",
+      "live/*",
+      "dist/*",
+      "vite.config.js",
+    ],
+  },
   {
     files: ["__tests__/**"],
     plugins: {
@@ -29,13 +39,12 @@ const config = [
   },
   {
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node, ...globals.jest },
+      globals: { ...globals.browser, ...globals.node },
     },
   },
   {
     plugins: {
       jsdoc,
-      jest,
       prettier: eslintPluginPrettier,
     },
   },
@@ -46,24 +55,29 @@ const config = [
     settings: {
       "import/resolver": {
         alias: {
-          map: [
-            ["@", "./src"], // Add the alias for '@' to point to './src'
-          ],
-          extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+          map: [["@", "./src"]],
+          extensions: [".js", ".ts", ".jsx", ".tsx"],
+        },
+        node: {
+          extensions: [".js", ".ts", ".mjs"],
+          moduleDirectory: ["node_modules", "src/"],
         },
       },
     },
+  },
+  {
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
     },
     rules: {
-      ...eslintConfigPrettier.rules, // Disable conflicting ESLint rules
       "prettier/prettier": "error", // Run Prettier as an ESLint rule
-
-      ...jest.configs.recommended.rules,
       "array-callback-return": "error",
-      "arrow-body-style": ["warn", "as-needed"],
+      "arrow-body-style": [
+        "warn",
+        "as-needed",
+        { requireReturnForObjectLiteral: false },
+      ],
       camelcase: ["warn", { ignoreImports: true }],
       "capitalized-comments": [
         "warn",
@@ -199,9 +213,9 @@ const config = [
       "jsdoc/check-values": "warn",
       "jsdoc/informative-docs": "warn",
       "jsdoc/no-undefined-types": "error",
-      "jsdoc/require-file-overview": "error",
+      "jsdoc/require-file-overview": ["error"],
       "jsdoc/sort-tags": [
-        "error" | "warn",
+        "warn",
         {
           tagSequence: [
             { tags: ["since", "access"] },
@@ -213,6 +227,7 @@ const config = [
             { tags: ["yields"] },
             { tags: ["returns"] },
           ],
+          linesBetween: 0,
         },
       ],
       "eol-last": ["error", "always"],
