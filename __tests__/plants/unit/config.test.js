@@ -9,7 +9,9 @@ const expectedEnvVars = {
 // Mock dotenv.config() as no-op mock.
 vi.mock("dotenv", () => ({
   default: {
-    config: vi.fn(() => {}),
+    config: vi.fn(() => {
+      // Do nothing.
+    }),
   },
 }))
 

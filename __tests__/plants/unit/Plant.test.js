@@ -90,7 +90,9 @@ describe("Plant class", () => {
 describe("printing", () => {
   it("should print the expected plant information", () => {
     // Capture console output
-    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {
+      // Do nothing.
+    })
 
     const plant = new Plant(validPlant)
     plant.print()
