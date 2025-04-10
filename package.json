@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/server.js",
     "test": "jest --coverage --verbose"
   },
   "author": "Jesse Kaufman",
