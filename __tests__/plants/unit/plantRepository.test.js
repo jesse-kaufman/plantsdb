@@ -1,3 +1,4 @@
+/** @file Unit tests for plant repository. */
 /* eslint-disable max-lines-per-function */
 import { describe, it, expect, vi } from "vitest"
 import PlantModel from "@/plants/models/plantModel" // Import your Mongoose model
