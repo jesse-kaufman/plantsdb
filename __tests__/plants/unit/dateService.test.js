@@ -10,11 +10,9 @@ import { calculatePotentialHarvest } from "../../../src/plants/services/dateServ
 import { addWeeksToDate } from "../../../src/utils/dateUtils.js"
 
 // Mock the addWeeksToDate function
-vi.mock("../../../src/utils/dateUtils", () => {
-  return {
-    addWeeksToDate: vi.fn(),
-  }
-})
+vi.mock("../../../src/utils/dateUtils", () => ({
+  addWeeksToDate: vi.fn(),
+}))
 
 describe("calculatePotentialHarvest", () => {
   const mockDates = {
