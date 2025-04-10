@@ -20,24 +20,28 @@ export const validVegPlant = {
   ...validSeedlingPlant,
   stage: "veg",
   vegStartedOn: "2023-01-08",
+  _id: "1",
 }
 /** Valid plant in the flower stage. */
 export const validFlowerPlant = {
   ...validVegPlant,
   stage: "flower",
   flowerStartedOn: "2023-02-08",
+  _id: "2",
 }
 /** Valid plant in the harvested stage. */
 export const validHarvestedPlant = {
   ...validFlowerPlant,
   stage: "harvested",
   harvestedOn: "2023-11-08",
+  _id: "3",
 }
 /** Valid plant in the harvested stage. */
 export const validCurePlant = {
   ...validHarvestedPlant,
   stage: "cure",
   cureStartedOn: "2023-11-15",
+  _id: "4",
 }
 
 /** Valid plant with archived status. */
@@ -45,12 +49,14 @@ export const validArchivedPlant = {
   ...validSeedlingPlant,
   status: "archived",
   archivedOn: "2023-01-01",
+  _id: "5",
 }
 /** Valid plant with deleted status. */
 export const validDeletedPlant = {
   ...validSeedlingPlant,
   status: "inactive",
   deletedOn: "2023-01-01",
+  _id: "6",
 }
 
 /** Valid plant object for each stage and the related date property to test against. */
