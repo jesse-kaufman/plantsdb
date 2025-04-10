@@ -105,7 +105,13 @@ export const validateStageDates = (stage, dates) => {
  * @param {object} dates - Dates to validate.
  */
 export const validateStageDatesOrder = (dates) => {
-  console.debug(dates)
+  /*
+   * Setup pairs of dates to compare when validating.
+   *
+   * The date in the property stored in .prev should be before the date in the
+   * property stored in .next. So if prev is 'startedOn' and next is 'vegStartedOn'
+   * it will throw an error if dates.startedOn is after dates.vegStartedOn.
+   */
   const stagePairs = [
     {
       prev: "startedOn",
@@ -129,6 +135,7 @@ export const validateStageDatesOrder = (dates) => {
     },
   ]
 
+  // Walk through each pair and throw an error if dates[prev] is after dates[next].
   for (const { prev, next, message } of stagePairs) {
     if (
       dates[next] !== null &&
