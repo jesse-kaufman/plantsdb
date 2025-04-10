@@ -30,7 +30,7 @@ const PlantSchema = new Schema(
     startedOn: {
       type: Date,
       required: true,
-      default: new Date().toISOString(),
+      default: new Date(new Date().toISOString().split("T")[0]),
     },
     vegStartedOn: {
       type: Date,
