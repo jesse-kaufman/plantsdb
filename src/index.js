@@ -9,6 +9,7 @@ import Plant from "./plants/Plant.js"
 
 const newPlant = {
   name: "Acapulco Gold",
+  source: "seed",
   status: "active",
   stage: "seedling",
   startedOn: "2023-01-01",
@@ -19,6 +20,7 @@ const newPlant = {
   cureStartedOn: null,
   archivedOn: null,
   deletedOn: null,
+  notes: "",
 }
 
 const plant = new Plant(newPlant)
