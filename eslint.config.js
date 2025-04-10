@@ -36,11 +36,7 @@ const config = [
 
       ...jest.configs.recommended.rules,
       "array-callback-return": "error",
-      "arrow-body-style": [
-        "warn",
-        "as-needed",
-        { requireReturnForObjectLiteral: true },
-      ],
+      "arrow-body-style": ["warn", "as-needed"],
       camelcase: ["warn", { ignoreImports: true }],
       "capitalized-comments": [
         "warn",
