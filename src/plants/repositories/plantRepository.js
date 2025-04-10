@@ -46,6 +46,9 @@ export const plantRepository = {
    * @returns {Promise<object>} Plant object after update.
    */
   async update(id, updates) {
-    return await PlantModel.findByIdAndUpdate(id, updates, { new: true })
+    return await PlantModel.findByIdAndUpdate(id, updates, {
+      new: true,
+      lean: true,
+    })
   },
 }
