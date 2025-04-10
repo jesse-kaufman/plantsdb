@@ -43,6 +43,16 @@ const config = [
   pluginJs.configs.recommended,
   importPlugin.flatConfigs.recommended,
   {
+    settings: {
+      "import/resolver": {
+        alias: {
+          map: [
+            ["@", "./src"], // Add the alias for '@' to point to './src'
+          ],
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+        },
+      },
+    },
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
