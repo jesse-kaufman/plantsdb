@@ -5,7 +5,7 @@
 // import connectDb from "./db/db.js"
 import Plant from "./plants/Plant.js"
 
-// connectDb()
+// TODO: run connectDb() here
 
 const newPlant = {
   name: "Acapulco Gold",
