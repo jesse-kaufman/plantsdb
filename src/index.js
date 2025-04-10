@@ -3,7 +3,7 @@
  */
 
 // import connectDb from "./db/db.js"
-import Plant from "./plants/Plant.js"
+import Plant from "./plants/PlantClass.js"
 
 // TODO: run connectDb() here
 

@@ -4,7 +4,7 @@
 
 import chalk from "chalk"
 import { validStages } from "../config/constants.js"
-import Plant from "../Plant.js"
+import Plant from "../PlantClass.js"
 
 /**
  * Prints plant to console.

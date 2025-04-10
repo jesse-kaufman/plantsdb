@@ -66,7 +66,7 @@ export const validateNotes = (notes) => {
 
 /**
  * Validates object being sent to constructor.
- * @param {import('../../Plant').PlantConstructorOptions} newPlant - Plant data to initialize the instance.
+ * @param {import('../../PlantClass.js').PlantConstructorOptions} newPlant - Plant data to initialize the instance.
  * @throws {TypeError} If newPlant null or non-object.
  * @throws {Error} If the provided plant object fails validation.
  */
