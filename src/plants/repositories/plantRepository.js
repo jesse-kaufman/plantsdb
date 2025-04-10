@@ -12,7 +12,8 @@ export const plantRepository = {
    * @returns {Promise<object>} Plant from database.
    */
   async findById(id) {
-    return await PlantModel.findById(id)
+    const data = await PlantModel.findById(id).lean()
+    if (data) return new Plant(data)
   },
 
   /**
